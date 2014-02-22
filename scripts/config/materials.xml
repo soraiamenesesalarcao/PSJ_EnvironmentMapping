@@ -1,0 +1,32 @@
+<materials>
+	<material id="ruby">
+		<ambient r="0.1745" g="0.01175" b="0.01175">
+		<diffuse r="0.61424" g="0.04136" b="0.04136">
+		<specular r="0.727811" g="0.626959" b="0.626959">
+		<shininess>0.6</shininess>
+	</material>
+	<material id="gold">
+		<ambient r="0.24725" g="0.1995" b="0.0745">
+		<diffuse r="0.75164" g="0.60648" b="0.22648">
+		<specular r="0.628281" g="0.555802" b="0.366065">
+		<shininess>0.4</shininess>
+	</material>
+	<material id="silver">
+		<ambient r="0.19225" g="0.19225" b="0.19225">
+		<diffuse r="0.50754" g="0.50754" b="0.50754">
+		<specular r="0.508273" g="0.508273" b="0.508273">
+		<shininess>0.4</shininess>
+	</material>
+	<material id="esmerald">
+		<ambient r="0.0215" g="0.1745" b="0.0215">
+		<diffuse r="0.07568" g="0.61424" b="0.07568">
+		<specular r="0.633" g="0.727811" b="0.633">
+		<shininess>0.6</shininess>
+	</material>
+	<material id="cyan">
+		<ambient r="0.0" g="0.1" b="0.06">
+		<diffuse r="0.0" g="0.50980392" b="0.50980392">
+		<specular r="0.50196078" g="0.50196078" b="0.50196078">
+		<shininess>0.25</shininess>
+	</material>
+</materials>

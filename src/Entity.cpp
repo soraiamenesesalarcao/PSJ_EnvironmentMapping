@@ -2,18 +2,22 @@
 #include "Utils.h"
 
 
-Entity::Entity(std::string matID){
+Entity::Entity(int solid){
 	//	_id = id;
-		_solid = CUBE;
-		_matID = matID;
+		_solid = solid;
+	//	_matID = matID;
 }
 
 Entity::Entity(){
 	//	_id = id;
 		_solid = CUBE;
-		_matID = "ruby";
+	//	_matID = "ruby";
 }
 
+
+void Entity::init() {
+
+}
 
 void Entity::draw(){
 
@@ -44,11 +48,10 @@ void Entity::changeSolid(){
 	_solid = (_solid + 1) % NSOLIDS;
 }
 
-std::string Entity::getMaterial(){
-	return _matID;
-}
 
-void Entity::setMaterial(std::string matID){
-	_matID = matID;
+void Entity::setMaterial(char* file, std::string matID){
+	//_matID = matID;
+
+	ConfigLoader::loadMaterial(file, matID, &_ambientMaterial, &_diffuseMaterial, &_specularMaterial, &_shininess);
 }
 

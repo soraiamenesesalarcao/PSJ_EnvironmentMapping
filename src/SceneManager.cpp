@@ -2,7 +2,7 @@
 
 
 SceneManager::SceneManager(){
-	_entity = new Entity();
+
 }
 
 
@@ -28,7 +28,9 @@ void SceneManager::init(){
 	//glm::vec3 pcoords;
 
 	_program = ShaderProgram::getInstance()->createShaderProgram("shaders/vertex.glsl", "shaders/fragment.glsl");
-
+	_entity = new Entity(CUBE);
+	_entity->setMaterial("config/materials.xml", "ruby");
+	// transformacoes e tal
 	
 	/* Exemplo * /
 	Utils::loadScene("scene/currentScene.xml", "quadradoAmarelo", &qcoords, &pcoords);
@@ -62,19 +64,19 @@ void SceneManager::update(){
 
 	// Material
 	if(Input::getInstance()->keyWasReleased('1')) {
-		_entity->setMaterial("ruby");
+		_entity->setMaterial("config/materials.xml", "ruby");
 	}
 	if(Input::getInstance()->keyWasReleased('2')) {
-		_entity->setMaterial("gold");
+		_entity->setMaterial("config/materials.xml", "gold");
 	}
 	if(Input::getInstance()->keyWasReleased('3')) {
-		_entity->setMaterial("silver");
+		_entity->setMaterial("config/materials.xml", "silver");
 	}
 	if(Input::getInstance()->keyWasReleased('4')) {
-		_entity->setMaterial("esmerald");
+		_entity->setMaterial("config/materials.xml", "esmerald");
 	}
 	if(Input::getInstance()->keyWasReleased('5')) {
-		_entity->setMaterial("cyan");
+		_entity->setMaterial("config/materials.xml", "cyan");
 	}
 
 	// Camera 

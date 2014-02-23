@@ -3,6 +3,7 @@
 
 Entity::Entity(std::string id){
 		_id = id;
+		_solid = 0;
 
 /*	std::string texture;
 	_height = _px = _py = _pz = 0.0;
@@ -18,11 +19,21 @@ Entity::~Entity(){
 
 void Entity::draw(){
 
+	if(_solid == CUBE) {
+		// desenhar cubo
+	}
+	else {
+		// desenhar teapot
+	}
+
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
 
 void Entity::update(){
 
+	if(Input::getInstance()->keyWasReleased('T')) {
+		_solid = (_solid + 1) % NSOLIDS;
+	}
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
 
@@ -34,6 +45,3 @@ int Entity::getSolid(){
 	return _solid;
 }
 
-void Entity::setSolid(int solid){
-	_solid = solid;
-}

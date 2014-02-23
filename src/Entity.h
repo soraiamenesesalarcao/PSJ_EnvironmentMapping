@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utils.h"
+#include "Input.h"
 #include <iostream>
 
 class Entity {

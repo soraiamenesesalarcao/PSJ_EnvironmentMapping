@@ -5,6 +5,9 @@
 #define COLORS 1
 #define NORMALS 2
 #define UVS 3
+#define NSOLIDS 2
+#define CUBE 0
+#define TEAPOT 1
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))

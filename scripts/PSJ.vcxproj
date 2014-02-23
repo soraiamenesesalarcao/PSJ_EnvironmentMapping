@@ -101,6 +101,8 @@
     <ClCompile Include="..\src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\fragmentShader.glsl" />
+    <None Include="shaders\vertexShader.glsl" />
     <None Include="textures\fire.tga" />
     <None Include="textures\stone.tga" />
   </ItemGroup>

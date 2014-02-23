@@ -85,6 +85,12 @@
     <None Include="textures\fire.tga">
       <Filter>Resource Files\textures</Filter>
     </None>
+    <None Include="shaders\fragmentShader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="shaders\vertexShader.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config\lights.xml">

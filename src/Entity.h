@@ -1,21 +1,23 @@
 #pragma once
 
+#include "Definitions.h"
 #include "Utils.h"
-#include "Input.h"
-#include <iostream>
 
 class Entity {
 
 	protected:
-		std::string _id;
+	//	std::string _id;
 		int _solid;
-		Entity(std::string id);
+		std::string _matID;
 
 	public:
-		virtual ~Entity();
-		virtual void update() = 0;
-		virtual void draw();
-		std::string getId();
+		Entity(std::string matID);
+		Entity();
+		void update();
+		void draw();
+		//std::string getId();
 		int getSolid();
-		void setSolid(int solid);
+		void changeSolid();
+		std::string getMaterial();
+		void setMaterial(std::string matID);
 };

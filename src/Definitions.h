@@ -1,5 +1,14 @@
+#pragma once
+
 #include "GL/glew.h"
 #include "GL/freeglut.h"
+#include <glm.hpp>
+#include <gtc/quaternion.hpp>
+#include <gtx/transform2.hpp>
+#include <ext.hpp>
+
+#include <iostream>
+//#include <map>
 
 #define VERTICES 0
 #define COLORS 1

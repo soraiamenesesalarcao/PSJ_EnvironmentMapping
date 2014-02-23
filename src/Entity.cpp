@@ -1,21 +1,19 @@
 #include "Entity.h"
 #include "Utils.h"
 
-Entity::Entity(std::string id){
-		_id = id;
-		_solid = 0;
 
-/*	std::string texture;
-	_height = _px = _py = _pz = 0.0;
-	_reflection = reflection;
-	_mesh = NULL;
-	_texture = NULL;*/
+Entity::Entity(std::string matID){
+	//	_id = id;
+		_solid = CUBE;
+		_matID = matID;
 }
 
-Entity::~Entity(){
-	//if(_mesh != NULL) _mesh->~Mesh();
-	//if(_texture != NULL) _texture->~Texture();
+Entity::Entity(){
+	//	_id = id;
+		_solid = CUBE;
+		_matID = "ruby";
 }
+
 
 void Entity::draw(){
 
@@ -29,19 +27,28 @@ void Entity::draw(){
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
 
-void Entity::update(){
+void Entity::update(){	
 
-	if(Input::getInstance()->keyWasReleased('T')) {
-		_solid = (_solid + 1) % NSOLIDS;
-	}
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
 
-std::string Entity::getId(){
+/* std::string Entity::getId(){
 	return _id;
-}
+} */
 
 int Entity::getSolid(){
 	return _solid;
+}
+
+void Entity::changeSolid(){
+	_solid = (_solid + 1) % NSOLIDS;
+}
+
+std::string Entity::getMaterial(){
+	return _matID;
+}
+
+void Entity::setMaterial(std::string matID){
+	_matID = matID;
 }
 

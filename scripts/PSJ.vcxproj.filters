@@ -19,14 +19,8 @@
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{f01b287c-d004-43a1-9d01-61be1db93acc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\materials">
-      <UniqueIdentifier>{ac9a879e-189c-4a8d-9004-1cb8471bf45a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\scene">
-      <UniqueIdentifier>{2c2e54bd-4fca-4998-882b-b18a9c2e95c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\lights">
-      <UniqueIdentifier>{c1030237-5f3d-4639-addb-d92c4ed9e65e}</UniqueIdentifier>
+    <Filter Include="Resource Files\config">
+      <UniqueIdentifier>{6a0f4bc8-e877-44df-886c-3165e2897b2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -91,5 +85,16 @@
     <None Include="textures\fire.tga">
       <Filter>Resource Files\textures</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="config\lights.xml">
+      <Filter>Resource Files\config</Filter>
+    </Xml>
+    <Xml Include="config\materials.xml">
+      <Filter>Resource Files\config</Filter>
+    </Xml>
+    <Xml Include="config\scene.xml">
+      <Filter>Resource Files\config</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

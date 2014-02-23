@@ -1,14 +1,20 @@
 #include "SceneManager.h"
 
-
 #define TITLE "Lab 0"
+
+/* ************************************************************************** */
+/* ********************************* GLOBALS ******************************** */
+/* ************************************************************************** */
 
 int WinX = 640, WinY = 480;
 int WindowHandle = 0;
 unsigned int FrameCount = 0;
 
 
-// CALLBACKS /////////////////////////////////////////////////////////////////
+/* ************************************************************************** */
+/* ******************************* CALLBACKS ******************************** */
+/* ************************************************************************** */
+
 void cleanup() {
 	SceneManager::getInstance()->destroyBufferObjects();
 }
@@ -64,6 +70,7 @@ void mouse(int button, int state, int x, int y)  {
 	Input::getInstance()->mouse(button, state);
 }
 
+
 void mouseClickMotion(int x, int y) {
 	Input::getInstance()->mouseClickMotion(x, y);
 }
@@ -87,7 +94,10 @@ void timer(int value) {
     glutTimerFunc(1000, timer, 0);
 }
 
-/////////////////////////////////////////////////////////////////////// SETUP
+
+/* ************************************************************************** */
+/* *********************************** SETUP ******************************** */
+/* ************************************************************************** */
 
 void setupCallbacks()  {
 	glutCloseFunc(cleanup);
@@ -108,6 +118,7 @@ void setupCallbacks()  {
 	glutTimerFunc(0,timer,0);
 }
 
+
 void setupOpenGL() {
 	std::cerr << "CONTEXT: OpenGL v" << glGetString(GL_VERSION) << std::endl;
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -122,6 +133,7 @@ void setupOpenGL() {
 	glFrontFace(GL_CCW);
 }
 
+
 void setupGLEW() {
 	glewExperimental = GL_TRUE;
 	GLenum result = glewInit() ; 
@@ -131,6 +143,7 @@ void setupGLEW() {
 	} 
 	GLenum err_code = glGetError();
 }
+
 
 void setupGLUT(int argc, char* argv[]) {
 	glutInit(&argc, argv);
@@ -150,6 +163,7 @@ void setupGLUT(int argc, char* argv[]) {
 	}
 }
 
+
 void init(int argc, char* argv[]) {
 	setupGLUT(argc, argv);
 	setupGLEW();
@@ -158,9 +172,13 @@ void init(int argc, char* argv[]) {
 	setupCallbacks();
 }
 
+
+/* ************************************************************************** */
+/* ************************************ MAIN ******************************** */
+/* ************************************************************************** */
+
 int main(int argc, char* argv[]) {	
 	init(argc, argv);
 	glutMainLoop();	
 	exit(EXIT_SUCCESS);
 }
-

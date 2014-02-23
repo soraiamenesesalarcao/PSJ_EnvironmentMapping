@@ -104,6 +104,11 @@
     <None Include="textures\fire.tga" />
     <None Include="textures\stone.tga" />
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="config\lights.xml" />
+    <Xml Include="config\materials.xml" />
+    <Xml Include="config\scene.xml" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

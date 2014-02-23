@@ -11,36 +11,20 @@ SceneManager * SceneManager::getInstance(){
 	return &instance;
 }
 
-/*
-void SceneManager::add(Entity * entity){
-	_entities.insert(std::make_pair(entity->getId(), entity));
-}
-
-
-Entity * SceneManager::getEntityById(std::string id){
-	return _entities.find(id)->second;
-}
-*/
 
 void SceneManager::init(){
 
-	//glm::quat qcoords;
-	//glm::vec3 pcoords;
-
+	// Shader
 	_program = ShaderProgram::getInstance()->createShaderProgram("shaders/vertex.glsl", "shaders/fragment.glsl");
+
+	// Solid
 	_entity = new Entity(CUBE);
 	_entity->setMaterial("config/materials.xml", "ruby");
 	// transformacoes e tal
-	
-	/* Exemplo * /
-	Utils::loadScene("scene/currentScene.xml", "quadradoAmarelo", &qcoords, &pcoords);
-	TangramPieces * quadradoAmarelo = new TangramPieces("quadradoAmarelo");
-	quadradoAmarelo->setMesh("mesh/parallellogram.obj", "materials/quadradoAmarelo.mtl");
-	quadradoAmarelo->setTexture("materials/quadradoAmarelo.mtl");
-	quadradoAmarelo->scale(1, 1, 0.15);
-	quadradoAmarelo->setPos(pcoords.x, pcoords.y, pcoords.z, qcoords);
-	add(quadradoAmarelo);
-	/**/
+
+	// LightSource
+	_lightSource = new LightSource();
+	_lightSource->setComponents("config/lights.xml", "main");
 	
 }
 
@@ -48,8 +32,15 @@ void SceneManager::init(){
 void SceneManager::draw(){
 
 	ShaderProgram::getInstance()->bind(_program);
+
+	// Camera
 	Camera::getInstance()->put(); 
 	
+	// Solid
+	// _entity->draw();
+
+	// LightSource
+	// _lightSource->draw();
 
 	ShaderProgram::getInstance()->unBind();
 }
@@ -78,6 +69,16 @@ void SceneManager::update(){
 	if(Input::getInstance()->keyWasReleased('5')) {
 		_entity->setMaterial("config/materials.xml", "cyan");
 	}
+
+	// Light distance
+	// MUDAR PARA NUMEROS, POR CAUSA DA CAMARA JA USAR AS SETAS!!!!!!!!!!!
+	if(Input::getInstance()->specialWasPressed(GLUT_KEY_LEFT)) {
+		// _lightSource->moveLeft();
+	}
+	if(Input::getInstance()->specialWasPressed(GLUT_KEY_RIGHT)) {
+		// _lightSource->moveRight();
+	}
+
 
 	// Camera 
 	Camera::getInstance()->update();

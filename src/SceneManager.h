@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Definitions.h"
-#include "Entity.h"
 #include "Input.h"
+#include "Entity.h"
+#include "LightSource.h"
 #include "Camera.h"
 
 
@@ -10,6 +11,7 @@ class SceneManager {
 
 	private:
 		Entity * _entity;
+		LightSource * _lightSource;
 		SceneManager();
 		GLuint _program;
 

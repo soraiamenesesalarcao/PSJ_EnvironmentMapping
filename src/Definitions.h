@@ -17,6 +17,7 @@
 #define NSOLIDS 2
 #define CUBE 0
 #define TEAPOT 1
+#define LIGHT_OFFSET_X 1
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))

@@ -15,6 +15,10 @@ uniform vec3 light_Ambient;
 uniform vec3 light_Diffuse;
 uniform vec3 light_Specular;
 uniform float light_Distance;
+uniform float light_ConstantAttenuation; 
+uniform float light_LinearAttenuation;
+uniform float light_QuadraticAttenuation;
+
 
 // Material Attributes
 uniform vec3 material_Ambient;
@@ -34,12 +38,10 @@ layout(std140) uniform Matrices{
 
 void main(void) {
 
-	float light_K = 0.3;
-
 	// Phong Shading + Blinn-Phong Illumination + Depth Cueing
 	vec3 L = normalize(vec3(mtx_View * vec4(light_Position, 1.0)) - ex_Position); //sem view -> luz segue camara, com view -> luz segue cena
-	vec3 V = normalize(-EyeDirection);
 	vec3 N = normalize(out_Normal);
+	vec3 V = normalize(-EyeDirection);
 	vec3 H = normalize(L + V);
 
 	// Ambient Component
@@ -57,9 +59,11 @@ void main(void) {
 	}
 
 	// Depth Cueing	
-	depth_Cueing = light_Distance + light_K;
+	depth_Cueing = light_ConstantAttenuation + 
+				   light_LinearAttenuation * light_Distance +
+				   light_QuadraticAttenuation * pow(light_Distance, 2);
 
 	// Final
-	vec4 lightIntensity = vec4((comp_Ambient) + ((comp_Diffuse) + comp_Specular)/(depth_Cueing), 1.0);
-	out_Color = LightIntensity;
+	vec4 lightIntensity = vec4( comp_Ambient + (comp_Diffuse + comp_Specular)/depth_Cueing, 1.0);
+	out_Color = LightIntensity
 }

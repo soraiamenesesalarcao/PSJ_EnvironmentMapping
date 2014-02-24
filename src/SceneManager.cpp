@@ -73,22 +73,22 @@ void SceneManager::update(){
 	// Light distance
 	
 	if(Input::getInstance()->keyWasPressed('a')) {
-		// _lightSource->moveLeft();
+		 _lightSource->moveLeft();
 	}
 	if(Input::getInstance()->keyWasPressed('d')) {
-		// _lightSource->moveRight();
+		 _lightSource->moveRight();
 	}
 	if(Input::getInstance()->keyWasPressed('w')) {
-		// _lightSource->moveAhead();
+		 _lightSource->moveAhead();
 	}
 	if(Input::getInstance()->keyWasPressed('s')) {
-		// _lightSource->moveBackwards();
+		 _lightSource->moveBackwards();
 	}
 	if(Input::getInstance()->keyWasPressed('q')) {
-		// _lightSource->moveUp();
+		 _lightSource->moveUp();
 	}
 	if(Input::getInstance()->keyWasPressed('e')) {
-		// _lightSource->moveDown();
+		 _lightSource->moveDown();
 	}
 
 

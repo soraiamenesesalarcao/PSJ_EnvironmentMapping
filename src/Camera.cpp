@@ -90,17 +90,17 @@ void Camera::update(){
 		rotate(0, 0.05);
 
 	// Views
-	if(Input::getInstance()->keyWasReleased('1'))		// Top
+	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F1))		// top
 		_q = glm::angleAxis(90.0f, glm::vec3(1.0, 0.0, 0.0));
-	if(Input::getInstance()->keyWasReleased('2'))		// Bottom
+	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F2))		// bottom
 		_q = glm::angleAxis(-90.0f, glm::vec3(1.0, 0.0, 0.0)) * glm::angleAxis(180.0f, glm::vec3(0.0, 0.0, 1.0));
-	if(Input::getInstance()->keyWasReleased('3'))		// Front
+	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F3))		// front
 		_q = glm::angleAxis(0.0f, glm::vec3(1.0, 0.0, 0.0));
-	if(Input::getInstance()->keyWasReleased('4'))		// Back
+	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F4))		// back
 		_q = glm::angleAxis(180.0f, glm::vec3(1.0, 0.0, 0.0)) * glm::angleAxis(180.0f, glm::vec3(0.0, 1.0, 0.0));
-	if(Input::getInstance()->keyWasReleased('5'))		// Left
+	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F5))		// left
 		_q = glm::angleAxis(90.0f, glm::vec3(0.0, 0.0, 1.0));
-	if(Input::getInstance()->keyWasReleased('6'))		// Right
+	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F6))		// right
 		_q = glm::angleAxis(270.0f, glm::vec3(0.0, 0.0, 1.0));
 	
 	// spheric camera

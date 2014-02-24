@@ -41,7 +41,8 @@ void main(void) {
 	// Phong Shading + Blinn-Phong Illumination + Depth Cueing
 	vec3 L = normalize(vec3(mtx_View * vec4(light_Position, 1.0)) - ex_Position); //sem view -> luz segue camara, com view -> luz segue cena
 	vec3 N = normalize(out_Normal);
-	vec3 V = normalize(-EyeDirection);
+	//vec3 V = normalize(-EyeDirection);
+	vec3 V = normalize(-LightPosition);
 	vec3 H = normalize(L + V);
 
 	// Ambient Component

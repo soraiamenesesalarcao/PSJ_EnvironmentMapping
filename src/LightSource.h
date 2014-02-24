@@ -17,5 +17,9 @@ class LightSource {
 		void setComponents(char* file, std::string lightID);
 		void moveLeft();
 		void moveRight();
+		void moveAhead();
+		void moveBackwards();
+		void moveUp();
+		void moveDown();
 		void draw();
 };

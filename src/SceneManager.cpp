@@ -71,12 +71,24 @@ void SceneManager::update(){
 	}
 
 	// Light distance
-	// MUDAR PARA NUMEROS, POR CAUSA DA CAMARA JA USAR AS SETAS!!!!!!!!!!!
-	if(Input::getInstance()->specialWasPressed(GLUT_KEY_LEFT)) {
+	
+	if(Input::getInstance()->keyWasPressed('a')) {
 		// _lightSource->moveLeft();
 	}
-	if(Input::getInstance()->specialWasPressed(GLUT_KEY_RIGHT)) {
+	if(Input::getInstance()->keyWasPressed('d')) {
 		// _lightSource->moveRight();
+	}
+	if(Input::getInstance()->keyWasPressed('w')) {
+		// _lightSource->moveAhead();
+	}
+	if(Input::getInstance()->keyWasPressed('s')) {
+		// _lightSource->moveBackwards();
+	}
+	if(Input::getInstance()->keyWasPressed('q')) {
+		// _lightSource->moveUp();
+	}
+	if(Input::getInstance()->keyWasPressed('e')) {
+		// _lightSource->moveDown();
 	}
 
 

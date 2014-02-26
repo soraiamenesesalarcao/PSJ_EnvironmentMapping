@@ -16,6 +16,11 @@ class ShaderProgram {
 		int compileShader(char * shaderFile, int shaderType);
 		ShaderProgram();
 
+		GLuint _modelMatrixUniformId;
+		GLuint _colorUniformId;
+		GLuint _sharedMatrixUboId;
+		GLuint _textureUniformId;
+
 	public:
 		static ShaderProgram * getInstance();
 		int createShaderProgram(char * vSFile, char * fSFile);
@@ -24,4 +29,10 @@ class ShaderProgram {
 		const GLint getId(std::string key);
 		void bind(GLuint id);
 		void unBind();
+
+		GLuint getColorUniformId() const  { return _colorUniformId; }
+		GLuint getModelMatrixUniformId() const  { return _modelMatrixUniformId; }
+		GLuint getSharedMatrixUboId() const { return _sharedMatrixUboId; }
+		GLuint getTextureUniformId() const  { return _textureUniformId; }
+
 };

@@ -32,11 +32,18 @@ int ShaderProgram::createShaderProgram(char * vSFile, char * fSFile){
 	glAttachShader(id, vertexShaderId);
 	glAttachShader(id, fragmentShaderId);
 	glBindAttribLocation(id, VERTICES, "in_Position");
-	glBindAttribLocation(id, COLORS, "in_Color");
+	//glBindAttribLocation(id, COLORS, "in_Color");
 	glBindAttribLocation(id, NORMALS, "in_Normal");
-	glBindAttribLocation(id, UVS, "in_TexCoord");
+	//glBindAttribLocation(id, UVS, "in_TexCoord");
+	glBindAttribLocation(id, UVS, "in_UV");
 	glLinkProgram(id);
-	//glUniformBlockBinding(id, glGetUniformBlockIndex(id, "SharedMatrices"), 0);
+	
+	_modelMatrixUniformId = glGetUniformLocation(id, "ModelMatrix");
+	_colorUniformId = glGetUniformLocation(id, "Color");
+	_sharedMatrixUboId = glGetUniformBlockIndex(id, "SharedMatrices");
+	_textureUniformId = glGetUniformLocation(id, "Texture");
+
+	glUniformBlockBinding(id, glGetUniformBlockIndex(id, "SharedMatrices"), 0);
 
 	Utils::checkOpenGLError("ERROR: Could not create shaders.");
 

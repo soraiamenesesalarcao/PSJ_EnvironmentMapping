@@ -35,7 +35,7 @@ namespace ConfigLoader {
 		}
 	}
 
-	void loadLight(char* file, std::string lightID, glm::vec3 *viewpoint, glm::vec3 *ambient, glm::vec3 *diffuse, glm::vec3 *specular) {
+	void loadLight(char* file, std::string lightID, glm::vec3 *viewpoint, glm::vec3 *ambient, glm::vec3 *diffuse, glm::vec3 *specular, glm::vec3 *attenuation) {
 		int i;
 
 		rapidxml::xml_document<> doc;
@@ -66,7 +66,12 @@ namespace ConfigLoader {
 				temp = child->first_node("specular");
 				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++)	{
 					(*specular)[i] = atof(attr->value());
-				}				
+				}
+
+				temp = child->first_node("attenuation");
+				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++)	{
+					(*attenuation)[i] = atof(attr->value());
+				}
 			}
 		}
 	}

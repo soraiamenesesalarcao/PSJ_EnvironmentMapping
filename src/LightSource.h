@@ -11,15 +11,16 @@ class LightSource {
 		glm::vec3 _ambient;
 		glm::vec3 _diffuse;
 		glm::vec3 _specular;
+		glm::vec3 _attenuation;
 
 	public:
 		LightSource();		
 		void setComponents(char* file, std::string lightID);
-		void moveLeft();
-		void moveRight();
-		void moveUp();
-		void moveDown();
-		void moveAhead();
-		void moveBackwards();		
+		void incX();
+		void decX();
+		void incY();
+		void decY();
+		void incZ();
+		void decZ();
 		void draw();
 };

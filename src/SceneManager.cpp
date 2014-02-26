@@ -35,7 +35,7 @@ void SceneManager::init(){
 
 void SceneManager::initObjects(){
 	_entity = new Entity(CUBE, "Cube");
-	_entity->setObjEntity("../src/cube.obj");
+	_entity->setObjEntity("../scripts/objects/cube.obj");
 	_entity->setTexture(TextureManager::RED);
 	addEntity(_entity);
 

@@ -4,6 +4,7 @@
 #include "Utils.h"
 //#include "ConfigLoader.h"
 #include "TextureManager.h"
+#include "Input.h"
 #include <iostream>
 #include <Vector>
 #include <GL\glew.h>
@@ -55,6 +56,8 @@ class Entity {
 		std::vector<glm::vec3> _modifiedVertexArray;
 		glm::mat4 _currentModelMatrix;
 
+		glm::quat _q;
+
 	public:
 
 		Entity(int solid, std::string name);
@@ -83,6 +86,6 @@ class Entity {
 
 		void setColor(const float color[4]);
 		void setColor(const float r, const float g, const float b, const float a);
-
+		void rotate(float angle);
 
 };

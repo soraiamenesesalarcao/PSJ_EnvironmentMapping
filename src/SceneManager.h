@@ -10,10 +10,9 @@
 
 class SceneManager {
 
-
+	bool f_Cube;
 
 	private:
-		Entity * _entity;
 		//LightSource * _lightSource;
 		SceneManager();
 		GLuint _shaderProgram;
@@ -32,6 +31,8 @@ class SceneManager {
 		void init();
 		Entity * getEntity();
 		void destroyBufferObjects();
+		void rotate();
+
 
 		//draw the specific object
 		void draw();

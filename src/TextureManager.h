@@ -11,8 +11,8 @@ class TextureManager
 public:
 
 
-	static const GLuint RED;
-	static const GLuint GREEN;
+	static const GLuint FIRE;
+	static const GLuint STONE;
 
 	static TextureManager* Inst();
 	virtual ~TextureManager();

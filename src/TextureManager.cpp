@@ -1,8 +1,8 @@
 #include "TextureManager.h"
 #include "SOIL.h"
 
-const GLuint TextureManager::RED = 1;
-const GLuint TextureManager::GREEN = 2;
+const GLuint TextureManager::FIRE = 0;
+const GLuint TextureManager::STONE = 1;
 
 TextureManager* TextureManager::_inst(0);
 
@@ -15,10 +15,10 @@ TextureManager* TextureManager::Inst()
 }
 
 TextureManager::TextureManager(){
-	_texID = std::vector<GLuint>(13);
+	_texID = std::vector<GLuint>(2);
 	glGenTextures(2, &_texID[0]); 
-	loadTexture("../scripts/textures/stone.tga", RED);
-	//loadTexture("../src/objs/green.png", GREEN); 
+	loadTexture("../scripts/textures/fire.tga", FIRE);
+	loadTexture("../scripts/textures/stone.tga", STONE); 
 }
 
 void TextureManager::loadTexture(const char* dirName, int textID){

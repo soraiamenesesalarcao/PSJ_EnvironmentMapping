@@ -86,6 +86,8 @@ void mouseWheel(int wheel, int direction, int x, int y) {
 }
 
 
+
+
 void timer(int value) {
 	std::string s = TITLE;
 	glutSetWindow(WindowHandle);

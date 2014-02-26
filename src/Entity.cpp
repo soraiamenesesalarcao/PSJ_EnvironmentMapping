@@ -10,7 +10,11 @@ using namespace glm;
 
 const vec3 Entity::DEFAULT_POSITION = vec3(0,0,0);
 const quat Entity::DEFAULT_ROTATION = quat();
-const vec3 Entity::DEFAULT_SCALE = vec3(1,1,1);
+const vec3 Entity::DEFAULT_SCALE = vec3(0.1,0.1,0.1);
+
+float x_angle = 0.0;
+float y_angle = 0.0;
+float z_angle = 0.0;
 
 Entity::Entity(int solid, std::string name) : _textureID(-1){
 	_name = name;
@@ -18,6 +22,7 @@ Entity::Entity(int solid, std::string name) : _textureID(-1){
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
 	_propertiesArray.push_back(initialProperty);
 	calculateModelMatrix();
+	_q = glm::angleAxis(x_angle, glm::vec3(1,0,0));
 }
 
 void Entity::calculateModelMatrix(){
@@ -70,13 +75,11 @@ std::string Entity::getObjFileDir(){
 
 void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint programTextureId){
 	glBindVertexArray(vaoId[0]);
-	//glUniformMatrix4fv(programId,1,GL_FALSE, I);
 	glUniformMatrix4fv(programId, 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniform4fv(programColorId, 1, _color);
 	if(TextureManager::Inst()->BindTexture(_textureID))
 		glUniform1i(programTextureId, 0);
 	glDrawArrays(GL_TRIANGLES,0,_vertexArray.size());
-	//glUseProgram(0);
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
 
@@ -95,8 +98,42 @@ void Entity::createBufferObjects(GLuint* vaoId, GLuint* vboId){
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(_vertexArray[0].NORMAL)*2));
 }
 
-//?????
 void Entity::update(){	
+	glm::quat q;
+
+	if(Input::getInstance()->mouseWasPressed(GLUT_LEFT_BUTTON)){ //x 
+		x_angle += 0.05;
+		if( x_angle > 360.0 ) x_angle -= 360.0;
+		_q = glm::angleAxis(x_angle, glm::vec3(1,0,0)) * _propertiesArray[0].rotation;;
+		_propertiesArray[0].rotation = _q;
+		calculateModelMatrix();
+		glutPostRedisplay();
+	}
+	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ //y
+		y_angle += 0.05;
+		if( y_angle > 360.0 ) y_angle -= 360.0;
+		_q = glm::angleAxis(y_angle, glm::vec3(0,1,0)) * _propertiesArray[0].rotation;
+		_propertiesArray[0].rotation = _q;
+		calculateModelMatrix();
+		glutPostRedisplay();
+	}
+	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ //z
+		z_angle += 0.05;
+		if( z_angle > 360.0 ) z_angle -= 360.0;
+		_q = glm::angleAxis(z_angle, glm::vec3(0,0,1)) * _propertiesArray[0].rotation;
+		_propertiesArray[0].rotation = _q;
+		calculateModelMatrix();
+		glutPostRedisplay();
+	}
+
+	if(Input::getInstance()->keyWasReleased('R')){
+		x_angle = 0.0; 
+		y_angle = 0.0;
+		z_angle = 0.0;
+		_q = glm::angleAxis(x_angle, glm::vec3(1,1,1));
+		_propertiesArray[0].rotation = _q;
+		calculateModelMatrix();
+	}
 
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }

@@ -17,7 +17,7 @@ void SceneManager::addEntity(Entity* entity){
 void SceneManager::init(){
 
 	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", "shaders/fragmentShaderUniforms.glsl");
+	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
 	TextureManager::Inst();
 	f_Cube = true;
 	_currentObject = TEAPOT;
@@ -32,12 +32,12 @@ void SceneManager::init(){
 void SceneManager::initObjects(){
 	Entity* teapot = new Entity(TEAPOT, "Teapot");
 	teapot->setObjEntity("../scripts/objects/teapot.obj");
-	teapot->setTexture(TextureManager::STONE);
+	//teapot->setTexture(TextureManager::STONE);
 	addEntity(teapot);
 
 	Entity* cube = new Entity(CUBE, "Cube");
 	cube->setObjEntity("../scripts/objects/cube.obj");
-	cube->setTexture(TextureManager::FIRE);
+	//cube->setTexture(TextureManager::FIRE);
 	addEntity(cube);
 }
 

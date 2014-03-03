@@ -81,8 +81,14 @@ void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint
 	glBindVertexArray(vaoId[0]);
 	glUniformMatrix4fv(programId, 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniform4fv(programColorId, 1, _color);
-	if(TextureManager::Inst()->BindTexture(_textureID))
-		glUniform1i(programTextureId, 0);
+	
+	glActiveTexture(GL_TEXTURE0);
+	TextureManager::Inst()->BindTexture(1);
+	glUniform1i(programTextureId, 0);
+	
+	glActiveTexture(GL_TEXTURE1);
+	TextureManager::Inst()->BindTexture(0);
+	glUniform1i(programTextureId, 1);
 
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");

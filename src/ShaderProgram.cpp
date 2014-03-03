@@ -39,7 +39,7 @@ int ShaderProgram::createShaderProgram(char * vSFile, char * fSFile){
 	_modelMatrixUniformId = glGetUniformLocation(id, "ModelMatrix");
 	_colorUniformId = glGetUniformLocation(id, "Color");
 	_sharedMatrixUboId = glGetUniformBlockIndex(id, "SharedMatrices");
-	_textureUniformId = glGetUniformLocation(id, "Texture");
+	_textureUniformId = glGetUniformLocation(id, "Texture1");
 
 	glUniformBlockBinding(id, glGetUniformBlockIndex(id, "SharedMatrices"), 0);
 

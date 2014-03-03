@@ -17,8 +17,8 @@ TextureManager* TextureManager::Inst()
 TextureManager::TextureManager(){
 	_texID = std::vector<GLuint>(2);
 	glGenTextures(2, &_texID[0]); 
-	loadTexture("../scripts/textures/fire.tga", FIRE);
 	loadTexture("../scripts/textures/stone.tga", STONE); 
+	loadTexture("../scripts/textures/fire.tga", FIRE);
 }
 
 void TextureManager::loadTexture(const char* dirName, int textID){

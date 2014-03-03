@@ -14,14 +14,14 @@ uniform sampler2D Texture;
 uniform vec3 MaterialAmbientColor;
 uniform vec3 MaterialDiffuseColor;
 uniform vec3 MaterialSpecularColor;
-uniform float materialShininess;
+uniform float MaterialShininess;
 
 void main(){
 
 	vec3 textureColor = texture( Texture, UV ).rgb;
 
 
-	//color =	textureColor + MaterialAmbientColor + MaterialDiffuseColor + MaterialSpecularColor * pow(1, materialShininess);
-	color =	textureColor + MaterialSpecularColor * pow(1, materialShininess);
+	//color =	textureColor + MaterialAmbientColor + MaterialDiffuseColor + MaterialSpecularColor * pow(1, MaterialShininess);
+	color =	textureColor + MaterialSpecularColor * pow(1, MaterialShininess);
 
 }

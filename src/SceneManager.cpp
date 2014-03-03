@@ -35,10 +35,10 @@ void SceneManager::initObjects(){
 	teapot->setTexture(TextureManager::STONE);
 	addEntity(teapot);
 
-	Entity* c = new Entity(CUBE, "Cube");
-	c->setObjEntity("../scripts/objects/cube.obj");
-	c->setTexture(TextureManager::FIRE);
-	addEntity(c);
+	Entity* cube = new Entity(CUBE, "Cube");
+	cube->setObjEntity("../scripts/objects/cube.obj");
+	cube->setTexture(TextureManager::FIRE);
+	addEntity(cube);
 }
 
 void SceneManager::createBufferObjects(){
@@ -50,9 +50,9 @@ void SceneManager::createBufferObjects(){
 
 	//create buffer for specific entity
 	if(f_Cube){
-		_objectList[0]->createBufferObjects(_vaoId, _vboId);
+		_objectList[TEAPOT]->createBufferObjects(_vaoId, _vboId);
 	}else{
-		_objectList[1]->createBufferObjects(_vaoId, _vboId);
+		_objectList[CUBE]->createBufferObjects(_vaoId, _vboId);
 	}
 	
 	//Reserve space for the Uniform Blocks
@@ -78,16 +78,15 @@ void SceneManager::draw(){
 
 		// draw solids
 		if(f_Cube){
-			_objectList[0]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
+			_objectList[TEAPOT]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
 				ShaderProgram::getInstance()->getColorUniformId(),
 				ShaderProgram::getInstance()->getTextureUniformId());
 
 		}else{
-			_objectList[1]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
+			_objectList[CUBE]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
 				ShaderProgram::getInstance()->getColorUniformId(),
 				ShaderProgram::getInstance()->getTextureUniformId());
 		}
-
 
 		// LightSource
 		// _lightSource->draw();
@@ -100,12 +99,15 @@ void SceneManager::update(){
 
 	// Solid type
 	if(Input::getInstance()->keyWasReleased('T')) {
-		if(f_Cube){
+		if(f_Cube) {
 			f_Cube = false;
-			_objectList[1]->createBufferObjects(_vaoId, _vboId);
-		}else{
+			_objectList[CUBE]->createBufferObjects(_vaoId, _vboId);
+			_currentObject = CUBE;
+		}
+		else {
 			f_Cube = true;
-			_objectList[0]->createBufferObjects(_vaoId, _vboId);
+			_objectList[TEAPOT]->createBufferObjects(_vaoId, _vboId);
+			_currentObject = TEAPOT;
 		}
 	}
 
@@ -116,19 +118,19 @@ void SceneManager::update(){
 	// Material
 	
 	if(Input::getInstance()->keyWasReleased('1')) {
-		_objectList[TEAPOT]->setMaterial("materials/ruby.mtl");
+		_objectList[_currentObject]->setMaterial("materials/ruby.mtl");
 	}
 	if(Input::getInstance()->keyWasReleased('2')) {
-	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "gold");
+		_objectList[_currentObject]->setMaterial("materials/gold.mtl");
 	}
 	if(Input::getInstance()->keyWasReleased('3')) {
-	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "silver");
+		_objectList[_currentObject]->setMaterial("materials/silver.mtl");
 	}
 	if(Input::getInstance()->keyWasReleased('4')) {
-	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "esmerald");
+		_objectList[_currentObject]->setMaterial("materials/esmerald.mtl");
 	}
 	if(Input::getInstance()->keyWasReleased('5')) {
-	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "cyan");
+		_objectList[_currentObject]->setMaterial("materials/cyan.mtl");
 	}
 
 	// Light distance
@@ -152,11 +154,8 @@ void SceneManager::update(){
 		 _lightSource->moveDown();
 	}*/
 
-	if(f_Cube){
-		_objectList[0]->update();
-	}else{
-		_objectList[1]->update();
-	}
+	if(f_Cube){ _objectList[TEAPOT]->update(); }
+	else{ _objectList[CUBE]->update(); }
 
 	// Camera 
 	Camera::getInstance()->update();

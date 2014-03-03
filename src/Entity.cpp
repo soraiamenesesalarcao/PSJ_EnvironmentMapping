@@ -87,7 +87,7 @@ void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
 	GLint specularId = ShaderProgram::getInstance()->getId("MaterialSpecularColor");
-	GLint shininessId = ShaderProgram::getInstance()->getId("materialShininess");
+	GLint shininessId = ShaderProgram::getInstance()->getId("MaterialShininess");
 
 	glUniform3fv(ambientId, 1, glm::value_ptr(_ambientMaterial));
 	glUniform3fv(diffuseId, 1, glm::value_ptr(_diffuseMaterial));

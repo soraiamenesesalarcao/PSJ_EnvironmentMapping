@@ -109,6 +109,12 @@
     <None Include="shaders\VertexShader3.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="shaders\fragmentShaderUniforms.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="shaders\vertexShaderUniforms.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config\lights.xml">

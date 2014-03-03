@@ -17,9 +17,10 @@ void SceneManager::addEntity(Entity* entity){
 void SceneManager::init(){
 
 	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/VertexShader3.glsl", "shaders/FragmentShader3.glsl");
+	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", "shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
 	f_Cube = true;
+	_currentObject = TEAPOT;
 	initObjects();
 	createBufferObjects();
 
@@ -113,21 +114,22 @@ void SceneManager::update(){
 	}
 
 	// Material
-	/*if(Input::getInstance()->keyWasReleased('1')) {
-		_entity->setMaterial("config/materials.xml", "ruby");
+	
+	if(Input::getInstance()->keyWasReleased('1')) {
+		_objectList[TEAPOT]->setMaterial("materials/ruby.mtl");
 	}
 	if(Input::getInstance()->keyWasReleased('2')) {
-		_entity->setMaterial("config/materials.xml", "gold");
+	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "gold");
 	}
 	if(Input::getInstance()->keyWasReleased('3')) {
-		_entity->setMaterial("config/materials.xml", "silver");
+	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "silver");
 	}
 	if(Input::getInstance()->keyWasReleased('4')) {
-		_entity->setMaterial("config/materials.xml", "esmerald");
+	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "esmerald");
 	}
 	if(Input::getInstance()->keyWasReleased('5')) {
-		_entity->setMaterial("config/materials.xml", "cyan");
-	}*/
+	//	_objectList[TEAPOT]->setMaterial("config/materials.xml", "cyan");
+	}
 
 	// Light distance
 	

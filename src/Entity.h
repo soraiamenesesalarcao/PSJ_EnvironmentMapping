@@ -2,7 +2,7 @@
 
 #include "Definitions.h"
 #include "Utils.h"
-//#include "ConfigLoader.h"
+#include "ConfigLoader.h"
 #include "TextureManager.h"
 #include "Input.h"
 #include <iostream>
@@ -65,7 +65,7 @@ class Entity {
 		void draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint programTextureId);
 		int getSolid();
 		void changeSolid();
-		//void setMaterial(char* file, std::string matID);  <<<----
+		void setMaterial(char* file); 
 		
 		void setObjEntity(std::string fileName);
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);

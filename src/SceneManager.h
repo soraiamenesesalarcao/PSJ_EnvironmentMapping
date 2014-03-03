@@ -21,6 +21,7 @@ class SceneManager {
 		GLuint* _vboId;
 		/*A list where all figures are stored*/
 		std::vector<Entity*> _objectList;
+		int _currentObject;
 	
 		/* The Uniform ID value */
 		GLint _uniformBlockId;

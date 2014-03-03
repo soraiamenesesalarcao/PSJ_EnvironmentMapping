@@ -74,11 +74,26 @@ std::string Entity::getObjFileDir(){
 
 
 void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint programTextureId){
+
+	// DEBUG
+	//std::cout << "Draw: Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
+
 	glBindVertexArray(vaoId[0]);
 	glUniformMatrix4fv(programId, 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniform4fv(programColorId, 1, _color);
 	if(TextureManager::Inst()->BindTexture(_textureID))
 		glUniform1i(programTextureId, 0);
+
+	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
+	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
+	GLint specularId = ShaderProgram::getInstance()->getId("MaterialSpecularColor");
+	GLint shininessId = ShaderProgram::getInstance()->getId("materialShininess");
+
+	glUniform3fv(ambientId, 1, glm::value_ptr(_ambientMaterial));
+	glUniform3fv(diffuseId, 1, glm::value_ptr(_diffuseMaterial));
+	glUniform3fv(specularId, 1, glm::value_ptr(_specularMaterial));
+	glUniform1f(shininessId, _shininess);
+
 	glDrawArrays(GL_TRIANGLES,0,_vertexArray.size());
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
@@ -149,12 +164,27 @@ void Entity::changeSolid(){
 }
 
 
-//void Entity::setMaterial(char* file, std::string matID){
-	//ConfigLoader::loadMaterial(file, matID, &_ambientMaterial, &_diffuseMaterial, &_specularMaterial, &_shininess);
+void Entity::setMaterial(char* file){
+	
+	_ambientMaterial.r = 0.5;
+	_ambientMaterial.g = 0.0;
+	_ambientMaterial.b = 0.0;
+	_diffuseMaterial.r = 0.5;
+	_diffuseMaterial.g = 0.0;
+	_diffuseMaterial.b = 0.0;
+	_specularMaterial.r = 0.5;
+	_specularMaterial.g = 0.0;
+	_specularMaterial.b = 0.0;
+	_shininess = 0.5;
+
+	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);
 
 	// DEBUG
-	//std::cout << "Ambient: [ " << _ambientMaterial.r << " " << _ambientMaterial.g << " " << _ambientMaterial.b << " ]" << std::endl;
-//}
+	std::cout << "Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
+	std::cout << "Shininess: " << _shininess << std::endl;
+	
+	
+}
 
 void Entity::loadMesh(const char* fileName){
         std::string line = std::string();

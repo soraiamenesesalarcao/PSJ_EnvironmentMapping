@@ -11,12 +11,12 @@
 //#include <map>
 
 #define VERTICES 0
-#define COLORS 1
-#define NORMALS 2
-#define UVS 3
+#define NORMALS 1
+#define UVS 2
+#define COLORS 3
 #define NSOLIDS 2
-#define CUBE 0
-#define TEAPOT 1
+#define TEAPOT 0
+#define CUBE 1
 #define LIGHT_OFFSET 1
 
 #define MAX(a,b) (((a)>(b))?(a):(b))

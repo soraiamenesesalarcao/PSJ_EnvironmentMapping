@@ -3,7 +3,7 @@
 #include "Definitions.h"
 #include "Input.h"
 #include "Entity.h"
-//#include "LightSource.h"
+#include "LightSource.h"
 #include "Camera.h"
 
 #include <vector>
@@ -13,7 +13,8 @@ class SceneManager {
 	bool f_Cube;
 
 	private:
-		//LightSource * _lightSource;
+		LightSource * _lightSource;
+		glm::vec3 _ambientGlobal;
 		SceneManager();
 		GLuint _shaderProgram;
 

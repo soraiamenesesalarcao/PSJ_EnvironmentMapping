@@ -4,7 +4,13 @@ LightSource::LightSource() {
 }
 
 void LightSource::setComponents(char* file, std::string lightID) {
-	ConfigLoader::loadLight(file, lightID, &_position, &_ambient, &_diffuse, &_specular, &_attenuation);
+	//ConfigLoader::loadLight(file, lightID, &_position, &_ambient, &_diffuse, &_specular, &_attenuation);
+
+	_position = glm::vec3(0.5, 0.5, 0.5);
+	_ambient = glm::vec3(0.0, 0.0, 1.0);
+	_diffuse = glm::vec3(0.5, 0.0, 0.0);
+	_specular = glm::vec3(0.5, 0.0, 0.0);
+	//_halfVector = glm::vec3(0.5, 0.0, 0.0);
 }
 
 void LightSource::incX(){
@@ -33,20 +39,23 @@ void LightSource::decZ(){
 
 
 void LightSource::draw(){
-	GLint positionId = ShaderProgram::getInstance()->getId("light_Position");
-	GLint ambientId = ShaderProgram::getInstance()->getId("light_Ambient");
-	GLint diffuseId = ShaderProgram::getInstance()->getId("light_Diffuse");
-	GLint specularId = ShaderProgram::getInstance()->getId("light_Specular");
-	GLint linearAttenuationId = ShaderProgram::getInstance()->getId("light_LinearAttenuation");
-	GLint quadraticAttenuationId = ShaderProgram::getInstance()->getId("light_QuadraticAttenuation");
-	GLint cubicAttenuationId = ShaderProgram::getInstance()->getId("light_CubicAttenuation");
+	GLint positionId = ShaderProgram::getInstance()->getId("LightPosition");
+	GLint ambientId = ShaderProgram::getInstance()->getId("LightAmbient");
+	GLint diffuseId = ShaderProgram::getInstance()->getId("LightDiffuse");
+	GLint specularId = ShaderProgram::getInstance()->getId("LightSpecular");
+	GLint linearAttenuationId = ShaderProgram::getInstance()->getId("LightLinearAttenuation");
+	GLint quadraticAttenuationId = ShaderProgram::getInstance()->getId("LightQuadraticAttenuation");
+	GLint cubicAttenuationId = ShaderProgram::getInstance()->getId("LightCubicAttenuation");
 
 	glUniform3fv(positionId, 1, glm::value_ptr(_position));
 	glUniform3fv(ambientId, 1, glm::value_ptr(_ambient));
 	glUniform3fv(diffuseId, 1, glm::value_ptr(_diffuse));
 	glUniform3fv(specularId, 1, glm::value_ptr(_specular));
 
-	glUniform1f(linearAttenuationId, _attenuation[0]);
+	/*glUniform1f(linearAttenuationId, _attenuation[0]);
 	glUniform1f(quadraticAttenuationId, _attenuation[1]);
-	glUniform1f(cubicAttenuationId,_attenuation[2]);
+	glUniform1f(cubicAttenuationId,_attenuation[2]);*/
+	glUniform1f(linearAttenuationId, 0);
+	glUniform1f(quadraticAttenuationId, 0.025);
+	glUniform1f(cubicAttenuationId, 0.002);
 }

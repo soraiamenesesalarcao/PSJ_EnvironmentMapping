@@ -182,7 +182,7 @@ void Entity::changeSolid(){
 
 void Entity::setMaterial(char* file){
 	
-	_ambientMaterial.r = 0.5;
+	/*_ambientMaterial.r = 0.5;
 	_ambientMaterial.g = 0.0;
 	_ambientMaterial.b = 0.0;
 	_diffuseMaterial.r = 0.5;
@@ -191,13 +191,13 @@ void Entity::setMaterial(char* file){
 	_specularMaterial.r = 0.5;
 	_specularMaterial.g = 0.0;
 	_specularMaterial.b = 0.0;
-	_shininess = 0.5;
+	_shininess = 0.5;*/
 
 	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);
 
 	// DEBUG
-	std::cout << "Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
-	std::cout << "Shininess: " << _shininess << std::endl;
+	//std::cout << "Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
+	//std::cout << "Shininess: " << _shininess << std::endl;
 	
 	
 }

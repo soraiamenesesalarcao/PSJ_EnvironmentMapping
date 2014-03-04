@@ -25,8 +25,9 @@ void SceneManager::init(){
 	createBufferObjects();
 
 	// LightSource
-	//_lightSource = new LightSource();
-	//_lightSource->setComponents("config/lights.xml", "main");
+	_lightSource = new LightSource();
+	_lightSource->setComponents("config/lights.xml", "main");
+	_ambientGlobal = glm::vec3(0.2, 0.2, 0.2);
 }
 
 void SceneManager::initObjects(){
@@ -89,7 +90,9 @@ void SceneManager::draw(){
 		}
 
 		// LightSource
-		// _lightSource->draw();
+		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
+		glUniform3fv(ambientGId, 1, glm::value_ptr(_ambientGlobal));
+		 _lightSource->draw();
 
 		ShaderProgram::getInstance()->unBind();
 	}

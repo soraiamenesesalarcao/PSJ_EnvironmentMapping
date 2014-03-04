@@ -81,9 +81,6 @@ std::string Entity::getObjFileDir(){
 
 void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programNormalId, GLuint programTextureId){
 
-	// DEBUG
-	//std::cout << "Draw: Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
-
 	glBindVertexArray(vaoId[0]);
 	glUniformMatrix4fv(programId, 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniformMatrix4fv(programNormalId, 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));

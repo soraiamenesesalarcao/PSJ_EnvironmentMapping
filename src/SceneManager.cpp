@@ -17,7 +17,7 @@ void SceneManager::addEntity(Entity* entity){
 void SceneManager::init(){
 
 	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
+	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", "shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
 	f_Cube = true;
 	_currentObject = TEAPOT;
@@ -79,12 +79,12 @@ void SceneManager::draw(){
 		// draw solids
 		if(f_Cube){
 			_objectList[TEAPOT]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
-				ShaderProgram::getInstance()->getColorUniformId(),
+				ShaderProgram::getInstance()->getNormalMatrixUniformId(),
 				ShaderProgram::getInstance()->getTextureUniformId());
 
 		}else{
 			_objectList[CUBE]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
-				ShaderProgram::getInstance()->getColorUniformId(),
+				ShaderProgram::getInstance()->getNormalMatrixUniformId(),
 				ShaderProgram::getInstance()->getTextureUniformId());
 		}
 

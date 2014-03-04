@@ -13,7 +13,6 @@
 #define VERTICES 0
 #define NORMALS 1
 #define UVS 2
-#define COLORS 3
 #define NSOLIDS 2
 #define TEAPOT 0
 #define CUBE 1

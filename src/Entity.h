@@ -5,6 +5,7 @@
 #include "ConfigLoader.h"
 #include "TextureManager.h"
 #include "Input.h"
+#include "Camera.h"
 #include <iostream>
 #include <Vector>
 #include <GL\glew.h>
@@ -55,14 +56,14 @@ class Entity {
 		//std::vector<Program*> _programsToUse;
 		std::vector<glm::vec3> _modifiedVertexArray;
 		glm::mat4 _currentModelMatrix;
-
+		glm::mat4 _currentNormalMatrix;
 		glm::quat _q;
 
 	public:
 
 		Entity(int solid, std::string name);
 		void update();
-		void draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint programTextureId);
+		void draw(GLuint* vaoId, GLuint programId, GLuint programNormalId, GLuint programTextureId);
 		int getSolid();
 		void changeSolid();
 		void setMaterial(char* file); 
@@ -83,6 +84,7 @@ class Entity {
 		void setTexture(const int id);
 
 		void calculateModelMatrix();
+		void calculateNormalMatrix();
 
 		void setColor(const float color[4]);
 		void setColor(const float r, const float g, const float b, const float a);

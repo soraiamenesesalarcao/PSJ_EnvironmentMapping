@@ -22,6 +22,7 @@ Entity::Entity(int solid, std::string name) : _textureID(-1){
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
 	_propertiesArray.push_back(initialProperty);
 	calculateModelMatrix();
+	calculateNormalMatrix();
 	_q = glm::angleAxis(x_angle, glm::vec3(1,0,0));
 }
 
@@ -30,6 +31,11 @@ void Entity::calculateModelMatrix(){
 	mat4 transformation2 = glm::toMat4(_propertiesArray[0].rotation);
 	mat4 transformation3 = glm::translate(_propertiesArray[0].position);
 	_currentModelMatrix = transformation3 * transformation2 * transformation1 * mat4();
+}
+
+void Entity::calculateNormalMatrix(){
+	//_currentNormalMatrix = glm::inverseTranspose(Camera::getInstance()->getView()*_currentModelMatrix);
+	_currentNormalMatrix = _currentModelMatrix;
 }
 
 void Entity::setVaoId(int value){
@@ -73,14 +79,14 @@ std::string Entity::getObjFileDir(){
 }
 
 
-void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programColorId, GLuint programTextureId){
+void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programNormalId, GLuint programTextureId){
 
 	// DEBUG
 	//std::cout << "Draw: Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
 
 	glBindVertexArray(vaoId[0]);
 	glUniformMatrix4fv(programId, 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
-	glUniform4fv(programColorId, 1, _color);
+	glUniformMatrix4fv(programNormalId, 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
 	glActiveTexture(GL_TEXTURE0);
 	TextureManager::Inst()->BindTexture(1);
@@ -128,6 +134,7 @@ void Entity::update(){
 		_q = glm::angleAxis(x_angle, glm::vec3(1,0,0)) * _propertiesArray[0].rotation;;
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
+		calculateNormalMatrix();
 		glutPostRedisplay();
 	}
 	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ //y
@@ -136,6 +143,7 @@ void Entity::update(){
 		_q = glm::angleAxis(y_angle, glm::vec3(0,1,0)) * _propertiesArray[0].rotation;
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
+		calculateNormalMatrix();
 		glutPostRedisplay();
 	}
 	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ //z
@@ -144,6 +152,7 @@ void Entity::update(){
 		_q = glm::angleAxis(z_angle, glm::vec3(0,0,1)) * _propertiesArray[0].rotation;
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
+		calculateNormalMatrix();
 		glutPostRedisplay();
 	}
 
@@ -154,6 +163,7 @@ void Entity::update(){
 		_q = glm::angleAxis(x_angle, glm::vec3(1,1,1));
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
+		calculateNormalMatrix();
 	}
 
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");

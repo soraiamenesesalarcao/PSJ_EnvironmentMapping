@@ -17,7 +17,7 @@ class ShaderProgram {
 		ShaderProgram();
 
 		GLuint _modelMatrixUniformId;
-		GLuint _colorUniformId;
+		GLuint _normalMatrixUniformId;
 		GLuint _sharedMatrixUboId;
 		GLuint _textureUniformId;
 
@@ -30,8 +30,8 @@ class ShaderProgram {
 		void bind(GLuint id);
 		void unBind();
 
-		GLuint getColorUniformId() const  { return _colorUniformId; }
 		GLuint getModelMatrixUniformId() const  { return _modelMatrixUniformId; }
+		GLuint getNormalMatrixUniformId() const  { return _normalMatrixUniformId; }
 		GLuint getSharedMatrixUboId() const { return _sharedMatrixUboId; }
 		GLuint getTextureUniformId() const  { return _textureUniformId; }
 

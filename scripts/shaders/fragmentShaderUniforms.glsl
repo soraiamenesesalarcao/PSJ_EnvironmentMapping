@@ -8,7 +8,9 @@ in vec3 Position_worldspace;
 out vec3 color;
 
 // Values that stay constant for the whole mesh.
-uniform sampler2D Texture;
+//uniform sampler2D Texture;
+uniform sampler2D Texture1;
+uniform sampler2D Texture2;
 
 // Material components
 uniform vec3 MaterialAmbientColor;
@@ -18,8 +20,8 @@ uniform float MaterialShininess;
 
 void main(){
 
-	vec3 textureColor = texture( Texture, UV ).rgb;
-
+	//vec3 textureColor = texture( Texture, UV ).rgb;
+	vec3 textureColor = texture( Texture1, UV ).rgb * texture( Texture2, UV ).rgb;
 
 	//color =	textureColor + MaterialAmbientColor + MaterialDiffuseColor + MaterialSpecularColor * pow(1, MaterialShininess);
 	color =	textureColor + MaterialSpecularColor * pow(1, MaterialShininess);

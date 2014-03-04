@@ -33,11 +33,13 @@ void SceneManager::init(){
 void SceneManager::initObjects(){
 	Entity* teapot = new Entity(TEAPOT, "Teapot");
 	teapot->setObjEntity("../scripts/objects/teapot.obj");
+	teapot->setMaterial("materials/ruby.mtl");
 	//teapot->setTexture(TextureManager::STONE);
 	addEntity(teapot);
 
 	Entity* cube = new Entity(CUBE, "Cube");
 	cube->setObjEntity("../scripts/objects/cube.obj");
+	cube->setMaterial("materials/ruby.mtl");
 	//cube->setTexture(TextureManager::FIRE);
 	addEntity(cube);
 }
@@ -113,11 +115,11 @@ void SceneManager::update(){
 			_currentObject = TEAPOT;
 		}
 	}
-
+	/*
 	if(Input::getInstance()->keyWasReleased('Q')){
 		exit(0);
 	}
-
+	*/
 	// Material	
 	if(Input::getInstance()->keyWasReleased('1')) {
 		_objectList[_currentObject]->setMaterial("materials/ruby.mtl");
@@ -137,24 +139,24 @@ void SceneManager::update(){
 
 	// Light distance
 	
-/*	if(Input::getInstance()->keyWasPressed('a')) {
-		 _lightSource->moveLeft();
+	if(Input::getInstance()->keyWasPressed('a')) {
+		 _lightSource->decX();
 	}
 	if(Input::getInstance()->keyWasPressed('d')) {
-		 _lightSource->moveRight();
-	}
-	if(Input::getInstance()->keyWasPressed('w')) {
-		 _lightSource->moveAhead();
+		 _lightSource->incX();
 	}
 	if(Input::getInstance()->keyWasPressed('s')) {
-		 _lightSource->moveBackwards();
+		 _lightSource->decY();
 	}
+	if(Input::getInstance()->keyWasPressed('w')) {
+		 _lightSource->incY();
+	}	
 	if(Input::getInstance()->keyWasPressed('q')) {
-		 _lightSource->moveUp();
+		 _lightSource->decZ();
 	}
 	if(Input::getInstance()->keyWasPressed('e')) {
-		 _lightSource->moveDown();
-	}*/
+		 _lightSource->incZ();
+	}
 
 	if(f_Cube){ _objectList[TEAPOT]->update(); }
 	else{ _objectList[CUBE]->update(); }

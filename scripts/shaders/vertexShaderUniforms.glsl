@@ -1,4 +1,4 @@
-#version 330 core
+#version 150
 
 // Input vertex data ///////////////////////////////////////////////////////////
 layout(location = 0) in vec4 in_Position;
@@ -47,9 +47,13 @@ out float ex_LightDistance;
 
 void main(){
 
+	vec4 pos = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
+
 	// Distance, Halfvector, Direction
 
-	vec3 surfaceToLight = LightPosition - in_Position.xyz;
+	//vec3 surfaceToLight = LightPosition - in_Position.xyz;
+
+	vec3 surfaceToLight = LightPosition - pos.xyz;
 
 	ex_LightDistance = length(surfaceToLight);
 
@@ -59,7 +63,7 @@ void main(){
 
 	ex_LightDirection = L;
 
-	ex_Normal  = NormalMatrix * in_Normal;
+	ex_Normal  = NormalMatrix *  in_Normal;
 
 	// Components
 	ex_AmbientGlobal = LightAmbientGlobal * MaterialAmbientColor;
@@ -68,7 +72,8 @@ void main(){
 	ex_Specular = MaterialSpecularColor * LightSpecular;	
 
 	// Output position of the vertex, in clip space : ProjectionMatrix * ViewMatrix * ModelMatrix * position
-	gl_Position =  ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;	
+	//gl_Position =  ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;	
+	gl_Position = pos;
 	// UV of the vertex. No special space for this one.
 	ex_UV = in_UV;
 }

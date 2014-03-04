@@ -1,4 +1,4 @@
-#version 330 core
+#version 150
 
 // Interpolated values /////////////////////////////////////////////////////////
 in vec2 ex_UV;
@@ -40,16 +40,21 @@ void main(){
 	vec3 textureColor = texture( Texture1, ex_UV ).rgb * texture( Texture2, ex_UV ).rgb;
 
 	// Light and material
-	vec3 N = normalize(ex_Normal);
-	float NdotL = max(dot(N, ex_LightDirection), 0.0);
-	if(NdotL > 0.0) {
-		attenuation = 1.0 / ( LightConstantAttenuation
+
+	attenuation = 1.0 / ( LightConstantAttenuation
 							+ LightLinearAttenuation * ex_LightDistance 
 							+ LightQuadraticAttenuation * pow(ex_LightDistance, 2.0) );
-		color += attenuation * (ex_Diffuse * NdotL + ex_Ambient);
-		float NdotH = max(dot(N, ex_HalfVector), 0.0);
-		color += attenuation * ex_Specular * pow(NdotH, MaterialShininess);
-	}	
 
-	color += textureColor; // not sure yet if + or *
+	vec3 N = normalize(ex_Normal);
+	float NdotH = max(dot(N, ex_HalfVector), 0.0);
+	float NdotL = max(dot(N, ex_LightDirection), 0.0);
+
+	if(NdotL > 0.0) {		
+		color += attenuation * (ex_Diffuse * NdotL + ex_Ambient);		
+	}	else {
+		color += attenuation * (ex_Diffuse + ex_Ambient);	
+	}
+
+	color += attenuation * ex_Specular * pow(NdotH, MaterialShininess);
+	//color += textureColor; // not sure yet if + or *
 }

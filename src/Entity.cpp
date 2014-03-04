@@ -94,6 +94,8 @@ void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programNormalId, GLuin
 	TextureManager::Inst()->BindTexture(0);
 	glUniform1i(programTextureId, 1);
 
+	std::cout << "Material ambient: [ " << _ambientMaterial.r << " " << _ambientMaterial.g << " " << _ambientMaterial.b << " ]" << std::endl;
+
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
 	GLint specularId = ShaderProgram::getInstance()->getId("MaterialSpecularColor");

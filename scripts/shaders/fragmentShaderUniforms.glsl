@@ -2,9 +2,11 @@
 
 // Interpolated values /////////////////////////////////////////////////////////
 in vec2 ex_UV;
-in vec3 ex_LightAmbientGlobal;
-in vec3 ex_LightAmbient;
-in vec3 ex_LightDiffuse;
+out vec4 ex_Normal;
+in vec3 ex_AmbientGlobal;
+in vec3 ex_Ambient;
+in vec3 ex_Diffuse;
+in vec3 ex_Specular;
 in vec3 ex_HalfVector;
 in vec3 ex_LightDirection;
 in float ex_LightDistance;
@@ -15,19 +17,14 @@ in float ex_LightDistance;
 uniform sampler2D Texture1;
 uniform sampler2D Texture2;
 
-// Light components
-uniform vec3 LightSpecular;
-
 // Material components
-uniform vec3 MaterialAmbientColor;
-uniform vec3 MaterialDiffuseColor;
-uniform vec3 MaterialSpecularColor;
 uniform float MaterialShininess;
 
 // Attenuation
+uniform float LightConstantAttenuation;
 uniform float LightLinearAttenuation;
 uniform float LightQuadraticAttenuation;
-uniform float LightCubicAttenuation;
+
 
 // Output data /////////////////////////////////////////////////////////////////
 out vec3 color;
@@ -36,10 +33,23 @@ out vec3 color;
 
 void main(){
 
-	//vec3 textureColor = texture( Texture, UV ).rgb;
+	float attenuation;
+	color = ex_AmbientGlobal;
+
+	// Multi-Texture
 	vec3 textureColor = texture( Texture1, ex_UV ).rgb * texture( Texture2, ex_UV ).rgb;
 
-	//color =	textureColor + MaterialAmbientColor + MaterialDiffuseColor + MaterialSpecularColor * pow(1, MaterialShininess);
-	//color =	textureColor + MaterialSpecularColor * pow(1, MaterialShininess);
-	color =	textureColor + ex_LightDiffuse + ex_LightAmbientGlobal;
+	// Light and material
+	vec3 N = normalize(ex_Normal);
+	float NdotL = max(dot(N, ex_LightDirection), 0.0);
+	if(NdotL > 0.0) {
+		attenuation = 1.0 / ( LightConstantAttenuation
+							+ LightLinearAttenuation * ex_LightDistance 
+							+ LightQuadraticAttenuation * pow(ex_LightDistance, 2.0) );
+		color += attenuation * (ex_Diffuse * NdotL + ex_Ambient);
+		float NdotH = max(dot(N, ex_HalfVector), 0.0);
+		color += attenuation * ex_Specular * pow(NdotH, MaterialShininess);
+	}	
+
+	color += textureColor; // not sure yet if + or *
 }

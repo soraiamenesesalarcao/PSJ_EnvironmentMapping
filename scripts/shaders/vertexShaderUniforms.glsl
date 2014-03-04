@@ -8,6 +8,7 @@ layout(location = 2) in vec2 in_UV;
 
 // Uniforms ////////////////////////////////////////////////////////////////////
 
+uniform vec3 EyePosition;
 uniform mat4 ModelMatrix;
 uniform mat4 NormalMatrix;
 layout(std140) uniform SharedMatrices
@@ -21,20 +22,23 @@ uniform vec3 LightPosition;
 uniform vec3 LightAmbientGlobal;
 uniform vec3 LightAmbient;
 uniform vec3 LightDiffuse;
+uniform vec3 LightSpecular;
 uniform vec3 HalfVector;
 
 // Material components
 uniform vec3 MaterialAmbientColor;
 uniform vec3 MaterialDiffuseColor;
+uniform vec3 MaterialSpecularColor;
 
 // Output data /////////////////////////////////////////////////////////////////
 out vec2 ex_UV;
 out vec4 ex_Normal;
 
 // Light components
-out vec3 ex_LightAmbientGlobal;
-out vec3 ex_LightAmbient;
-out vec3 ex_LightDiffuse;
+out vec3 ex_AmbientGlobal;
+out vec3 ex_Ambient;
+out vec3 ex_Diffuse;
+out vec3 ex_Specular;
 out vec3 ex_HalfVector;
 out vec3 ex_LightDirection;
 out float ex_LightDistance;
@@ -43,11 +47,25 @@ out float ex_LightDistance;
 
 void main(){
 
+	// Distance, Halfvector, Direction
+
+	vec3 surfaceToLight = LightPosition - in_Position.xyz;
+
+	ex_LightDistance = length(surfaceToLight);
+
+	vec3 L = normalize(surfaceToLight);
+	vec3 V = normalize(-EyePosition);
+	ex_HalfVector = normalize(L + V);
+
+	ex_LightDirection = L;
+
 	ex_Normal  = NormalMatrix * in_Normal;
 
-	ex_LightAmbientGlobal = LightAmbientGlobal;
-	ex_LightAmbient = MaterialAmbientColor * LightAmbient;
-	ex_LightDiffuse = MaterialDiffuseColor * LightDiffuse;	
+	// Components
+	ex_AmbientGlobal = LightAmbientGlobal * MaterialAmbientColor;
+	ex_Ambient = MaterialAmbientColor * LightAmbient;
+	ex_Diffuse = MaterialDiffuseColor * LightDiffuse;
+	ex_Specular = MaterialSpecularColor * LightSpecular;	
 
 	// Output position of the vertex, in clip space : ProjectionMatrix * ViewMatrix * ModelMatrix * position
 	gl_Position =  ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;	

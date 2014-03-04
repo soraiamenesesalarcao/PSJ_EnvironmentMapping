@@ -37,19 +37,18 @@ void LightSource::draw(){
 	GLint ambientId = ShaderProgram::getInstance()->getId("LightAmbient");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("LightDiffuse");
 	GLint specularId = ShaderProgram::getInstance()->getId("LightSpecular");
+	GLint constantAttenuationId = ShaderProgram::getInstance()->getId("LightConstantAttenuation");
 	GLint linearAttenuationId = ShaderProgram::getInstance()->getId("LightLinearAttenuation");
-	GLint quadraticAttenuationId = ShaderProgram::getInstance()->getId("LightQuadraticAttenuation");
-	GLint cubicAttenuationId = ShaderProgram::getInstance()->getId("LightCubicAttenuation");
-
-	std::cout << "Light: Attenuation: [ " << _attenuation[0] << " " << _attenuation[1] << " " << _attenuation[2] << " ]" << std::endl;
+	GLint quadraticAttenuationId = ShaderProgram::getInstance()->getId("LightQuadraticAttenuation");	
 
 	glUniform3fv(positionId, 1, glm::value_ptr(_position));
 	glUniform3fv(ambientId, 1, glm::value_ptr(_ambient));
 	glUniform3fv(diffuseId, 1, glm::value_ptr(_diffuse));
 	glUniform3fv(specularId, 1, glm::value_ptr(_specular));
 
-	glUniform1f(linearAttenuationId, _attenuation[0]);
-	glUniform1f(quadraticAttenuationId, _attenuation[1]);
-	glUniform1f(cubicAttenuationId,_attenuation[2]);
+	glUniform1f(constantAttenuationId,_attenuation[0]);
+	glUniform1f(linearAttenuationId, _attenuation[1]);
+	glUniform1f(quadraticAttenuationId, _attenuation[2]);
+	
 
 }

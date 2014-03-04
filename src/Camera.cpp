@@ -48,7 +48,7 @@ void Camera::put(){
 
 	_view = _view*glm::mat4_cast(_q);
 
-	GLint id = ShaderProgram::getInstance()->getId("EyeDirection");
+	GLint id = ShaderProgram::getInstance()->getId("EyePosition");
 	glm::vec4 e = glm::mat4_cast(_q) * glm::normalize(glm::vec4(_center-eye, 1.0));
 	e.x *= -1;
 	e.z *= -1;

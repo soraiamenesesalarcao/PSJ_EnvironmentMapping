@@ -118,8 +118,7 @@ void SceneManager::update(){
 		exit(0);
 	}
 
-	// Material
-	
+	// Material	
 	if(Input::getInstance()->keyWasReleased('1')) {
 		_objectList[_currentObject]->setMaterial("materials/ruby.mtl");
 	}

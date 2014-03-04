@@ -34,6 +34,7 @@ void Entity::calculateModelMatrix(){
 }
 
 void Entity::calculateNormalMatrix(){
+	// TO DO: figure this out
 	//_currentNormalMatrix = glm::inverseTranspose(Camera::getInstance()->getView()*_currentModelMatrix);
 	_currentNormalMatrix = _currentModelMatrix;
 }
@@ -178,25 +179,7 @@ void Entity::changeSolid(){
 
 
 void Entity::setMaterial(char* file){
-	
-	/*_ambientMaterial.r = 0.5;
-	_ambientMaterial.g = 0.0;
-	_ambientMaterial.b = 0.0;
-	_diffuseMaterial.r = 0.5;
-	_diffuseMaterial.g = 0.0;
-	_diffuseMaterial.b = 0.0;
-	_specularMaterial.r = 0.5;
-	_specularMaterial.g = 0.0;
-	_specularMaterial.b = 0.0;
-	_shininess = 0.5;*/
-
-	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);
-
-	// DEBUG
-	//std::cout << "Specular: [ " << _specularMaterial.r << " " << _specularMaterial.g << " " << _specularMaterial.b << " ]" << std::endl;
-	//std::cout << "Shininess: " << _shininess << std::endl;
-	
-	
+	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);	
 }
 
 void Entity::loadMesh(const char* fileName){

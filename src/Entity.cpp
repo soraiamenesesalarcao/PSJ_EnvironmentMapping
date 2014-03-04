@@ -129,7 +129,7 @@ void Entity::update(){
 	if(Input::getInstance()->mouseWasPressed(GLUT_LEFT_BUTTON)){ //x 
 		x_angle += 0.05;
 		if( x_angle > 360.0 ) x_angle -= 360.0;
-		_q = glm::angleAxis(x_angle, glm::vec3(1,0,0)) * _propertiesArray[0].rotation;;
+		_q = glm::angleAxis(x_angle / ROTATION_SPEED, glm::vec3(1,0,0)) * _propertiesArray[0].rotation;;
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
 		calculateNormalMatrix();
@@ -138,7 +138,7 @@ void Entity::update(){
 	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ //y
 		y_angle += 0.05;
 		if( y_angle > 360.0 ) y_angle -= 360.0;
-		_q = glm::angleAxis(y_angle, glm::vec3(0,1,0)) * _propertiesArray[0].rotation;
+		_q = glm::angleAxis(y_angle / ROTATION_SPEED, glm::vec3(0,1,0)) * _propertiesArray[0].rotation;
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
 		calculateNormalMatrix();
@@ -147,7 +147,7 @@ void Entity::update(){
 	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ //z
 		z_angle += 0.05;
 		if( z_angle > 360.0 ) z_angle -= 360.0;
-		_q = glm::angleAxis(z_angle, glm::vec3(0,0,1)) * _propertiesArray[0].rotation;
+		_q = glm::angleAxis(z_angle / ROTATION_SPEED, glm::vec3(0,0,1)) * _propertiesArray[0].rotation;
 		_propertiesArray[0].rotation = _q;
 		calculateModelMatrix();
 		calculateNormalMatrix();

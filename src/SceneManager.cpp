@@ -85,7 +85,7 @@ void SceneManager::draw(){
 		}else{
 			_currentObject = CUBE;			
 		}
-		_objectList[_currentObject]->draw();
+		_objectList[_currentObject]->draw(_vaoId);
 
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");

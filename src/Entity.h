@@ -44,7 +44,7 @@ class Entity {
 
 		Entity(int solid, std::string name);
 		void update();
-		void draw();
+		void draw(GLuint* vaoId);
 		int getSolid();
 		void changeSolid();
 		void setObjEntity(std::string fileName);

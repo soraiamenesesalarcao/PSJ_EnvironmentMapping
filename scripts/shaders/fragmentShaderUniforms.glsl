@@ -1,8 +1,8 @@
-#version 150
+#version 330 core
 
 // Interpolated values /////////////////////////////////////////////////////////
 in vec2 ex_UV;
-out vec4 ex_Normal;
+in vec4 ex_Normal;
 in vec3 ex_AmbientGlobal;
 in vec3 ex_Ambient;
 in vec3 ex_Diffuse;
@@ -45,7 +45,7 @@ void main(){
 							+ LightLinearAttenuation * ex_LightDistance 
 							+ LightQuadraticAttenuation * pow(ex_LightDistance, 2.0) );
 
-	vec3 N = normalize(ex_Normal);
+	vec3 N = normalize(ex_Normal).xyz;
 	float NdotH = max(dot(N, ex_HalfVector), 0.0);
 	float NdotL = max(dot(N, ex_LightDirection), 0.0);
 

@@ -1,4 +1,4 @@
-#version 150
+#version 330 core
 
 // Input vertex data ///////////////////////////////////////////////////////////
 layout(location = 0) in vec4 in_Position;

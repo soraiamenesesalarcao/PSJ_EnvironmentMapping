@@ -22,6 +22,9 @@
     <Filter Include="Resource Files\config">
       <UniqueIdentifier>{6a0f4bc8-e877-44df-886c-3165e2897b2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\materials">
+      <UniqueIdentifier>{156f3a1b-2810-49a9-a99c-9f4a32f07bd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Entity.h">
@@ -115,12 +118,24 @@
     <None Include="shaders\vertexShaderUniforms.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="materials\cyan.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="materials\esmerald.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="materials\gold.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="materials\ruby.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
+    <None Include="materials\silver.mtl">
+      <Filter>Resource Files\materials</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config\lights.xml">
-      <Filter>Resource Files\config</Filter>
-    </Xml>
-    <Xml Include="config\materials.xml">
       <Filter>Resource Files\config</Filter>
     </Xml>
     <Xml Include="config\scene.xml">

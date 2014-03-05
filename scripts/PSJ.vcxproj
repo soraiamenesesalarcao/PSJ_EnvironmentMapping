@@ -105,6 +105,11 @@
     <ClCompile Include="..\src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="materials\cyan.mtl" />
+    <None Include="materials\esmerald.mtl" />
+    <None Include="materials\gold.mtl" />
+    <None Include="materials\ruby.mtl" />
+    <None Include="materials\silver.mtl" />
     <None Include="shaders\fragmentShader.glsl" />
     <None Include="shaders\FragmentShader3.glsl" />
     <None Include="shaders\fragmentShaderUniforms.glsl" />
@@ -116,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config\lights.xml" />
-    <Xml Include="config\materials.xml" />
     <Xml Include="config\scene.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

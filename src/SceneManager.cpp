@@ -1,5 +1,4 @@
 #include "SceneManager.h"
-#include "TextureManager.h"
 
 
 SceneManager::SceneManager(){}
@@ -80,16 +79,13 @@ void SceneManager::draw(){
 		Camera::getInstance()->put(); 
 
 		// draw solids
+		// this if is going down xD
 		if(f_Cube){
-			_objectList[TEAPOT]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
-				ShaderProgram::getInstance()->getNormalMatrixUniformId(),
-				ShaderProgram::getInstance()->getTextureUniformId());
-
+			_currentObject = TEAPOT;
 		}else{
-			_objectList[CUBE]->draw(_vaoId, ShaderProgram::getInstance()->getModelMatrixUniformId(),
-				ShaderProgram::getInstance()->getNormalMatrixUniformId(),
-				ShaderProgram::getInstance()->getTextureUniformId());
+			_currentObject = CUBE;			
 		}
+		_objectList[_currentObject]->draw();
 
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
@@ -103,6 +99,7 @@ void SceneManager::draw(){
 void SceneManager::update(){
 
 	// Solid type
+	// use changeSolid
 	if(Input::getInstance()->keyWasReleased('T')) {
 		if(f_Cube) {
 			f_Cube = false;

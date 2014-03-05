@@ -1,5 +1,5 @@
 #include "TextureManager.h"
-#include "SOIL.h"
+
 
 const GLuint TextureManager::FIRE = 0;
 const GLuint TextureManager::STONE = 1;

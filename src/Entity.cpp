@@ -1,16 +1,9 @@
 #include "Entity.h"
-#include "Utils.h"
 
-#include <gtc/matrix_transform.hpp>
-#include <gtx/transform.hpp>
-#include <gtc/type_ptr.hpp>
-#include <gtx/intersect.hpp>
 
-using namespace glm;
-
-const vec3 Entity::DEFAULT_POSITION = vec3(0,0,0);
-const quat Entity::DEFAULT_ROTATION = quat();
-const vec3 Entity::DEFAULT_SCALE = vec3(0.1,0.1,0.1);
+const glm::vec3 Entity::DEFAULT_POSITION = glm::vec3(0,0,0);
+const glm::quat Entity::DEFAULT_ROTATION = glm::quat();
+const glm::vec3 Entity::DEFAULT_SCALE = glm::vec3(0.1,0.1,0.1);
 
 float x_angle = 0.0;
 float y_angle = 0.0;
@@ -27,24 +20,16 @@ Entity::Entity(int solid, std::string name) : _textureID(-1){
 }
 
 void Entity::calculateModelMatrix(){
-	mat4 transformation1 = glm::scale(_propertiesArray[0].scale);
-	mat4 transformation2 = glm::toMat4(_propertiesArray[0].rotation);
-	mat4 transformation3 = glm::translate(_propertiesArray[0].position);
-	_currentModelMatrix = transformation3 * transformation2 * transformation1 * mat4();
+	glm::mat4 transformation1 = glm::scale(_propertiesArray[0].scale);
+	glm::mat4 transformation2 = glm::toMat4(_propertiesArray[0].rotation);
+	glm::mat4 transformation3 = glm::translate(_propertiesArray[0].position);
+	_currentModelMatrix = transformation3 * transformation2 * transformation1 * glm::mat4();
 }
 
 void Entity::calculateNormalMatrix(){
 	// TO DO: figure this out
 	//_currentNormalMatrix = glm::inverseTranspose(Camera::getInstance()->getView()*_currentModelMatrix);
 	_currentNormalMatrix = _currentModelMatrix;
-}
-
-void Entity::setVaoId(int value){
-	_vaoId = value;
-}
-
-void Entity::setVboId(int value){
-	_vboId = value;
 }
 
 
@@ -72,7 +57,7 @@ void Entity::setObjEntity(std::string fileName){
 	_objFileDir = fileName;
 	setColor(1.0f, 0.0f, 0.0f, 1.0f);
 	//_textureID = textureID;
-	loadMesh(fileName.c_str());
+	ConfigLoader::loadMesh(fileName.c_str(), &_vertexArray);
 }
 
 std::string Entity::getObjFileDir(){
@@ -80,21 +65,19 @@ std::string Entity::getObjFileDir(){
 }
 
 
-void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programNormalId, GLuint programTextureId){
+void Entity::draw(){
 
-	glBindVertexArray(vaoId[0]);
-	glUniformMatrix4fv(programId, 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
-	glUniformMatrix4fv(programNormalId, 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
+	glBindVertexArray(_vaoId[0]);
+	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
+	glUniformMatrix4fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
 	glActiveTexture(GL_TEXTURE0);
 	TextureManager::Inst()->BindTexture(1);
-	glUniform1i(programTextureId, 0);
+	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 0);
 	
 	glActiveTexture(GL_TEXTURE1);
 	TextureManager::Inst()->BindTexture(0);
-	glUniform1i(programTextureId, 1);
-
-	std::cout << "Material ambient: [ " << _ambientMaterial.r << " " << _ambientMaterial.g << " " << _ambientMaterial.b << " ]" << std::endl;
+	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 1);
 
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
@@ -111,6 +94,8 @@ void Entity::draw(GLuint* vaoId, GLuint programId, GLuint programNormalId, GLuin
 }
 
 void Entity::createBufferObjects(GLuint* vaoId, GLuint* vboId){
+	_vaoId = vaoId;
+	_vboId = vboId;
 	glBindVertexArray(vaoId[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_vertexArray.size(), &_vertexArray[0], GL_STATIC_DRAW);
@@ -184,78 +169,6 @@ void Entity::setMaterial(char* file){
 	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);	
 }
 
-void Entity::loadMesh(const char* fileName){
-        std::string line = std::string();
-        std::ifstream file(fileName);
-
-		//Temporary arrays to store loaded information
-        std::vector<glm::vec4> vertices, normals;
-		std::vector<glm::vec2> uvs;
-        
-        if (file.is_open()) {
-                while (getline(file, line)) {
-					std::vector<std::string> splitedLine = explode(line, ' ');
-					if(splitedLine.size() > 0){
-						if(splitedLine[0] == "#"){
-							continue; //Comment in obj, skip this line
-						}
-						else if(splitedLine[0] == "v"){ //Ex line => v 1.00000 0.45555 1.10000
-							float x = atof(splitedLine[1].c_str());
-							float y = atof(splitedLine[2].c_str());
-							float z = atof(splitedLine[3].c_str());
-							vertices.push_back(glm::vec4(x,y,z,1.0f));
-						}
-						else if(splitedLine[0] == "vt"){ //Ex line => vt 1.00000 0.45555
-							float x = atof(splitedLine[1].c_str());
-							float y = atof(splitedLine[2].c_str());
-							uvs.push_back(glm::vec2(x,y));
-						}
-						else if(splitedLine[0] == "vn"){ //Ex line => vn 1.00000 0.45555 0.65555
-							float x = atof(splitedLine[1].c_str());
-							float y = atof(splitedLine[2].c_str());
-							float z = atof(splitedLine[3].c_str());
-							normals.push_back(glm::vec4(x,y,z,1.0f));
-						}
-						else if(splitedLine[0] == "f"){ 
-							Vertex vertex1, vertex2, vertex3;
-							std::vector<std::string> face1 = explode(splitedLine[1], '/');
-							std::vector<std::string> face2 = explode(splitedLine[2], '/');
-							std::vector<std::string> face3 = explode(splitedLine[3], '/');
-							//Copy vertex information from temporary vertices array to vertices
-							memcpy(vertex1.XYZW, &vertices[atoi(face1[0].c_str())-1][0], sizeof(vertex1.XYZW));
-							memcpy(vertex2.XYZW, &vertices[atoi(face2[0].c_str())-1][0], sizeof(vertex2.XYZW));
-							memcpy(vertex3.XYZW, &vertices[atoi(face3[0].c_str())-1][0], sizeof(vertex3.XYZW));
-							if((face1.size() > 1) && face1[1].size() > 0){
-								//UV information
-								memcpy(vertex1.UV, &uvs[atoi(face1[1].c_str())-1][0], sizeof(vertex1.UV));
-								memcpy(vertex2.UV, &uvs[atoi(face2[1].c_str())-1][0], sizeof(vertex2.UV));
-								memcpy(vertex3.UV, &uvs[atoi(face3[1].c_str())-1][0], sizeof(vertex3.UV));
-							}
-							if((face1.size() > 2) && face1[2].size() > 0){
-								//Normal information
-								memcpy(vertex1.NORMAL, &normals[atoi(face1[2].c_str())-1][0], sizeof(vertex1.NORMAL));
-								memcpy(vertex2.NORMAL, &normals[atoi(face2[2].c_str())-1][0], sizeof(vertex2.NORMAL));
-								memcpy(vertex3.NORMAL, &normals[atoi(face3[2].c_str())-1][0], sizeof(vertex3.NORMAL));
-							}
-							_vertexArray.push_back(vertex1);
-							_vertexArray.push_back(vertex2);
-							_vertexArray.push_back(vertex3);
-						}
-					}
-                }
-        }
-        else{
-			std::cerr << "Cannot open " << fileName << std::endl; exit(1);
-		}
-}
 
 
-std::vector<std::string> Entity::explode(const std::string &s, char delim){
-	int i = 0;
-	std::vector<std::string> result;
-    std::istringstream iss(s);
-    for (std::string token; std::getline(iss, token, delim);)
-		result.push_back(token);
-	return result;
-}
 

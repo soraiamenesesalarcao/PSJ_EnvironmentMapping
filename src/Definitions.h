@@ -2,13 +2,22 @@
 
 #include "GL/glew.h"
 #include "GL/freeglut.h"
+
 #include <glm.hpp>
+#include <gtc/type_ptr.hpp>
+#include <gtx/intersect.hpp>
+#include <gtx/quaternion.hpp>
 #include <gtc/quaternion.hpp>
+#include <gtx/transform.hpp>
 #include <gtx/transform2.hpp>
+#include <gtc/matrix_transform.hpp>
 #include <ext.hpp>
 
+#include "SOIL.h"
+
 #include <iostream>
-//#include <map>
+#include <vector>
+
 
 #define VERTICES 0
 #define NORMALS 1
@@ -24,6 +33,20 @@
 #define SWAP(T, a, b) {T temp = a; a = b; b = temp;}
 
 typedef struct {
+	float XYZW[4];
+	float NORMAL[4];
+	float UV[2];
+} Vertex;
+
+typedef struct {
+	glm::vec3 position;
+	glm::quat rotation;
+	glm::vec3 scale;
+} Properties;
+
+/*
+typedef struct {
 	GLfloat XYZW[4];
 	GLfloat RGBA[4];
 } Vertex;
+*/

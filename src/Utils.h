@@ -16,4 +16,5 @@ namespace Utils {
 	bool isOpenGLError();
 	void checkOpenGLError(std::string error);	
 	char * readFile(char * file);
+	std::vector<std::string> explode(const std::string &s, char delim);
 }

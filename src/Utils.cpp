@@ -1,7 +1,6 @@
 #include "Utils.h"
 
 
-
 namespace Utils {
 
 	bool isOpenGLError() {
@@ -60,5 +59,15 @@ namespace Utils {
 		buffer[size-1] = '\0';
 	
 		return buffer;
+	}
+
+
+	std::vector<std::string> explode(const std::string &s, char delim){
+		int i = 0;
+		std::vector<std::string> result;
+		std::istringstream iss(s);
+		for (std::string token; std::getline(iss, token, delim);)
+			result.push_back(token);
+		return result;
 	}
 }

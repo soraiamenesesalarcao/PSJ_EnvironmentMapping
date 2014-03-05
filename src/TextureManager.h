@@ -1,10 +1,7 @@
-#ifndef TextureManager_H
-#define TextureManager_H
+#pragma once
 
-#include <GL/glew.h>
-#include <GL/freeglut.h>
-#include <vector>
-#include <iostream>
+#include "Definitions.h"
+
 
 class TextureManager
 {
@@ -43,5 +40,3 @@ protected:
 	std::vector<GLuint> _texID;
 	void loadTexture(const char* dirName, int textID);
 };
-
-#endif

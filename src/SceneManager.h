@@ -5,8 +5,8 @@
 #include "Entity.h"
 #include "LightSource.h"
 #include "Camera.h"
+#include "TextureManager.h"
 
-#include <vector>
 
 class SceneManager {
 

@@ -36,9 +36,6 @@
     <ClInclude Include="..\src\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\TGA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Definitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>

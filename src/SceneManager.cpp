@@ -8,12 +8,11 @@ SceneManager * SceneManager::getInstance(){
 	return &instance;
 }
 
-
-
 void SceneManager::init(){
 
 	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", "shaders/fragmentShaderUniforms.glsl");
+	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram( "shaders/vertexShaderUniforms.glsl", 
+																		"shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
 	_currentObject = TEAPOT;
 	initObjects();
@@ -24,7 +23,6 @@ void SceneManager::init(){
 	_lightSource->setComponents("config/lights.xml", "main");
 	_ambientGlobal = glm::vec3(0.2, 0.2, 0.2);
 }
-
 
 void SceneManager::draw(){
 	if(!_objectList.empty()){
@@ -45,7 +43,6 @@ void SceneManager::draw(){
 	}
 }
 
-
 void SceneManager::update(){
 
 	// Solid type
@@ -54,11 +51,9 @@ void SceneManager::update(){
 		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
 	}
 
-	/*
-	if(Input::getInstance()->keyWasReleased('Q')){
+	if(Input::getInstance()->keyWasReleased('m')){
 		exit(0);
 	}
-	*/
 
 	// Material	
 	if(Input::getInstance()->keyWasReleased('1')) {
@@ -101,10 +96,10 @@ void SceneManager::update(){
 	if(Input::getInstance()->mouseWasPressed(GLUT_LEFT_BUTTON)){ // x
 		_objectList[_currentObject]->rotate(glm::vec3(1.0, 0.0, 0.0));
 	}
-	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ // x
+	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ // y
 		_objectList[_currentObject]->rotate(glm::vec3(0.0, 1.0, 0.0));
 	}
-	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ // x
+	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ // z
 		_objectList[_currentObject]->rotate(glm::vec3(0.0, 0.0, 1.0));
 	}
 
@@ -128,7 +123,6 @@ void SceneManager::destroyBufferObjects(){
 
 	Camera::getInstance()->~Camera();
 }
-
 
 void SceneManager::createBufferObjects(){
 	_vaoId = new GLuint[1];
@@ -154,7 +148,6 @@ void SceneManager::createBufferObjects(){
 	glDisableVertexAttribArray(2); //UVs
 }
 
-
 void SceneManager::initObjects(){
 	Entity* teapot = new Entity("Teapot");
 	teapot->setMesh("objects/teapot.obj");
@@ -168,7 +161,6 @@ void SceneManager::initObjects(){
 	//cube->setTexture(TextureManager::FIRE);
 	addEntity(cube);
 }
-
 
 void SceneManager::addEntity(Entity* entity){
 	_objectList.push_back(entity);

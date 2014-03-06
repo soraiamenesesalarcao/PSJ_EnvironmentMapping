@@ -10,7 +10,6 @@
 
 class Entity {
 		
-
 	private:
 		glm::vec3 _ambientMaterial;
 		glm::vec3 _diffuseMaterial;
@@ -49,5 +48,4 @@ class Entity {
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 		void calculateModelMatrix();
 		void calculateNormalMatrix();	
-
 };

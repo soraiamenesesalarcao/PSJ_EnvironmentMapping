@@ -6,7 +6,6 @@ const glm::quat Entity::DEFAULT_ROTATION = glm::quat();
 const glm::vec3 Entity::DEFAULT_SCALE = glm::vec3(0.1,0.1,0.1);
 
 
-
 Entity::Entity(std::string name) : _textureID(-1){
 	float x_angle = 0.0;
 	_name = name;
@@ -14,7 +13,7 @@ Entity::Entity(std::string name) : _textureID(-1){
 	_propertiesArray.push_back(initialProperty);
 	calculateModelMatrix();
 	calculateNormalMatrix();
-	_q = glm::angleAxis(x_angle, glm::vec3(1,0,0));
+	_q = glm::angleAxis(x_angle, glm::vec3(1.0, 0.0, 0.0));
 }
 
 void Entity::calculateModelMatrix(){
@@ -30,7 +29,6 @@ void Entity::calculateNormalMatrix(){
 	_currentNormalMatrix = _currentModelMatrix;
 }
 
-
 std::string Entity::getName() const{
 	return _name;
 }
@@ -39,13 +37,10 @@ void Entity::setTexture(const int id){
 	_textureID = id;
 }
 
-
-
 /* read the .obj file*/
 void Entity::setMesh(char * file){
 	ConfigLoader::loadMesh(file, &_vertexArray);
 }
-
 
 void Entity::draw(){
 	glBindVertexArray(_vaoId[0]);
@@ -59,6 +54,10 @@ void Entity::draw(){
 	glActiveTexture(GL_TEXTURE1);
 	TextureManager::Inst()->BindTexture(0);
 	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 1);
+
+	/*glActiveTexture(GL_TEXTURE2);
+	TextureManager::Inst()->BindTexture(2);
+	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 2);*/
 
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
@@ -101,8 +100,6 @@ void Entity::rotate(glm::vec3 axis) {
 	calculateNormalMatrix();
 	glutPostRedisplay();
 }
-
-
 
 void Entity::setMaterial(char* file){
 	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);	

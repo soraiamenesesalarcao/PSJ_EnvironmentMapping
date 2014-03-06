@@ -4,6 +4,7 @@
 #include "Definitions.h"
 #include "Input.h"
 
+
 class Camera {
 
 	private:

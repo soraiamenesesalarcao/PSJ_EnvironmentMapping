@@ -8,7 +8,6 @@ ShaderProgram * ShaderProgram::getInstance(){
 	return &instance;
 }
 
-
 int ShaderProgram::compileShader(char * shaderFile, int shaderType){
 	const char* shader = Utils::readFile(shaderFile);
 	int shaderId = glCreateShader(shaderType);
@@ -16,7 +15,6 @@ int ShaderProgram::compileShader(char * shaderFile, int shaderType){
 	glCompileShader(shaderId);
 	return shaderId;
 }
-
 
 int ShaderProgram::createShaderProgram(char * vSFile, char * fSFile){
 	GLuint vertexShaderId = compileShader(vSFile, GL_VERTEX_SHADER);
@@ -48,7 +46,6 @@ int ShaderProgram::createShaderProgram(char * vSFile, char * fSFile){
 	return id;
 }
 
-
 void ShaderProgram::destroyShaderProgram(){
 	for(std::vector<glm::vec3>::iterator iterator = _programId.begin(); iterator < _programId.end(); iterator++){
 		glUseProgram(iterator->x);
@@ -58,25 +55,18 @@ void ShaderProgram::destroyShaderProgram(){
 		glDeleteShader( iterator->z);
 		glDeleteProgram(iterator->x);
 	}
-
 	Utils::checkOpenGLError("ERROR: Could not destroy shaders.");
 }
 
-
 const GLuint ShaderProgram::getUId(std::string key) {
-	if(key.compare("Program") == 0)
-		return _activeProgram.x;
-	if(key.compare("VertexShader") == 0)
-		return _activeProgram.y;
-	if(key.compare("FragmentShader") == 0)
-		return _activeProgram.z;
+	if(key.compare("Program") == 0) return _activeProgram.x;
+	if(key.compare("VertexShader") == 0) return _activeProgram.y;
+	if(key.compare("FragmentShader") == 0) return _activeProgram.z;
 }
-
 
 const GLint ShaderProgram::getId(std::string key) {
 	return glGetUniformLocation(_activeProgram.x, key.c_str());
 }
-
 
 void ShaderProgram::bind(GLuint id){
 	glm::vec3 program;
@@ -87,7 +77,6 @@ void ShaderProgram::bind(GLuint id){
 	_activeProgram = program;
 	glUseProgram(_activeProgram.x);
 }
-
 
 void ShaderProgram::unBind(){
 	_activeProgram = glm::vec3();

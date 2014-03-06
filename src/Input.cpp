@@ -23,18 +23,15 @@ Input::Input(){
     }
 }
 
-
 Input * Input::getInstance(){
 	static Input instance;
 	return &instance;
 }
 
-
 void Input::keyPressed(unsigned char key){
 	if (key > 96 && key < 123) key -= 32;
 	_keyPressedStates[key] = true;
 }
-
 
 void Input::keyUp(unsigned char key){
 	if (key > 96 && key < 123) key -= 32;
@@ -42,17 +39,14 @@ void Input::keyUp(unsigned char key){
 	_keyReleasedStates[key] = true;
 }
 
-
 void Input::specialPressed(int key){
 	_specialPressedStates[key] = true;
 }
-
 
 void Input::specialUp(int key){
 	_specialPressedStates[key] = false;
 	_specialReleasedStates[key] = true;
 }
-
 
 void Input::reset(){
     for (int i = 0; i < SIZE; i++) {
@@ -65,36 +59,29 @@ void Input::reset(){
 	_wheelDirection = 0;
 }
 
-
 bool Input::keyWasPressed(unsigned char key){
 	return _keyPressedStates[key];
 }
-
 
 bool Input::keyWasReleased(unsigned char key){
 	return _keyReleasedStates[key];
 }
 
-
 bool Input::specialWasPressed(int key){
 	return _specialPressedStates[key];
 }
-
 
 bool Input::specialWasReleased(int key){
 	return _specialReleasedStates[key];
 }
 
-
 bool Input::mouseWasPressed(int key){
 	return _mousePressedStates[key];
 }
 
-
 bool Input::mouseWasReleased(int key){
 	return _mouseReleasedStates[key];
 }
-
 
 void Input::mouse(int button, int state) {
 	if(state == GLUT_DOWN){
@@ -106,7 +93,6 @@ void Input::mouse(int button, int state) {
 	}
 }
 
-
 void Input::mouseClickMotion(int x, int y) {
 	_mouseMotion.x = x - _lastMousePositionX;
 	_mouseMotion.y = y - _lastMousePositionY;
@@ -115,17 +101,14 @@ void Input::mouseClickMotion(int x, int y) {
 	
 }
 
-
 void Input::mousePassiveMotion(int x, int y){
 	_lastMousePositionX = x;
 	_lastMousePositionY = y;
 }
 
-
 void Input::mouseWheel(int direction){
 	_wheelDirection = -direction;
 }
-
 
 glm::vec2 Input::getMousePostion(){
 	glm::vec2 pos;
@@ -134,11 +117,9 @@ glm::vec2 Input::getMousePostion(){
 	return pos;
 }
 
-
 glm::vec2 Input::getMouseMotion(){
 	return _mouseMotion;
 }
-
 
 int Input::getWheelDirection(){
 	return _wheelDirection;

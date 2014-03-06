@@ -34,5 +34,4 @@ class ShaderProgram {
 		GLuint getNormalMatrixUniformId() const  { return _normalMatrixUniformId; }
 		GLuint getSharedMatrixUboId() const { return _sharedMatrixUboId; }
 		GLuint getTextureUniformId() const  { return _textureUniformId; }
-
 };

@@ -16,6 +16,7 @@ in float ex_LightDistance;
 // Textures
 uniform sampler2D Texture1;
 uniform sampler2D Texture2;
+uniform samplerCube Texture3;
 
 // Material components
 uniform float MaterialShininess;

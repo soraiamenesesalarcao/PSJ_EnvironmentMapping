@@ -65,7 +65,7 @@ namespace ConfigLoader {
         else{
 			std::cerr << "Cannot open " << fileName << std::endl; exit(1);
 		}
-}
+	}
 
 	void loadMaterial(char* file, glm::vec3 &ambient, glm::vec3 &diffuse, glm::vec3 &specular, float &shininess){
 		std::ifstream in(file, std::ios::in);

@@ -16,7 +16,6 @@ namespace Utils {
 		return isError;
 	}
 	
-
 	void checkOpenGLError(std::string error) {
 		int maxLength;
 		char result[128];
@@ -25,21 +24,17 @@ namespace Utils {
 			std::cerr << error << std::endl;
 
 			glGetShaderInfoLog(ShaderProgram::getInstance()->getUId("VertexShader"), sizeof(result), &maxLength, result);
-			if(maxLength > 11)
-				std::cerr << "Error Vertex Shader: " << result;
+			if(maxLength > 11) std::cerr << "Error Vertex Shader: " << result;
 
 			glGetShaderInfoLog(ShaderProgram::getInstance()->getUId("FragmentShader"), sizeof(result), &maxLength, result);
-			if(maxLength > 11)
-				std::cerr << "Error Fragment Shader: " << result;
+			if(maxLength > 11) std::cerr << "Error Fragment Shader: " << result;
 
 			glGetProgramInfoLog(ShaderProgram::getInstance()->getUId("Program"), sizeof(result), &maxLength, result);
-			if(maxLength > 11)
-				std::cerr << "Error Program: " << result << std::endl;
+			if(maxLength > 11) std::cerr << "Error Program: " << result << std::endl;
 
 			exit(EXIT_FAILURE);
 		}
 	}
-
 	
 	GLchar* readFile(char* path){
 		std::string line, result;
@@ -60,7 +55,6 @@ namespace Utils {
 	
 		return buffer;
 	}
-
 
 	std::vector<std::string> explode(const std::string &s, char delim){
 		int i = 0;

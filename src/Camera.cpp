@@ -7,7 +7,7 @@ Camera::Camera(){
 	_eye = glm::vec3(0.0, -1.0, 0.0);
 	_center = glm::vec3(0.0, 0.0, 0.0);
 	_up = glm::vec3(0.0, 0.0, 1.0);
-	_q = glm::angleAxis(90.0f, glm::vec3(1,0,0));
+	_q = glm::angleAxis(90.0f, glm::vec3(1.0, 0.0, 0.0));
 	 
 	glGenBuffers(1, &_vboUBId);
 	glBindBuffer(GL_UNIFORM_BUFFER, _vboUBId);
@@ -43,8 +43,7 @@ void Camera::put(){
 									-1.5/racio * _distance/4, 1.5/racio * _distance/4, 
 									 1.0 *_distance/4, 10.0 * _distance/4);
 	}
-	else
-		projection = glm::perspective(38.0f, racio, 1.0f, 15.0f);
+	else projection = glm::perspective(38.0f, racio, 1.0f, 15.0f);
 
 	_view = _view*glm::mat4_cast(_q);
 
@@ -60,34 +59,26 @@ void Camera::put(){
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-
 void Camera::rotate(float angleX, float angleZ){
 	_q = glm::angleAxis(angleX, glm::vec3(1,0,0)) * glm::angleAxis(angleZ, glm::vec3(0,0,1)) * _q;
 }
 
-
 glm::mat4 Camera::getView(){
 	return _view;
 }
-
 
 void Camera::update(){
 
 	glm::quat q;
 
 	// Alternate between orthographic and perspective
-	if(Input::getInstance()->keyWasReleased('P'))
-		_type = !_type;
+	if(Input::getInstance()->keyWasReleased('P')) _type = !_type;
 
 	// Progressive rotation
-	if(Input::getInstance()->specialWasPressed(GLUT_KEY_UP))
-		rotate(-0.05, 0);
-	if(Input::getInstance()->specialWasPressed(GLUT_KEY_DOWN))
-		rotate(0.05, 0);
-	if(Input::getInstance()->specialWasPressed(GLUT_KEY_LEFT))
-		rotate(0, -0.05);
-	if(Input::getInstance()->specialWasPressed(GLUT_KEY_RIGHT))
-		rotate(0, 0.05);
+	if(Input::getInstance()->specialWasPressed(GLUT_KEY_UP)) rotate(-0.05, 0);
+	if(Input::getInstance()->specialWasPressed(GLUT_KEY_DOWN)) rotate(0.05, 0);
+	if(Input::getInstance()->specialWasPressed(GLUT_KEY_LEFT)) rotate(0, -0.05);
+	if(Input::getInstance()->specialWasPressed(GLUT_KEY_RIGHT)) rotate(0, 0.05);
 
 	// Views
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F1))		// top

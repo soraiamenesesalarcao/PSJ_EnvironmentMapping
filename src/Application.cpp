@@ -1,24 +1,20 @@
 #include "SceneManager.h"
 
-#define TITLE "Lab 0"
+#define TITLE "Lab 1"
 
 /* ************************************************************************** */
 /* ********************************* GLOBALS ******************************** */
 /* ************************************************************************** */
-
 int WinX = 640, WinY = 480;
 int WindowHandle = 0;
 unsigned int FrameCount = 0;
 
-
 /* ************************************************************************** */
 /* ******************************* CALLBACKS ******************************** */
 /* ************************************************************************** */
-
 void cleanup() {
 	SceneManager::getInstance()->destroyBufferObjects();
 }
-
 
 void display() {
 	++FrameCount;
@@ -31,11 +27,9 @@ void display() {
 	glutSwapBuffers();
 }
 
-
 void idle() {
 	glutPostRedisplay();
 }
-
 
 void reshape(int w, int h) {
 	WinX = w;
@@ -44,49 +38,38 @@ void reshape(int w, int h) {
 	glViewport(0, 0, WinX, WinY);
 }
 
-
 void keyPressed(unsigned char key, int x, int y){
 	Input::getInstance()->keyPressed(key);
 }
-
 
 void keyUp(unsigned char key, int x, int y){
 	Input::getInstance()->keyUp(key);
 }
 
-
 void specialPressed(int key, int x, int y){
 	Input::getInstance()->specialPressed(key);
 }
-
 
 void specialUp(int key, int x, int y) {
 	Input::getInstance()->specialUp(key);
 
 }
 
-
 void mouse(int button, int state, int x, int y)  {
 	Input::getInstance()->mouse(button, state);
 }
-
 
 void mouseClickMotion(int x, int y) {
 	Input::getInstance()->mouseClickMotion(x, y);
 }
 
-
 void mousePassiveMotion(int x, int y) {
 	Input::getInstance()->mousePassiveMotion(x, y);
 }
 
-
 void mouseWheel(int wheel, int direction, int x, int y) {
 	Input::getInstance()->mouseWheel(direction);
 }
-
-
-
 
 void timer(int value) {
 	std::string s = TITLE;
@@ -96,11 +79,9 @@ void timer(int value) {
     glutTimerFunc(1000, timer, 0);
 }
 
-
 /* ************************************************************************** */
 /* *********************************** SETUP ******************************** */
 /* ************************************************************************** */
-
 void setupCallbacks()  {
 	glutCloseFunc(cleanup);
 	glutDisplayFunc(display);
@@ -120,7 +101,6 @@ void setupCallbacks()  {
 	glutTimerFunc(0,timer,0);
 }
 
-
 void setupOpenGL() {
 	std::cerr << "CONTEXT: OpenGL v" << glGetString(GL_VERSION) << std::endl;
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
@@ -135,7 +115,6 @@ void setupOpenGL() {
 	glFrontFace(GL_CCW);
 }
 
-
 void setupGLEW() {
 	glewExperimental = GL_TRUE;
 	GLenum result = glewInit() ; 
@@ -145,7 +124,6 @@ void setupGLEW() {
 	} 
 	GLenum err_code = glGetError();
 }
-
 
 void setupGLUT(int argc, char* argv[]) {
 	glutInit(&argc, argv);
@@ -165,7 +143,6 @@ void setupGLUT(int argc, char* argv[]) {
 	}
 }
 
-
 void init(int argc, char* argv[]) {
 	setupGLUT(argc, argv);
 	setupGLEW();
@@ -174,11 +151,9 @@ void init(int argc, char* argv[]) {
 	setupCallbacks();
 }
 
-
 /* ************************************************************************** */
 /* ************************************ MAIN ******************************** */
 /* ************************************************************************** */
-
 int main(int argc, char* argv[]) {	
 	init(argc, argv);
 	glutMainLoop();	

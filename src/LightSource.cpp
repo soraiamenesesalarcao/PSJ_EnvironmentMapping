@@ -45,10 +45,7 @@ void LightSource::draw(){
 	glUniform3fv(ambientId, 1, glm::value_ptr(_ambient));
 	glUniform3fv(diffuseId, 1, glm::value_ptr(_diffuse));
 	glUniform3fv(specularId, 1, glm::value_ptr(_specular));
-
 	glUniform1f(constantAttenuationId,_attenuation[0]);
 	glUniform1f(linearAttenuationId, _attenuation[1]);
 	glUniform1f(quadraticAttenuationId, _attenuation[2]);
-	
-
 }

@@ -89,7 +89,6 @@
     <ClInclude Include="..\src\SceneManager.h" />
     <ClInclude Include="..\src\ShaderProgram.h" />
     <ClInclude Include="..\src\TextureManager.h" />
-    <ClInclude Include="..\src\TGA.h" />
     <ClInclude Include="..\src\Utils.h" />
   </ItemGroup>
   <ItemGroup>

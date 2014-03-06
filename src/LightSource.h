@@ -13,7 +13,6 @@ class LightSource {
 		glm::vec3 _specular;
 		glm::vec3 _attenuation;
 
-
 	public:
 		LightSource();		
 		void setComponents(char* file, std::string lightID);

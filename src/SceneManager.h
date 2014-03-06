@@ -26,7 +26,6 @@ class SceneManager {
 		GLint _uniformBlockId;
 		GLuint UBO_BP;
 		
-
 	public:
 		static SceneManager * getInstance();
 		void init();

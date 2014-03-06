@@ -17,6 +17,7 @@ TextureManager::TextureManager(){
 	glGenTextures(3, &_texID[0]);
 	loadTexture("textures/stone.tga", STONE); 
 	loadTexture("textures/fire.tga", FIRE);
+
 	/*loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
 					"textures/negz.jpg", "textures/posx.jpg",
 					"textures/posy.jpg", "textures/posz.jpg",
@@ -42,8 +43,8 @@ void TextureManager::loadTextureCube(const char* dirNameNX, const char* dirNameN
 	GLuint image = SOIL_load_OGL_cubemap(dirNamePX, dirNameNX, dirNamePY, 
 										 dirNameNY, dirNamePZ, dirNameNZ,
 										 SOIL_LOAD_RGB, 
-										 SOIL_CREATE_NEW_ID, 0);
-
+										 SOIL_CREATE_NEW_ID, 
+										 0);
 
 	//glBindTexture(GL_TEXTURE_CUBE_MAP, _texID[textID]);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, image);
@@ -53,10 +54,6 @@ void TextureManager::loadTextureCube(const char* dirNameNX, const char* dirNameN
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
-
-//these should never be called
-//TextureManager::TextureManager(const TextureManager& tm){}
-//TextureManager& TextureManager::operator=(const TextureManager& tm){}
 	
 TextureManager::~TextureManager(){
 	UnloadAllTextures();
@@ -76,23 +73,20 @@ bool TextureManager::UnloadTexture(const unsigned int texID){
 		_texID.erase(_texID.begin()+texID);
 	}
 	//otherwise, unload failed
-	else
-	{
+	else {
 		result = false;
 	}
 
 	return result;
 }
 
-bool TextureManager::BindTexture(const unsigned int texID)
-{
+bool TextureManager::BindTexture(const unsigned int texID) {
 	bool result(true);
 	//if this texture ID mapped, bind it's texture as current
 	if(texID < _texID.size())
 		glBindTexture(GL_TEXTURE_2D, _texID[texID]);
 	//otherwise, binding failed
-	else
-		result = false;
+	else result = false;
 
 	return result;
 }

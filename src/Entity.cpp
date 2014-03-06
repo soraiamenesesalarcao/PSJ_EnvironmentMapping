@@ -53,9 +53,8 @@ std::string Entity::getObjFileDir(){
 }
 
 
-void Entity::draw(GLuint* vaoId){
-
-	glBindVertexArray(vaoId[0]);
+void Entity::draw(){
+	glBindVertexArray(_vaoId[0]);
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	

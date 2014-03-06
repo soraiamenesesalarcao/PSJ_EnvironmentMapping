@@ -75,7 +75,7 @@ void SceneManager::draw(){
 		Camera::getInstance()->put(); 
 
 		// Draw solid
-		_objectList[_currentObject]->draw(_vaoId);
+		_objectList[_currentObject]->draw();
 
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");

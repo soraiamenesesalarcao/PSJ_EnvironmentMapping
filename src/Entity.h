@@ -40,7 +40,7 @@ class Entity {
 		std::string _objFileDir;
 
 		Entity(int solid, std::string name);		
-		void draw(GLuint* vaoId);
+		void draw();
 		void setObjEntity(std::string fileName);
 		void setMaterial(char* file); 
 		void setTexture(const int id);

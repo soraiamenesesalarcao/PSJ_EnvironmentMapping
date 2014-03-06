@@ -3,22 +3,24 @@
 
 const GLuint TextureManager::FIRE = 0;
 const GLuint TextureManager::STONE = 1;
-
+const GLuint TextureManager::ENV_CUBE = 2;
+ 
 TextureManager* TextureManager::_inst(0);
 
-TextureManager* TextureManager::Inst()
-{
-	if(!_inst)
-		_inst = new TextureManager();
-
+TextureManager* TextureManager::Inst() {
+	if(!_inst) _inst = new TextureManager();
 	return _inst;
 }
 
 TextureManager::TextureManager(){
-	_texID = std::vector<GLuint>(2);
-	glGenTextures(2, &_texID[0]); 
-	loadTexture("../scripts/textures/stone.tga", STONE); 
-	loadTexture("../scripts/textures/fire.tga", FIRE);
+	_texID = std::vector<GLuint>(3);
+	glGenTextures(3, &_texID[0]);
+	loadTexture("textures/negx.jpg", STONE); 
+	loadTexture("textures/fire.tga", FIRE);
+	loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
+					"textures/negz.jpg", "textures/posx.jpg",
+					"textures/posy.jpg", "textures/posz.jpg",
+					ENV_CUBE);
 }
 
 void TextureManager::loadTexture(const char* dirName, int textID){
@@ -32,6 +34,25 @@ void TextureManager::loadTexture(const char* dirName, int textID){
 	SOIL_free_image_data(image);
 }
 
+void TextureManager::loadTextureCube(const char* dirNameNX, const char* dirNameNY, 
+									 const char* dirNameNZ, const char* dirNamePX, 
+									 const char* dirNamePY, const char* dirNamePZ,
+									 int textID){
+
+	GLuint image = SOIL_load_OGL_cubemap(dirNamePX, dirNameNX, dirNamePY, 
+										 dirNameNY, dirNamePZ, dirNameNZ,
+										 SOIL_LOAD_RGB, 
+										 SOIL_CREATE_NEW_ID, 0);
+
+
+	//glBindTexture(GL_TEXTURE_CUBE_MAP, _texID[textID]);
+	//glBindTexture(GL_TEXTURE_CUBE_MAP, image);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+}
 
 //these should never be called
 //TextureManager::TextureManager(const TextureManager& tm){}

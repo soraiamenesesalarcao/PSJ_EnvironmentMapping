@@ -123,6 +123,14 @@
     <Xml Include="config\lights.xml" />
     <Xml Include="config\scene.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\negx.jpg" />
+    <Image Include="textures\negy.jpg" />
+    <Image Include="textures\negz.jpg" />
+    <Image Include="textures\posx.jpg" />
+    <Image Include="textures\posy.jpg" />
+    <Image Include="textures\posz.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

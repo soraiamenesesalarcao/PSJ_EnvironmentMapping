@@ -15,12 +15,12 @@ TextureManager* TextureManager::Inst() {
 TextureManager::TextureManager(){
 	_texID = std::vector<GLuint>(3);
 	glGenTextures(3, &_texID[0]);
-	loadTexture("textures/negx.jpg", STONE); 
+	loadTexture("textures/stone.tga", STONE); 
 	loadTexture("textures/fire.tga", FIRE);
-	loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
+	/*loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
 					"textures/negz.jpg", "textures/posx.jpg",
 					"textures/posy.jpg", "textures/posz.jpg",
-					ENV_CUBE);
+					ENV_CUBE);*/
 }
 
 void TextureManager::loadTexture(const char* dirName, int textID){
@@ -46,12 +46,12 @@ void TextureManager::loadTextureCube(const char* dirNameNX, const char* dirNameN
 
 
 	//glBindTexture(GL_TEXTURE_CUBE_MAP, _texID[textID]);
-	//glBindTexture(GL_TEXTURE_CUBE_MAP, image);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, image);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
 //these should never be called

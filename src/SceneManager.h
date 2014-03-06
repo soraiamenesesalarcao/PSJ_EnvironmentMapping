@@ -10,8 +10,6 @@
 
 class SceneManager {
 
-	bool f_Cube;
-
 	private:
 		LightSource * _lightSource;
 		glm::vec3 _ambientGlobal;

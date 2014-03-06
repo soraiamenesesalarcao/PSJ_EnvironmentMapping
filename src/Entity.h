@@ -12,7 +12,6 @@ class Entity {
 		
 
 	private:
-		int _solid;
 		glm::vec3 _ambientMaterial;
 		glm::vec3 _diffuseMaterial;
 		glm::vec3 _specularMaterial;
@@ -45,26 +44,19 @@ class Entity {
 		Entity(int solid, std::string name);
 		void update();
 		void draw(GLuint* vaoId);
-		int getSolid();
-		void changeSolid();
 		void setObjEntity(std::string fileName);
 		void setMaterial(char* file); 
 		void setTexture(const int id);
 		void setColor(const float color[4]);
 		void setColor(const float r, const float g, const float b, const float a);
 		void rotate(float angle);
-		
-		
+				
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 				
-
 		std::string getName() const;
-		std::string getObjFileDir();
-		
+		std::string getObjFileDir();		
 
 		void calculateModelMatrix();
-		void calculateNormalMatrix();
-
-		
+		void calculateNormalMatrix();	
 
 };

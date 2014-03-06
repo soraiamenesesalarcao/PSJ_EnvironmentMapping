@@ -11,7 +11,6 @@ float z_angle = 0.0;
 
 Entity::Entity(int solid, std::string name) : _textureID(-1){
 	_name = name;
-	_solid = solid;
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
 	_propertiesArray.push_back(initialProperty);
 	calculateModelMatrix();
@@ -155,20 +154,6 @@ void Entity::update(){
 }
 
 
-int Entity::getSolid(){
-	return _solid;
-}
-
-
-void Entity::changeSolid(){
-	_solid = (_solid + 1) % NSOLIDS;
-}
-
-
 void Entity::setMaterial(char* file){
 	ConfigLoader::loadMaterial(file,  _ambientMaterial, _diffuseMaterial, _specularMaterial, _shininess);	
 }
-
-
-
-

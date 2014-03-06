@@ -18,7 +18,7 @@ void SceneManager::init(){
 	// Shader
 	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", "shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
-	f_Cube = true;
+	//f_Cube = true;
 	_currentObject = TEAPOT;
 	initObjects();
 	createBufferObjects();
@@ -51,11 +51,7 @@ void SceneManager::createBufferObjects(){
 	glGenBuffers(2, _vboId);		//Buffer Array
 
 	//create buffer for specific entity
-	if(f_Cube){
-		_objectList[TEAPOT]->createBufferObjects(_vaoId, _vboId);
-	}else{
-		_objectList[CUBE]->createBufferObjects(_vaoId, _vboId);
-	}
+	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
 	
 	//Reserve space for the Uniform Blocks
 	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
@@ -78,13 +74,7 @@ void SceneManager::draw(){
 		// Camera
 		Camera::getInstance()->put(); 
 
-		// draw solids
-		// this if is going down xD
-		if(f_Cube){
-			_currentObject = TEAPOT;
-		}else{
-			_currentObject = CUBE;			
-		}
+		// Draw solid
 		_objectList[_currentObject]->draw(_vaoId);
 
 		// LightSource
@@ -99,24 +89,17 @@ void SceneManager::draw(){
 void SceneManager::update(){
 
 	// Solid type
-	// use changeSolid
 	if(Input::getInstance()->keyWasReleased('T')) {
-		if(f_Cube) {
-			f_Cube = false;
-			_objectList[CUBE]->createBufferObjects(_vaoId, _vboId);
-			_currentObject = CUBE;
-		}
-		else {
-			f_Cube = true;
-			_objectList[TEAPOT]->createBufferObjects(_vaoId, _vboId);
-			_currentObject = TEAPOT;
-		}
+		_currentObject = (_currentObject + 1) % NSOLIDS;
+		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
 	}
+
 	/*
 	if(Input::getInstance()->keyWasReleased('Q')){
 		exit(0);
 	}
 	*/
+
 	// Material	
 	if(Input::getInstance()->keyWasReleased('1')) {
 		_objectList[_currentObject]->setMaterial("materials/ruby.mtl");
@@ -134,8 +117,7 @@ void SceneManager::update(){
 		_objectList[_currentObject]->setMaterial("materials/cyan.mtl");
 	}
 
-	// Light distance
-	
+	// Light distance	
 	if(Input::getInstance()->keyWasPressed('a')) {
 		 _lightSource->decX();
 	}
@@ -155,8 +137,8 @@ void SceneManager::update(){
 		 _lightSource->incZ();
 	}
 
-	if(f_Cube){ _objectList[TEAPOT]->update(); }
-	else{ _objectList[CUBE]->update(); }
+	// Solid update (rotations)
+	_objectList[_currentObject]->update();
 
 	// Camera 
 	Camera::getInstance()->update();

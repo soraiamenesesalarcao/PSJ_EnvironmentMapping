@@ -37,13 +37,14 @@ void main(){
 	color = ex_AmbientGlobal;
 
 	// Multi-Texture
-	vec3 textureColor = texture( Texture1, ex_UV ).rgb * texture( Texture2, ex_UV ).rgb;
+	vec3 textureColor = texture( Texture1, ex_UV ).rgb * 
+						texture( Texture2, ex_UV ).rgb;
 
 	// Light and material
 
 	attenuation = 1.0 / ( LightConstantAttenuation
-							+ LightLinearAttenuation * ex_LightDistance 
-							+ LightQuadraticAttenuation * pow(ex_LightDistance, 2.0) );
+						+ LightLinearAttenuation * ex_LightDistance 
+						+ LightQuadraticAttenuation * pow(ex_LightDistance, 2.0) );
 
 	vec3 N = normalize(ex_Normal).xyz;
 	float NdotH = max(dot(N, ex_HalfVector), 0.0);
@@ -56,5 +57,5 @@ void main(){
 	}
 
 	color += attenuation * ex_Specular * pow(NdotH, MaterialShininess);
-	color *= textureColor; // not sure yet if + or *
+	color *= textureColor;
 }

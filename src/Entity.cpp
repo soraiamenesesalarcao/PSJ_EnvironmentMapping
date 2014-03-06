@@ -5,11 +5,10 @@ const glm::vec3 Entity::DEFAULT_POSITION = glm::vec3(0,0,0);
 const glm::quat Entity::DEFAULT_ROTATION = glm::quat();
 const glm::vec3 Entity::DEFAULT_SCALE = glm::vec3(0.1,0.1,0.1);
 
-float x_angle = 0.0;
-float y_angle = 0.0;
-float z_angle = 0.0;
+
 
 Entity::Entity(int solid, std::string name) : _textureID(-1){
+	float x_angle = 0.0;
 	_name = name;
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
 	_propertiesArray.push_back(initialProperty);
@@ -40,21 +39,11 @@ void Entity::setTexture(const int id){
 	_textureID = id;
 }
 
-void Entity::setColor(const float color[4]){
-	memcpy(_color, color, sizeof(float)*4);
-}
 
-void Entity::setColor(const float r, const float g, const float b, const float a){
-	_color[0] = r;
-	_color[1] = g;
-	_color[2] = b;
-	_color[3] = a;
-}
 
 /* read the .obj file*/
 void Entity::setObjEntity(std::string fileName){
 	_objFileDir = fileName;
-	setColor(1.0f, 0.0f, 0.0f, 1.0f);
 	//_textureID = textureID;
 	ConfigLoader::loadMesh(fileName.c_str(), &_vertexArray);
 }
@@ -109,49 +98,17 @@ void Entity::createBufferObjects(GLuint* vaoId, GLuint* vboId){
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(_vertexArray[0].NORMAL)*2));
 }
 
-void Entity::update(){	
+void Entity::rotate(glm::vec3 axis) {
 	glm::quat q;
-
-	if(Input::getInstance()->mouseWasPressed(GLUT_LEFT_BUTTON)){ //x 
-		x_angle += 0.05;
-		if( x_angle > 360.0 ) x_angle -= 360.0;
-		_q = glm::angleAxis(x_angle / ROTATION_SPEED, glm::vec3(1,0,0)) * _propertiesArray[0].rotation;;
-		_propertiesArray[0].rotation = _q;
-		calculateModelMatrix();
-		calculateNormalMatrix();
-		glutPostRedisplay();
-	}
-	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ //y
-		y_angle += 0.05;
-		if( y_angle > 360.0 ) y_angle -= 360.0;
-		_q = glm::angleAxis(y_angle / ROTATION_SPEED, glm::vec3(0,1,0)) * _propertiesArray[0].rotation;
-		_propertiesArray[0].rotation = _q;
-		calculateModelMatrix();
-		calculateNormalMatrix();
-		glutPostRedisplay();
-	}
-	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ //z
-		z_angle += 0.05;
-		if( z_angle > 360.0 ) z_angle -= 360.0;
-		_q = glm::angleAxis(z_angle / ROTATION_SPEED, glm::vec3(0,0,1)) * _propertiesArray[0].rotation;
-		_propertiesArray[0].rotation = _q;
-		calculateModelMatrix();
-		calculateNormalMatrix();
-		glutPostRedisplay();
-	}
-
-	if(Input::getInstance()->keyWasReleased('R')){
-		x_angle = 0.0; 
-		y_angle = 0.0;
-		z_angle = 0.0;
-		_q = glm::angleAxis(x_angle, glm::vec3(1,1,1));
-		_propertiesArray[0].rotation = _q;
-		calculateModelMatrix();
-		calculateNormalMatrix();
-	}
-
-	Utils::checkOpenGLError("ERROR: Could not draw scene.");
+	float angle = ANGLE_OFFSET;
+	if(angle > 360.0) angle -= 360.0;
+	_q = glm::angleAxis(angle / ROTATION_DELAY, axis) * _propertiesArray[0].rotation;;
+	_propertiesArray[0].rotation = _q;
+	calculateModelMatrix();
+	calculateNormalMatrix();
+	glutPostRedisplay();
 }
+
 
 
 void Entity::setMaterial(char* file){

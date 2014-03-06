@@ -17,8 +17,6 @@ class Entity {
 		glm::vec3 _specularMaterial;
 		float _shininess;
 
-		float _color[4];
-
 		std::string _name;
 		GLuint* _vaoId;
 		GLuint* _vboId;
@@ -41,21 +39,17 @@ class Entity {
 
 		std::string _objFileDir;
 
-		Entity(int solid, std::string name);
-		void update();
+		Entity(int solid, std::string name);		
 		void draw(GLuint* vaoId);
 		void setObjEntity(std::string fileName);
 		void setMaterial(char* file); 
 		void setTexture(const int id);
-		void setColor(const float color[4]);
-		void setColor(const float r, const float g, const float b, const float a);
-		void rotate(float angle);
-				
-		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
+		void rotate(glm::vec3 axis);			
 				
 		std::string getName() const;
-		std::string getObjFileDir();		
+		std::string getObjFileDir();
 
+		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 		void calculateModelMatrix();
 		void calculateNormalMatrix();	
 

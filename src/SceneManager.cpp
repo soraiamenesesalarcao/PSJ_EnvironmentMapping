@@ -137,8 +137,16 @@ void SceneManager::update(){
 		 _lightSource->incZ();
 	}
 
-	// Solid update (rotations)
-	_objectList[_currentObject]->update();
+	// Rotation
+	if(Input::getInstance()->mouseWasPressed(GLUT_LEFT_BUTTON)){ // x
+		_objectList[_currentObject]->rotate(glm::vec3(1.0, 0.0, 0.0));
+	}
+	if(Input::getInstance()->mouseWasPressed(GLUT_RIGHT_BUTTON)){ // x
+		_objectList[_currentObject]->rotate(glm::vec3(0.0, 1.0, 0.0));
+	}
+	if(Input::getInstance()->mouseWasPressed(GLUT_MIDDLE_BUTTON)){ // x
+		_objectList[_currentObject]->rotate(glm::vec3(0.0, 0.0, 1.0));
+	}
 
 	// Camera 
 	Camera::getInstance()->update();

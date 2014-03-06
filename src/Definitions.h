@@ -26,7 +26,8 @@
 #define TEAPOT 0
 #define CUBE 1
 #define LIGHT_OFFSET 1
-#define ROTATION_SPEED 100.0f
+#define ANGLE_OFFSET 0.05
+#define ROTATION_DELAY 1.0f
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))
@@ -43,10 +44,3 @@ typedef struct {
 	glm::quat rotation;
 	glm::vec3 scale;
 } Properties;
-
-/*
-typedef struct {
-	GLfloat XYZW[4];
-	GLfloat RGBA[4];
-} Vertex;
-*/

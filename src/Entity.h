@@ -36,18 +36,15 @@ class Entity {
 		static const glm::vec3 DEFAULT_SCALE;
 
 	public:
-
-		std::string _objFileDir;
-
-		Entity(int solid, std::string name);		
+		Entity(std::string name);		
 		void draw();
-		void setObjEntity(std::string fileName);
+		void setMesh(char* file);
 		void setMaterial(char* file); 
 		void setTexture(const int id);
 		void rotate(glm::vec3 axis);			
 				
 		std::string getName() const;
-		std::string getObjFileDir();
+		//std::string getObjFileDir();
 
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 		void calculateModelMatrix();

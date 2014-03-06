@@ -7,7 +7,7 @@ const glm::vec3 Entity::DEFAULT_SCALE = glm::vec3(0.1,0.1,0.1);
 
 
 
-Entity::Entity(int solid, std::string name) : _textureID(-1){
+Entity::Entity(std::string name) : _textureID(-1){
 	float x_angle = 0.0;
 	_name = name;
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
@@ -42,14 +42,8 @@ void Entity::setTexture(const int id){
 
 
 /* read the .obj file*/
-void Entity::setObjEntity(std::string fileName){
-	_objFileDir = fileName;
-	//_textureID = textureID;
-	ConfigLoader::loadMesh(fileName.c_str(), &_vertexArray);
-}
-
-std::string Entity::getObjFileDir(){
-	return _objFileDir;
+void Entity::setMesh(char * file){
+	ConfigLoader::loadMesh(file, &_vertexArray);
 }
 
 

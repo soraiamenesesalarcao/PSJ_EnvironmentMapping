@@ -25,21 +25,15 @@ class SceneManager {
 		/* The Uniform ID value */
 		GLint _uniformBlockId;
 		GLuint UBO_BP;
+		
 
 	public:
 		static SceneManager * getInstance();
 		void init();
-		Entity * getEntity();
-		void destroyBufferObjects();
-		void rotate();
-
-
-		//draw the specific object
 		void draw();
 		void update();
-
-		void initObjects();
 		void createBufferObjects();
+		void destroyBufferObjects();
+		void initObjects();
 		void addEntity(Entity* entity);
-
 };

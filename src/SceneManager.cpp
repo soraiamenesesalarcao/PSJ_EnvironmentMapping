@@ -8,9 +8,6 @@ SceneManager * SceneManager::getInstance(){
 	return &instance;
 }
 
-void SceneManager::addEntity(Entity* entity){
-	_objectList.push_back(entity);
-}
 
 
 void SceneManager::init(){
@@ -18,7 +15,6 @@ void SceneManager::init(){
 	// Shader
 	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", "shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
-	//f_Cube = true;
 	_currentObject = TEAPOT;
 	initObjects();
 	createBufferObjects();
@@ -29,43 +25,6 @@ void SceneManager::init(){
 	_ambientGlobal = glm::vec3(0.2, 0.2, 0.2);
 }
 
-void SceneManager::initObjects(){
-	Entity* teapot = new Entity(TEAPOT, "Teapot");
-	teapot->setObjEntity("../scripts/objects/teapot.obj");
-	teapot->setMaterial("materials/ruby.mtl");
-	//teapot->setTexture(TextureManager::STONE);
-	addEntity(teapot);
-
-	Entity* cube = new Entity(CUBE, "Cube");
-	cube->setObjEntity("../scripts/objects/cube.obj");
-	cube->setMaterial("materials/ruby.mtl");
-	//cube->setTexture(TextureManager::FIRE);
-	addEntity(cube);
-}
-
-void SceneManager::createBufferObjects(){
-	_vaoId = new GLuint[1];
-	_vboId = new GLuint[2];
-
-	glGenVertexArrays(1, _vaoId);	//Vertex Array
-	glGenBuffers(2, _vboId);		//Buffer Array
-
-	//create buffer for specific entity
-	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
-	
-	//Reserve space for the Uniform Blocks
-	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(float)*16*2, 0, GL_STREAM_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 0, _vboId[1]);
-
-	// Clear buffers
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(0); //Vertices
-	glDisableVertexAttribArray(1); //Normals
-	glDisableVertexAttribArray(2); //UVs
-}
 
 void SceneManager::draw(){
 	if(!_objectList.empty()){
@@ -85,6 +44,7 @@ void SceneManager::draw(){
 		ShaderProgram::getInstance()->unBind();
 	}
 }
+
 
 void SceneManager::update(){
 
@@ -168,3 +128,49 @@ void SceneManager::destroyBufferObjects(){
 
 	Camera::getInstance()->~Camera();
 }
+
+
+void SceneManager::createBufferObjects(){
+	_vaoId = new GLuint[1];
+	_vboId = new GLuint[2];
+
+	glGenVertexArrays(1, _vaoId);	//Vertex Array
+	glGenBuffers(2, _vboId);		//Buffer Array
+
+	//create buffer for specific entity
+	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
+	
+	//Reserve space for the Uniform Blocks
+	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(float)*16*2, 0, GL_STREAM_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 0, _vboId[1]);
+
+	// Clear buffers
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(0); //Vertices
+	glDisableVertexAttribArray(1); //Normals
+	glDisableVertexAttribArray(2); //UVs
+}
+
+
+void SceneManager::initObjects(){
+	Entity* teapot = new Entity("Teapot");
+	teapot->setMesh("objects/teapot.obj");
+	teapot->setMaterial("materials/ruby.mtl");
+	//teapot->setTexture(TextureManager::STONE);
+	addEntity(teapot);
+
+	Entity* cube = new Entity("Cube");
+	cube->setMesh("objects/cube.obj");
+	cube->setMaterial("materials/ruby.mtl");
+	//cube->setTexture(TextureManager::FIRE);
+	addEntity(cube);
+}
+
+
+void SceneManager::addEntity(Entity* entity){
+	_objectList.push_back(entity);
+}
+

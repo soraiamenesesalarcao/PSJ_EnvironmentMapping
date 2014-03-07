@@ -14,7 +14,7 @@ void SceneManager::init(){
 	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram( "shaders/vertexShaderUniforms.glsl", 
 																		"shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
-	_currentObject = TEAPOT;
+	_currentObject = CYLINDER;
 	initObjects();
 	createBufferObjects();
 
@@ -149,17 +149,42 @@ void SceneManager::createBufferObjects(){
 }
 
 void SceneManager::initObjects(){
-	Entity* teapot = new Entity("Teapot");
+	/*Entity* teapot = new Entity("Teapot");
 	teapot->setMesh("objects/teapot.obj");
 	teapot->setMaterial("materials/ruby.mtl");
 	//teapot->setTexture(TextureManager::STONE);
-	addEntity(teapot);
+	addEntity(teapot);*/
+
+	Entity* cylinder = new Entity("Cylinder");
+	cylinder->setMesh("objects/cylinder.obj");
+	cylinder->setMaterial("materials/ruby.mtl");
+	//teapot->setTexture(TextureManager::STONE);
+	addEntity(cylinder);
 
 	Entity* cube = new Entity("Cube");
 	cube->setMesh("objects/cube.obj");
-	cube->setMaterial("materials/ruby.mtl");
+	cube->setMaterial("materials/silver.mtl");
 	//cube->setTexture(TextureManager::FIRE);
 	addEntity(cube);
+
+	Entity* torus = new Entity("Torus");
+	torus->setMesh("objects/torus.obj");
+	torus->setMaterial("materials/gold.mtl");
+	//cube->setTexture(TextureManager::FIRE);
+	addEntity(torus);
+
+	Entity* sphere = new Entity("Sphere");
+	sphere->setMesh("objects/sphere.obj");
+	sphere->setMaterial("materials/esmerald.mtl");
+	//cube->setTexture(TextureManager::FIRE);
+	addEntity(sphere);
+
+	Entity* quad = new Entity("Quad");
+	quad->setMesh("objects/quad.obj");
+	quad->setMaterial("materials/cyan.mtl");
+	//cube->setTexture(TextureManager::FIRE);
+	addEntity(quad);
+
 }
 
 void SceneManager::addEntity(Entity* entity){

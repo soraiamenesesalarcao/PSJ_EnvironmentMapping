@@ -58,5 +58,5 @@ void main(){
 	}
 
 	color += attenuation * ex_Specular * pow(NdotH, MaterialShininess);
-	color *= textureColor;
+	//color *= textureColor;
 }

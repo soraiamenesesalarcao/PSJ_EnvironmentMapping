@@ -22,9 +22,14 @@
 #define VERTICES 0
 #define NORMALS 1
 #define UVS 2
-#define NSOLIDS 2
-#define TEAPOT 0
+#define NSOLIDS 5
+//#define TEAPOT 0
+#define CYLINDER 0
 #define CUBE 1
+#define TORUS 2
+#define SPHERE 3
+#define QUAD 4
+
 #define LIGHT_OFFSET 1
 #define ANGLE_OFFSET 0.05
 #define ROTATION_DELAY 1.0f

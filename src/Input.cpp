@@ -102,6 +102,8 @@ void Input::mouseClickMotion(int x, int y) {
 }
 
 void Input::mousePassiveMotion(int x, int y){
+	_mouseMotion.x = x - _lastMousePositionX;
+	_mouseMotion.y = y - _lastMousePositionY;
 	_lastMousePositionX = x;
 	_lastMousePositionY = y;
 }
@@ -110,7 +112,7 @@ void Input::mouseWheel(int direction){
 	_wheelDirection = -direction;
 }
 
-glm::vec2 Input::getMousePostion(){
+glm::vec2 Input::getMousePosition(){
 	glm::vec2 pos;
 	pos.x = _lastMousePositionX;
 	pos.y = _lastMousePositionY;

@@ -38,7 +38,7 @@ class Input {
 		bool specialWasReleased(int key);
 		bool mouseWasPressed(int key);
 		bool mouseWasReleased(int key);
-		glm::vec2 getMousePostion();
+		glm::vec2 getMousePosition();
 		glm::vec2 getMouseMotion();
 		int getWheelDirection();
 };

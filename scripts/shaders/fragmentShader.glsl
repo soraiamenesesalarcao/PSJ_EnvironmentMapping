@@ -16,8 +16,8 @@ in vec3 ex_Reflect;
 // Uniforms ////////////////////////////////////////////////////////////////////
 
 // Textures
+uniform samplerCube CubeMap;
 uniform sampler2D Texture1;
-uniform samplerCube cubeMap;
 
 // Material components
 uniform float MaterialShininess;
@@ -42,7 +42,8 @@ void main(){
 
 	// Multi-Texture
 	vec3 textureColor = texture(Texture1, ex_UV).rgb;
-	vec3 textureCube = textureCube(cubeMap, ex_Reflect).rgb;
+	//vec3 textureCube = textureCube(CubeMap, ex_UV).rgb;
+	//vec3 textureCube = textureCube(CubeMap, ex_Reflect).rgb;
 
 	// Light and material
 	attenuation = 1.0 / ( LightConstantAttenuation

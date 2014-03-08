@@ -38,8 +38,8 @@ void main(){
 	color = ex_AmbientGlobal;
 
 	// Multi-Texture
-	vec3 textureColor = texture( Texture1, ex_UV ).rgb * 
-						texture( Texture2, ex_UV ).rgb;
+	vec3 textureColor = texture(Texture1, ex_UV).rgb * 0.5 +
+						texture(Texture2, ex_UV).rgb * 0.5;
 
 	// Light and material
 

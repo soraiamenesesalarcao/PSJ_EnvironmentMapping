@@ -22,6 +22,7 @@ void SceneManager::init(){
 	_lightSource = new LightSource();
 	_lightSource->setComponents("config/lights.xml", "main");
 	_ambientGlobal = glm::vec3(0.2, 0.2, 0.2);
+	
 }
 
 void SceneManager::draw(){
@@ -30,6 +31,7 @@ void SceneManager::draw(){
 
 		Camera::getInstance()->put(); 			// Camera 
 		_objectList[_currentObject]->draw();	// Draw solid
+		_skybox->draw();
 
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
@@ -125,12 +127,17 @@ void SceneManager::destroyBufferObjects(){
 void SceneManager::createBufferObjects(){
 	_vaoId = new GLuint[1];
 	_vboId = new GLuint[2];
+	_vaoIdEnv = new GLuint[1];
+	_vboIdEnv = new GLuint[2];
 
 	glGenVertexArrays(1, _vaoId);	//Vertex Array
 	glGenBuffers(2, _vboId);		//Buffer Array
+	glGenVertexArrays(1, _vaoIdEnv);	//Vertex Array
+	glGenBuffers(2, _vboIdEnv);		//Buffer Array
 
 	//create buffer for specific entity
 	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
+	_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
 	
 	//Reserve space for the Uniform Blocks
 	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
@@ -176,6 +183,10 @@ void SceneManager::initObjects(){
 	quad->setMesh("objects/quad.obj");
 	quad->setMaterial("materials/cyan.mtl");
 	addEntity(quad);
+
+	_skybox = new Skybox();
+	_skybox->setMesh("objects/cube.obj");
+	_skybox->setMaterial("materials/esmerald.mtl");
 }
 
 void SceneManager::addEntity(Entity* entity){

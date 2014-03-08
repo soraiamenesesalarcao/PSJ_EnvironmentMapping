@@ -69,7 +69,7 @@ void main(){
 	ex_Normal  = NormalMatrix *  in_Normal;
 
 	vec3 N = normalize(ex_Normal).xyz;
-	ex_Reflect = reflect(V, N);
+	ex_Reflect = reflect(V, N).xyz;
 
 	// Components
 	ex_AmbientGlobal = LightAmbientGlobal * MaterialAmbientColor;

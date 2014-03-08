@@ -16,6 +16,12 @@ Entity::Entity(std::string name) : _textureID(-1){
 	_q = glm::angleAxis(x_angle, glm::vec3(1.0, 0.0, 0.0));
 }
 
+Entity::Entity() : _textureID(-1){
+	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
+	_propertiesArray.push_back(initialProperty);
+	
+}
+
 void Entity::calculateModelMatrix(){
 	glm::mat4 transformation1 = glm::scale(_propertiesArray[0].scale);
 	glm::mat4 transformation2 = glm::toMat4(_propertiesArray[0].rotation);

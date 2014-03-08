@@ -10,7 +10,7 @@
 
 class Entity {
 		
-	private:
+	protected:
 		glm::vec3 _ambientMaterial;
 		glm::vec3 _diffuseMaterial;
 		glm::vec3 _specularMaterial;
@@ -35,7 +35,8 @@ class Entity {
 		static const glm::vec3 DEFAULT_SCALE;
 
 	public:
-		Entity(std::string name);		
+		Entity(std::string name);
+		Entity();
 		void draw();
 		void setMesh(char* file);
 		void setMaterial(char* file); 

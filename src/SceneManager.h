@@ -6,6 +6,7 @@
 #include "LightSource.h"
 #include "Camera.h"
 #include "TextureManager.h"
+#include "Skybox.h"
 
 
 class SceneManager {
@@ -18,8 +19,11 @@ class SceneManager {
 
 		GLuint* _vaoId;
 		GLuint* _vboId;
+		GLuint* _vaoIdEnv;
+		GLuint* _vboIdEnv;
 		/*A list where all figures are stored*/
 		std::vector<Entity*> _objectList;
+		Skybox * _skybox;
 		int _currentObject;
 	
 		/* The Uniform ID value */

@@ -33,9 +33,9 @@
 #define LIGHT_OFFSET 0.005
 #define ANGLE_OFFSET 0.05
 #define ROTATION_DELAY 1.0f
-#define TEX_FIRE 0
-#define TEX_STONE 1
-#define TEX_ENV_CUBE 2
+//#define TEX_FIRE 0
+#define TEX_STONE 0
+#define TEX_ENV_CUBE 1
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))

@@ -110,11 +110,7 @@
     <None Include="materials\ruby.mtl" />
     <None Include="materials\silver.mtl" />
     <None Include="shaders\fragmentShader.glsl" />
-    <None Include="shaders\FragmentShader3.glsl" />
-    <None Include="shaders\fragmentShaderUniforms.glsl" />
     <None Include="shaders\vertexShader.glsl" />
-    <None Include="shaders\VertexShader3.glsl" />
-    <None Include="shaders\vertexShaderUniforms.glsl" />
     <None Include="textures\fire.tga" />
     <None Include="textures\stone.tga" />
   </ItemGroup>

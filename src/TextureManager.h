@@ -6,11 +6,6 @@
 class TextureManager {
 
 	public:
-
-		static const GLuint FIRE;
-		static const GLuint STONE;
-		static const GLuint ENV_CUBE;
-
 		static TextureManager* Inst();
 		virtual ~TextureManager();
 

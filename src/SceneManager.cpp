@@ -11,8 +11,8 @@ SceneManager * SceneManager::getInstance(){
 void SceneManager::init(){
 
 	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", 
-																	   "shaders/fragmentShaderUniforms.glsl");
+	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader.glsl", 
+																	   "shaders/fragmentShader.glsl");
 	TextureManager::Inst();
 	_currentObject = TEAPOT;
 	initObjects();
@@ -29,7 +29,6 @@ void SceneManager::draw(){
 		ShaderProgram::getInstance()->bind(_shaderProgram);
 
 		Camera::getInstance()->put(); 			// Camera 
-
 		_objectList[_currentObject]->draw();	// Draw solid
 
 		// LightSource
@@ -49,6 +48,7 @@ void SceneManager::update(){
 		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
 	}
 
+	// Exit
 	if(Input::getInstance()->keyWasReleased('M')){
 		exit(0);
 	}

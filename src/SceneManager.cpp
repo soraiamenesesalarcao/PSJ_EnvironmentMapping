@@ -11,10 +11,10 @@ SceneManager * SceneManager::getInstance(){
 void SceneManager::init(){
 
 	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram( "shaders/vertexShaderUniforms.glsl", 
-																		"shaders/fragmentShaderUniforms.glsl");
+	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShaderUniforms.glsl", 
+																	   "shaders/fragmentShaderUniforms.glsl");
 	TextureManager::Inst();
-	_currentObject = CYLINDER;
+	_currentObject = TEAPOT;
 	initObjects();
 	createBufferObjects();
 
@@ -28,11 +28,9 @@ void SceneManager::draw(){
 	if(!_objectList.empty()){
 		ShaderProgram::getInstance()->bind(_shaderProgram);
 
-		// Camera
-		Camera::getInstance()->put(); 
+		Camera::getInstance()->put(); 			// Camera 
 
-		// Draw solid
-		_objectList[_currentObject]->draw();
+		_objectList[_currentObject]->draw();	// Draw solid
 
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
@@ -51,7 +49,7 @@ void SceneManager::update(){
 		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
 	}
 
-	if(Input::getInstance()->keyWasReleased('m')){
+	if(Input::getInstance()->keyWasReleased('M')){
 		exit(0);
 	}
 
@@ -73,22 +71,22 @@ void SceneManager::update(){
 	}
 
 	// Light distance	
-	if(Input::getInstance()->keyWasPressed('a')) {
+	if(Input::getInstance()->keyWasPressed('A')) {
 		 _lightSource->decX();
 	}
-	if(Input::getInstance()->keyWasPressed('d')) {
+	if(Input::getInstance()->keyWasPressed('D')) {
 		 _lightSource->incX();
 	}
-	if(Input::getInstance()->keyWasPressed('s')) {
+	if(Input::getInstance()->keyWasPressed('S')) {
 		 _lightSource->decY();
 	}
-	if(Input::getInstance()->keyWasPressed('w')) {
+	if(Input::getInstance()->keyWasPressed('W')) {
 		 _lightSource->incY();
 	}	
-	if(Input::getInstance()->keyWasPressed('q')) {
+	if(Input::getInstance()->keyWasPressed('Q')) {
 		 _lightSource->decZ();
 	}
-	if(Input::getInstance()->keyWasPressed('e')) {
+	if(Input::getInstance()->keyWasPressed('E')) {
 		 _lightSource->incZ();
 	}
 
@@ -149,42 +147,35 @@ void SceneManager::createBufferObjects(){
 }
 
 void SceneManager::initObjects(){
-	/*Entity* teapot = new Entity("Teapot");
+	Entity* teapot = new Entity("Teapot");
 	teapot->setMesh("objects/teapot.obj");
 	teapot->setMaterial("materials/ruby.mtl");
-	//teapot->setTexture(TextureManager::STONE);
-	addEntity(teapot);*/
+	addEntity(teapot);
 
 	Entity* cylinder = new Entity("Cylinder");
 	cylinder->setMesh("objects/cylinder.obj");
 	cylinder->setMaterial("materials/ruby.mtl");
-	//teapot->setTexture(TextureManager::STONE);
 	addEntity(cylinder);
 
 	Entity* cube = new Entity("Cube");
 	cube->setMesh("objects/cube.obj");
 	cube->setMaterial("materials/silver.mtl");
-	//cube->setTexture(TextureManager::FIRE);
 	addEntity(cube);
 
 	Entity* torus = new Entity("Torus");
 	torus->setMesh("objects/torus.obj");
 	torus->setMaterial("materials/gold.mtl");
-	//cube->setTexture(TextureManager::FIRE);
 	addEntity(torus);
 
 	Entity* sphere = new Entity("Sphere");
 	sphere->setMesh("objects/sphere.obj");
 	sphere->setMaterial("materials/esmerald.mtl");
-	//cube->setTexture(TextureManager::FIRE);
 	addEntity(sphere);
 
 	Entity* quad = new Entity("Quad");
 	quad->setMesh("objects/quad.obj");
 	quad->setMaterial("materials/cyan.mtl");
-	//cube->setTexture(TextureManager::FIRE);
 	addEntity(quad);
-
 }
 
 void SceneManager::addEntity(Entity* entity){

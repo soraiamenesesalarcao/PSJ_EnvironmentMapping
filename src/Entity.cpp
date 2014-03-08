@@ -47,14 +47,14 @@ void Entity::draw(){
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
-	glActiveTexture(GL_TEXTURE0);
+	/*glActiveTexture(GL_TEXTURE0);
 	TextureManager::Inst()->BindTexture(TEX_FIRE); 
 	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 0);
 	//std::cout << "GL_TEXTURE0: " << GL_TEXTURE0 << std::endl;
 	
 	glActiveTexture(GL_TEXTURE1);
 	TextureManager::Inst()->BindTexture(TEX_STONE);
-	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 1);
+	glUniform1i(ShaderProgram::getInstance()->getTextureUniformId(), 1);*/
 
 	/*glActiveTexture(GL_TEXTURE2);
 	TextureManager::Inst()->BindTexture(TEX_ENV_CUBE);

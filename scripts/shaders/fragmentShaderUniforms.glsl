@@ -53,10 +53,11 @@ void main(){
 
 	if(NdotL > 0.0) {		
 		color += attenuation * (ex_Diffuse * NdotL + ex_Ambient);		
-	}	else {
+	}	
+	else {
 		color += attenuation * (ex_Diffuse + ex_Ambient);	
 	}
 
 	color += attenuation * ex_Specular * pow(NdotH, MaterialShininess);
-	//color *= textureColor;
+	color *= textureColor;
 }

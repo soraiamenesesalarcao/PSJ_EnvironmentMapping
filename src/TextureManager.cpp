@@ -15,7 +15,7 @@ TextureManager* TextureManager::Inst() {
 TextureManager::TextureManager(){
 	_texID = std::vector<GLuint>(3);
 	glGenTextures(3, &_texID[0]);
-	loadTexture("textures/stone.tga", STONE); 
+	//loadTexture("textures/stone.tga", STONE); 
 	loadTexture("textures/fire.tga", FIRE);
 
 	/*loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
@@ -29,9 +29,9 @@ void TextureManager::loadTexture(const char* dirName, int textID){
 	int channel;
 	unsigned char* image = SOIL_load_image(dirName, &width, &height, &channel, SOIL_LOAD_RGB);
 	glBindTexture(GL_TEXTURE_2D, _texID[textID]);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,GL_UNSIGNED_BYTE, image);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR); // Linear Filtering (optional)
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR); // Linear Filtering (optional)
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // Linear Filtering (optional)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Linear Filtering (optional)
 	SOIL_free_image_data(image);
 }
 
@@ -60,11 +60,6 @@ TextureManager::~TextureManager(){
 	_inst = 0;
 }
 
-bool TextureManager::LoadTexture(const char* filename, const unsigned int texID, GLenum image_format, GLint internal_format, GLint level, GLint border) {
-	//Not implemented
-	return false;
-}
-
 bool TextureManager::UnloadTexture(const unsigned int texID){
 	bool result(true);
 	//if this texture ID mapped, unload it's texture, and remove it from the vector
@@ -76,17 +71,6 @@ bool TextureManager::UnloadTexture(const unsigned int texID){
 	else {
 		result = false;
 	}
-
-	return result;
-}
-
-bool TextureManager::BindTexture(const unsigned int texID) {
-	bool result(true);
-	//if this texture ID mapped, bind it's texture as current
-	if(texID < _texID.size())
-		glBindTexture(GL_TEXTURE_2D, _texID[texID]);
-	//otherwise, binding failed
-	else result = false;
 
 	return result;
 }

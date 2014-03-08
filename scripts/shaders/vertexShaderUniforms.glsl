@@ -51,14 +51,12 @@ void main(){
 
 	// Distance, Halfvector, Direction
 
-	//vec3 surfaceToLight = LightPosition - in_Position.xyz;
-
 	vec3 surfaceToLight = LightPosition - pos.xyz;
 
 	ex_LightDistance = length(surfaceToLight);
 
 	vec3 L = normalize(surfaceToLight);
-	vec3 V = normalize(-EyePosition);
+	vec3 V = normalize(EyePosition);
 	ex_HalfVector = normalize(L + V);
 
 	ex_LightDirection = L;

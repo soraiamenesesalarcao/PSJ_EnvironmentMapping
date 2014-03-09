@@ -13,8 +13,10 @@ void SceneManager::init(){
 	// Shader
 	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader.glsl", 
 																	   "shaders/fragmentShader.glsl");
+
+	// Textures
 	TextureManager::Inst();
-	_currentObject = CUBE;
+	_currentObject = TEAPOT;
 	initObjects();
 	createBufferObjects();
 
@@ -36,7 +38,7 @@ void SceneManager::draw(){
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
 		glUniform3fv(ambientGId, 1, glm::value_ptr(_ambientGlobal));
-		 _lightSource->draw();
+		_lightSource->draw();
 
 		ShaderProgram::getInstance()->unBind();
 	}
@@ -44,7 +46,7 @@ void SceneManager::draw(){
 
 void SceneManager::update(){
 
-	// Solid type
+	// Change Solid type
 	if(Input::getInstance()->keyWasReleased('T')) {
 		_currentObject = (_currentObject + 1) % NSOLIDS;
 		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
@@ -55,7 +57,7 @@ void SceneManager::update(){
 		exit(0);
 	}
 
-	// Material	
+	// Change Materials
 	if(Input::getInstance()->keyWasReleased('1')) {
 		_objectList[_currentObject]->setMaterial("materials/ruby.mtl");
 	}
@@ -72,7 +74,7 @@ void SceneManager::update(){
 		_objectList[_currentObject]->setMaterial("materials/cyan.mtl");
 	}
 
-	// Light distance	
+	// Change Light distance (in each direction)	
 	if(Input::getInstance()->keyWasPressed('A')) {
 		 _lightSource->decX();
 	}
@@ -92,7 +94,7 @@ void SceneManager::update(){
 		 _lightSource->incZ();
 	}
 
-	// Rotation
+	// Rotate Axis
 	if(Input::getInstance()->mouseWasPressed(GLUT_LEFT_BUTTON)){ // x
 		_objectList[_currentObject]->rotate(glm::vec3(1.0, 0.0, 0.0));
 	}
@@ -130,16 +132,16 @@ void SceneManager::createBufferObjects(){
 	_vaoIdEnv = new GLuint[1];
 	_vboIdEnv = new GLuint[2];
 
-	glGenVertexArrays(1, _vaoId);	//Vertex Array
-	glGenBuffers(2, _vboId);		//Buffer Array
+	glGenVertexArrays(1, _vaoId);		//Vertex Array
+	glGenBuffers(2, _vboId);			//Buffer Array
 	glGenVertexArrays(1, _vaoIdEnv);	//Vertex Array
-	glGenBuffers(2, _vboIdEnv);		//Buffer Array
+	glGenBuffers(2, _vboIdEnv);			//Buffer Array
 
-	//create buffer for specific entity
+	// Create buffer for specific entity
 	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
 	_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
 	
-	//Reserve space for the Uniform Blocks
+	// Reserve space for the Uniform Blocks
 	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(float)*16*2, 0, GL_STREAM_DRAW);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 0, _vboId[1]);
@@ -161,32 +163,32 @@ void SceneManager::initObjects(){
 
 	Entity* cylinder = new Entity("Cylinder");
 	cylinder->setMesh("objects/cylinder.obj");
-	cylinder->setMaterial("materials/ruby.mtl");
+	cylinder->setMaterial("materials/silver.mtl");
 	addEntity(cylinder);
-
-	Entity* cube = new Entity("Cube");
-	cube->setMesh("objects/cube.obj");
-	cube->setMaterial("materials/silver.mtl");
-	addEntity(cube);
 
 	Entity* torus = new Entity("Torus");
 	torus->setMesh("objects/torus.obj");
 	torus->setMaterial("materials/gold.mtl");
 	addEntity(torus);
 
+	Entity* cube = new Entity("Cube");
+	cube->setMesh("objects/cube.obj");
+	cube->setMaterial("materials/esmerald.mtl");
+	addEntity(cube);
+
 	Entity* sphere = new Entity("Sphere");
 	sphere->setMesh("objects/sphere.obj");
-	sphere->setMaterial("materials/esmerald.mtl");
+	sphere->setMaterial("materials/cyan.mtl");
 	addEntity(sphere);
 
 	Entity* quad = new Entity("Quad");
 	quad->setMesh("objects/quad.obj");
-	quad->setMaterial("materials/cyan.mtl");
+	quad->setMaterial("materials/ruby.mtl");
 	addEntity(quad);
 
 	_skybox = new Skybox();
 	_skybox->setMesh("objects/cube.obj");
-	_skybox->setMaterial("materials/esmerald.mtl");
+	_skybox->setMaterial("materials/cyan.mtl");
 }
 
 void SceneManager::addEntity(Entity* entity){

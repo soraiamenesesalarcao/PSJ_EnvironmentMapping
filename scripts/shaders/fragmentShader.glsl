@@ -9,9 +9,8 @@ in vec3 ex_Diffuse;
 in vec3 ex_Specular;
 in vec3 ex_HalfVector;
 in vec3 ex_LightDirection;
-in float ex_LightDistance;
-
 in vec3 ex_Reflect;
+in float ex_LightDistance;
 
 // Uniforms ////////////////////////////////////////////////////////////////////
 
@@ -27,7 +26,6 @@ uniform float LightConstantAttenuation;
 uniform float LightLinearAttenuation;
 uniform float LightQuadraticAttenuation;
 
-
 // Output data /////////////////////////////////////////////////////////////////
 out vec3 color;
 
@@ -37,22 +35,21 @@ out vec3 color;
 
 void main(){
 
-	float attenuation;
-	color = ex_AmbientGlobal;
+	float attenuation, NdotH, NdotL;
+	vec3 textureColor, N;
 
 	// Multi-Texture
-	vec3 textureColor = texture(Texture1, ex_UV).rgb;
-	//vec3 textureCube = textureCube(CubeMap, ex_UV).rgb;
+	textureColor = texture(Texture1, ex_UV).rgb;
 	//vec3 textureCube = textureCube(CubeMap, ex_Reflect).rgb;
 
-	// Light and material
+	// Light and Material
+	color = ex_AmbientGlobal;
 	attenuation = 1.0 / ( LightConstantAttenuation
 						+ LightLinearAttenuation * ex_LightDistance 
 						+ LightQuadraticAttenuation * pow(ex_LightDistance, 2.0) );
-
-	vec3 N = normalize(ex_Normal).xyz;
-	float NdotH = max(dot(N, ex_HalfVector), 0.0);
-	float NdotL = max(dot(N, ex_LightDirection), 0.0);
+	N = ex_Normal;
+	NdotH = max(dot(N, ex_HalfVector), 0.0);
+	NdotL = max(dot(N, ex_LightDirection), 0.0);
 
 	if(NdotL > 0.0) color += attenuation * (ex_Diffuse * NdotL + ex_Ambient);		
 	else color += attenuation * (ex_Diffuse + ex_Ambient);

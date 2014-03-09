@@ -24,7 +24,6 @@ class Entity {
 		std::vector<Properties> _propertiesArray;
 		std::vector<Vertex> _vertexArray;
 		int _currentPropertyIndex;
-		//std::vector<Program*> _programsToUse;
 		std::vector<glm::vec3> _modifiedVertexArray;
 		glm::mat4 _currentModelMatrix;
 		glm::mat3 _currentNormalMatrix;
@@ -44,7 +43,6 @@ class Entity {
 		void rotate(glm::vec3 axis);			
 				
 		std::string getName() const;
-		//std::string getObjFileDir();
 
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 		void calculateModelMatrix();

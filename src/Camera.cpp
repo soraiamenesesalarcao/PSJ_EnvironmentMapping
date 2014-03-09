@@ -32,7 +32,7 @@ void Camera::put(){
 	eye.y *= _distance;
 	_view = glm::lookAt(eye, _center, _up);
 
-	if(_type){
+	if(_type) {
 		if (racio > 1)
 			projection = glm::ortho(-1.5 * racio * _distance/4, 
 									 1.5 * racio*_distance/4, -1.5 * _distance/4, 
@@ -101,5 +101,5 @@ void Camera::update(){
 	if(mouse.x != 0 || mouse.y != 0) //rotate(mouse.y, mouse.x);
 
 	// zoom
-	_distance = MAX(MIN((_distance + Input::getInstance()->getWheelDirection()), 10), 2);
+	_distance = 5; //MAX(MIN((_distance + Input::getInstance()->getWheelDirection()), 10), 2);
 }

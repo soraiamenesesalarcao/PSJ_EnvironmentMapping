@@ -3,10 +3,6 @@
 #include "Utils.h"
 #include "Definitions.h"
 
-#include <iostream>
-#include <vector>
-#include <glm.hpp>
-
 
 class ShaderProgram {
 
@@ -19,7 +15,8 @@ class ShaderProgram {
 		GLuint _modelMatrixUniformId;
 		GLuint _normalMatrixUniformId;
 		GLuint _sharedMatrixUboId;
-		GLuint _textureUniformId;
+		GLuint _textureUniformId[2];
+
 
 	public:
 		static ShaderProgram * getInstance();
@@ -33,5 +30,5 @@ class ShaderProgram {
 		GLuint getModelMatrixUniformId() const  { return _modelMatrixUniformId; }
 		GLuint getNormalMatrixUniformId() const  { return _normalMatrixUniformId; }
 		GLuint getSharedMatrixUboId() const { return _sharedMatrixUboId; }
-		GLuint getTextureUniformId() const  { return _textureUniformId; }
+		GLuint getTextureUniformId(int index) const  { return _textureUniformId[index]; }
 };

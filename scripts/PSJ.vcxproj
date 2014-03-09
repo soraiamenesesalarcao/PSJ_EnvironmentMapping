@@ -89,6 +89,9 @@
     <ClInclude Include="..\src\SceneManager.h" />
     <ClInclude Include="..\src\ShaderProgram.h" />
     <ClInclude Include="..\src\Skybox.h" />
+    <ClInclude Include="..\src\Texture.h" />
+    <ClInclude Include="..\src\Texture2D.h" />
+    <ClInclude Include="..\src\TextureCube.h" />
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\Utils.h" />
   </ItemGroup>
@@ -102,6 +105,9 @@
     <ClCompile Include="..\src\SceneManager.cpp" />
     <ClCompile Include="..\src\ShaderProgram.cpp" />
     <ClCompile Include="..\src\Skybox.cpp" />
+    <ClCompile Include="..\src\Texture.cpp" />
+    <ClCompile Include="..\src\Texture2D.cpp" />
+    <ClCompile Include="..\src\TextureCube.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\Utils.cpp" />
   </ItemGroup>

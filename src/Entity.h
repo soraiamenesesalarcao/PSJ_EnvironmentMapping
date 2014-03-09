@@ -6,6 +6,7 @@
 #include "TextureManager.h"
 #include "Input.h"
 #include "Camera.h"
+#include "Texture2D.h"
 
 
 class Entity {
@@ -20,7 +21,9 @@ class Entity {
 		GLuint* _vaoId;
 		GLuint* _vboId;
 
-		int _textureID;
+		Texture2D * _texture2D;
+
+		//int _textureID;
 		std::vector<Properties> _propertiesArray;
 		std::vector<Vertex> _vertexArray;
 		int _currentPropertyIndex;
@@ -36,13 +39,16 @@ class Entity {
 	public:
 		Entity(std::string name);
 		Entity();
-		void draw();
+
+		std::string getName() const;
+
 		void setMesh(char* file);
 		void setMaterial(char* file); 
-		void setTexture(const int id);
-		void rotate(glm::vec3 axis);			
-				
-		std::string getName() const;
+		//void setTexture(const int id);
+		void setTexture2D(std::string file);
+
+		void rotate(glm::vec3 axis);
+		void draw();
 
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 		void calculateModelMatrix();

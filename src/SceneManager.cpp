@@ -159,43 +159,56 @@ void SceneManager::initObjects(){
 	Entity* teapot = new Entity("Teapot");
 	teapot->setMesh("objects/teapot.obj");
 	teapot->setMaterial("materials/ruby.mtl");
-	teapot->setTexture2D("textures/stone.tga");
+	//teapot->setTexture2D("textures/stone.tga");
+	teapot->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 	addEntity(teapot);
 
 	Entity* cylinder = new Entity("Cylinder");
 	cylinder->setMesh("objects/cylinder.obj");
 	cylinder->setMaterial("materials/silver.mtl");
-	cylinder->setTexture2D("textures/stone.tga");
+//	cylinder->setTexture2D("textures/stone.tga");
+	cylinder->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 	addEntity(cylinder);
 
 	Entity* torus = new Entity("Torus");
 	torus->setMesh("objects/torus.obj");
 	torus->setMaterial("materials/gold.mtl");
-	torus->setTexture2D("textures/stone.tga");
+//	torus->setTexture2D("textures/stone.tga");
+	torus->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 	addEntity(torus);
 
 	Entity* cube = new Entity("Cube");
 	cube->setMesh("objects/cube.obj");
 	cube->setMaterial("materials/esmerald.mtl");
-	cube->setTexture2D("textures/stone.tga");
+	//cube->setTexture2D("textures/stone.tga");
+	cube->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 	addEntity(cube);
 
 	Entity* sphere = new Entity("Sphere");
 	sphere->setMesh("objects/sphere.obj");
 	sphere->setMaterial("materials/cyan.mtl");
-	sphere->setTexture2D("textures/stone.tga");
+	//sphere->setTexture2D("textures/stone.tga");
+	sphere->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 	addEntity(sphere);
 
 	Entity* quad = new Entity("Quad");
 	quad->setMesh("objects/quad.obj");
 	quad->setMaterial("materials/ruby.mtl");
-	quad->setTexture2D("textures/stone.tga");
+	//quad->setTexture2D("textures/stone.tga");
+	quad->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 	addEntity(quad);
 
 	_skybox = new Skybox();
 	_skybox->setMesh("objects/cube.obj");
 	_skybox->setMaterial("materials/cyan.mtl");
-	_skybox->setTexture2D("textures/stone.tga");
+	_skybox->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg");
 }
 
 void SceneManager::addEntity(Entity* entity){

@@ -14,4 +14,5 @@ class TextureCube : public Texture {
 					GLenum texUnit);
 		void bind();
 		void unbind();
+		void draw();
 };

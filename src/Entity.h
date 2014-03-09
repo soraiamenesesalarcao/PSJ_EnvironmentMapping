@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Camera.h"
 #include "Texture2D.h"
+#include "TextureCube.h"
 
 
 class Entity {
@@ -22,6 +23,7 @@ class Entity {
 		GLuint* _vboId;
 
 		Texture2D * _texture2D;
+		TextureCube * _textureCube;
 
 		//int _textureID;
 		std::vector<Properties> _propertiesArray;
@@ -46,6 +48,8 @@ class Entity {
 		void setMaterial(char* file); 
 		//void setTexture(const int id);
 		void setTexture2D(std::string file);
+		void setTextureCube(std::string f1, std::string f2, std::string f3,
+							std::string f4, std::string f5, std::string f6);
 
 		void rotate(glm::vec3 axis);
 		void draw();

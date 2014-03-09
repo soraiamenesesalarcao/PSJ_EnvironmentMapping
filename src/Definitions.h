@@ -31,6 +31,8 @@
 #define SPHERE 4
 #define QUAD 5
 
+#define LIGHT_OFF 0
+#define LIGHT_ON 1
 #define LIGHT_OFFSET 0.005
 #define ANGLE_OFFSET 0.05
 #define ROTATION_DELAY 1.0f

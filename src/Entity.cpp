@@ -42,6 +42,11 @@ void Entity::setTexture2D(std::string file){
 	_texture2D = new Texture2D(file, TEX_UNIT_0);
 }
 
+void Entity::setTextureCube(std::string f1, std::string f2, std::string f3,
+							std::string f4, std::string f5, std::string f6){
+	_textureCube = new TextureCube(f1, f2, f3, f4, f5, f6, TEX_UNIT_0);
+}
+
 
 void Entity::rotate(glm::vec3 axis) {
 	glm::quat q;
@@ -63,21 +68,25 @@ void Entity::draw(){
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniformMatrix3fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
-	_texture2D->draw();
+//	_texture2D->draw();
+	_textureCube->draw();
 
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
 	GLint specularId = ShaderProgram::getInstance()->getId("MaterialSpecularColor");
 	GLint shininessId = ShaderProgram::getInstance()->getId("MaterialShininess");
+	GLint illuminationId = ShaderProgram::getInstance()->getId("Illumination");
 
 	glUniform3fv(ambientId, 1, glm::value_ptr(_ambientMaterial));
 	glUniform3fv(diffuseId, 1, glm::value_ptr(_diffuseMaterial));
 	glUniform3fv(specularId, 1, glm::value_ptr(_specularMaterial));
 	glUniform1f(shininessId, _shininess);
+	glUniform1i(illuminationId, LIGHT_ON);
 
 	glDrawArrays(GL_TRIANGLES,0,_vertexArray.size());
 
-	_texture2D->unbind();
+	//_texture2D->unbind();
+	_textureCube->unbind();
 
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }

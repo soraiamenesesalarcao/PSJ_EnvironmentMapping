@@ -5,7 +5,6 @@ Texture2D::Texture2D(std::string file, int texUnit) : Texture(texUnit) {
 
 	_file = file;
 
-	// cenas fixes irao acontecer aqui
 	glGenTextures(1, &_texID);
 
 	//glActiveTexture(GL_TEXTURE0);

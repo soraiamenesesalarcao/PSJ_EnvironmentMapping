@@ -23,7 +23,7 @@
 #define NORMALS 1
 #define UVS 2
 
-#define NSOLIDS 6
+#define NSOLIDS 1
 #define TEAPOT 0
 #define CYLINDER 1
 #define CUBE 2
@@ -35,8 +35,8 @@
 #define ANGLE_OFFSET 0.05
 #define ROTATION_DELAY 1.0f
 
-#define TEX_ENV_CUBE 0
-#define TEX_STONE 1
+//#define TEX_ENV_CUBE 0
+#define TEX_STONE 0
 //#define TEX_FIRE 2
 
 #define MAX(a,b) (((a)>(b))?(a):(b))

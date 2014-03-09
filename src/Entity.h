@@ -27,7 +27,7 @@ class Entity {
 		//std::vector<Program*> _programsToUse;
 		std::vector<glm::vec3> _modifiedVertexArray;
 		glm::mat4 _currentModelMatrix;
-		glm::mat4 _currentNormalMatrix;
+		glm::mat3 _currentNormalMatrix;
 		glm::quat _q;
 
 		static const glm::vec3 DEFAULT_POSITION;

@@ -10,7 +10,7 @@ layout(location = 2) in vec2 in_UV;
 
 uniform vec3 EyePosition;
 uniform mat4 ModelMatrix;
-uniform mat4 NormalMatrix;
+uniform mat3 NormalMatrix;
 layout(std140) uniform SharedMatrices
 {
 	mat4 ViewMatrix;
@@ -32,7 +32,7 @@ uniform vec3 MaterialSpecularColor;
 
 // Output data /////////////////////////////////////////////////////////////////
 out vec2 ex_UV;
-out vec4 ex_Normal;
+out vec3 ex_Normal;
 
 // Light components
 out vec3 ex_AmbientGlobal;
@@ -66,7 +66,7 @@ void main(){
 
 	ex_LightDirection = L;
 
-	ex_Normal  = NormalMatrix *  in_Normal;
+	ex_Normal  = NormalMatrix * in_Normal.xyz;
 
 	vec3 N = normalize(ex_Normal).xyz;
 	ex_Reflect = reflect(V, N).xyz;
@@ -78,7 +78,6 @@ void main(){
 	ex_Specular = MaterialSpecularColor * LightSpecular;	
 
 	// Output position of the vertex, in clip space : ProjectionMatrix * ViewMatrix * ModelMatrix * position
-	//gl_Position =  ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;	
 	gl_Position = pos;
 	// UV of the vertex. No special space for this one.
 	ex_UV = in_UV;

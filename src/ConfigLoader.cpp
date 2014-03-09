@@ -92,7 +92,6 @@ namespace ConfigLoader {
 				std::istringstream s(line.substr(3));
 				s >> shininess;
 			}
-
 		}
 	}
 
@@ -113,22 +112,18 @@ namespace ConfigLoader {
 				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++) {
 					(*viewpoint)[i] = atof(attr->value());
 				}
-
 				temp = child->first_node("ambient");
 				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++) {
 					(*ambient)[i] = atof(attr->value());
 				}
-				
 				temp = child->first_node("diffuse");
 				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++)	{
 					(*diffuse)[i] = atof(attr->value());
 				}
-				
 				temp = child->first_node("specular");
 				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++)	{
 					(*specular)[i] = atof(attr->value());
 				}
-
 				temp = child->first_node("attenuation");
 				for(attr = temp->first_attribute(), i = 0; attr != NULL; attr = attr->next_attribute(), i++)	{
 					(*attenuation)[i] = atof(attr->value());

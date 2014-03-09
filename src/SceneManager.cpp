@@ -14,7 +14,7 @@ void SceneManager::init(){
 	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader.glsl", 
 																	   "shaders/fragmentShader.glsl");
 	TextureManager::Inst();
-	_currentObject = TEAPOT;
+	_currentObject = CUBE;
 	initObjects();
 	createBufferObjects();
 
@@ -31,7 +31,7 @@ void SceneManager::draw(){
 
 		Camera::getInstance()->put(); 			// Camera 
 		_objectList[_currentObject]->draw();	// Draw solid
-		_skybox->draw();
+		//_skybox->draw();
 
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");

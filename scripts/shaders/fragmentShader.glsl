@@ -2,7 +2,7 @@
 
 // Interpolated values /////////////////////////////////////////////////////////
 in vec2 ex_UV;
-in vec4 ex_Normal;
+in vec3 ex_Normal;
 in vec3 ex_AmbientGlobal;
 in vec3 ex_Ambient;
 in vec3 ex_Diffuse;
@@ -16,7 +16,7 @@ in vec3 ex_Reflect;
 // Uniforms ////////////////////////////////////////////////////////////////////
 
 // Textures
-uniform samplerCube CubeMap;
+//uniform samplerCube CubeMap;
 uniform sampler2D Texture1;
 
 // Material components

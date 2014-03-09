@@ -10,10 +10,10 @@ TextureManager* TextureManager::Inst() {
 TextureManager::TextureManager(){
 	_texID = std::vector<GLuint>(2);
 	glGenTextures(2, &_texID[0]);
-	loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
+	/*loadTextureCube("textures/negx.jpg", "textures/negy.jpg", 
 					"textures/negz.jpg", "textures/posx.jpg",
 					"textures/posy.jpg", "textures/posz.jpg",
-					TEX_ENV_CUBE);
+					TEX_ENV_CUBE);*/
 	loadTexture("textures/stone.tga", TEX_STONE);
 }
 
@@ -64,8 +64,9 @@ bool TextureManager::BindTexture(const unsigned int texID)
 	bool result(true);
 	//if this texture ID mapped, bind it's texture as current
 	if(texID < _texID.size()){
-		if(texID != TEX_ENV_CUBE) glBindTexture(GL_TEXTURE_2D, _texID[texID]);
-		else glBindTexture(GL_TEXTURE_CUBE_MAP, _texID[texID]);
+		//if(texID != TEX_ENV_CUBE) 
+		glBindTexture(GL_TEXTURE_2D, _texID[texID]);
+		//else glBindTexture(GL_TEXTURE_CUBE_MAP, _texID[texID]);
 	}
 	else result = false;	//otherwise, binding failed
 

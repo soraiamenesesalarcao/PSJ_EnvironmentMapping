@@ -12,7 +12,6 @@ Entity::Entity(std::string name) : _textureID(-1){
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
 	_propertiesArray.push_back(initialProperty);
 	calculateModelMatrix();
-	calculateNormalMatrix();
 	_q = glm::angleAxis(x_angle, glm::vec3(1.0, 0.0, 0.0));
 }
 
@@ -30,9 +29,7 @@ void Entity::calculateModelMatrix(){
 }
 
 void Entity::calculateNormalMatrix(){
-	// TO DO: figure this out
-	//_currentNormalMatrix = glm::inverseTranspose(Camera::getInstance()->getView()*_currentModelMatrix);
-	_currentNormalMatrix = _currentModelMatrix;
+	_currentNormalMatrix = glm::inverseTranspose(glm::mat3(Camera::getInstance()->getView()*_currentModelMatrix));
 }
 
 std::string Entity::getName() const{
@@ -49,9 +46,13 @@ void Entity::setMesh(char * file){
 }
 
 void Entity::draw(){
+
+	calculateModelMatrix();
+	calculateNormalMatrix();
+
 	glBindVertexArray(_vaoId[0]);
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
-	glUniformMatrix4fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
+	glUniformMatrix3fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
 	//glActiveTexture(GL_TEXTURE0);
 	/*TextureManager::Inst()->BindTexture(TEX_FIRE); 
@@ -102,7 +103,7 @@ void Entity::rotate(glm::vec3 axis) {
 	_q = glm::angleAxis(angle / ROTATION_DELAY, axis) * _propertiesArray[0].rotation;;
 	_propertiesArray[0].rotation = _q;
 	calculateModelMatrix();
-	calculateNormalMatrix();
+	//calculateNormalMatrix();
 	glutPostRedisplay();
 }
 

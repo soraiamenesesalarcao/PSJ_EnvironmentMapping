@@ -1,6 +1,5 @@
 #include "Camera.h"
 
-
 Camera::Camera(){
 	_type = 0;
 	_distance = 4;
@@ -47,6 +46,7 @@ void Camera::put(){
 
 	_view = _view*glm::mat4_cast(_q);
 
+	// Calculate Eye Position for Illumination 
 	GLint id = ShaderProgram::getInstance()->getId("EyePosition");
 	glm::vec4 e = glm::mat4_cast(_q) * glm::normalize(glm::vec4(_center-eye, 1.0));
 	e.x *= -1;
@@ -84,11 +84,13 @@ void Camera::update(){
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F1))		// top
 		_q = glm::angleAxis(90.0f, glm::vec3(1.0, 0.0, 0.0));
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F2))		// bottom
-		_q = glm::angleAxis(-90.0f, glm::vec3(1.0, 0.0, 0.0)) * glm::angleAxis(180.0f, glm::vec3(0.0, 0.0, 1.0));
+		_q = glm::angleAxis(-90.0f, glm::vec3(1.0, 0.0, 0.0)) * 
+			 glm::angleAxis(180.0f, glm::vec3(0.0, 0.0, 1.0));
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F3))		// front
 		_q = glm::angleAxis(0.0f, glm::vec3(1.0, 0.0, 0.0));
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F4))		// back
-		_q = glm::angleAxis(180.0f, glm::vec3(1.0, 0.0, 0.0)) * glm::angleAxis(180.0f, glm::vec3(0.0, 1.0, 0.0));
+		_q = glm::angleAxis(180.0f, glm::vec3(1.0, 0.0, 0.0)) * 
+			 glm::angleAxis(180.0f, glm::vec3(0.0, 1.0, 0.0));
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F5))		// left
 		_q = glm::angleAxis(90.0f, glm::vec3(0.0, 0.0, 1.0));
 	if(Input::getInstance()->specialWasReleased(GLUT_KEY_F6))		// right
@@ -96,8 +98,7 @@ void Camera::update(){
 	
 	// spheric camera
 	glm::vec2 mouse = Input::getInstance()->getMouseMotion();
-	if(mouse.x != 0 || mouse.y != 0)
-		rotate(mouse.y, mouse.x);
+	if(mouse.x != 0 || mouse.y != 0) //rotate(mouse.y, mouse.x);
 
 	// zoom
 	_distance = MAX(MIN((_distance + Input::getInstance()->getWheelDirection()), 10), 2);

@@ -67,11 +67,6 @@ void main(){
 		} else Specular = vec3(0.0);
 
 		color += Attenuation * (Diffuse + Specular + Ambient);
-		
-		//if(NdotL > 0.0) color += attenuation * (Diffuse * NdotL + Ambient);		
-		//else color += attenuation * (Diffuse + Ambient);
-
-		//color += attenuation * Specular * pow(NdotH, MaterialShininess);
-		//color *= textureCube;
-	} //else color = textureCube;
+		color *= textureCube;
+	} else color = textureCube;
 }

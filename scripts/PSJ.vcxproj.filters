@@ -170,5 +170,17 @@
     <Image Include="textures\posz.jpg">
       <Filter>Resource Files\textures</Filter>
     </Image>
+    <Image Include="textures\cleanmetal.png">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="textures\colorful.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="textures\textures.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
+    <Image Include="textures\tree.jpg">
+      <Filter>Resource Files\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

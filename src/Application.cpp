@@ -75,6 +75,7 @@ void timer(int value) {
 	std::string s = TITLE;
 	glutSetWindow(WindowHandle);
 	glutSetWindowTitle(s.c_str());
+	//std::cout << FrameCount << std::endl;
     FrameCount = 0;
     glutTimerFunc(1000, timer, 0);
 }

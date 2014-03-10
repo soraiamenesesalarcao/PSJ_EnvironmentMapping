@@ -43,5 +43,12 @@ void main(){
 	ex_ViewVector = V;
 	ex_LightDistance = length(surfaceToLight);
 
+	// Contas para o Sphere Mapping
+	//vec3 U = normalize(ViewMatrix * ModelMatrix * in_Position);
+	//vec3 R = reflect(U, N);
+	//float m = 2.0 * sqrt(pow(R.x, 2.0) + pow(R.y, 2.0) + pow(R.z + 1.0, 2.0));
+	//ex_UV[1].s = R.x/m + 0.5;
+	//ex_UV[1].t = R.y/m + 0.5;
+
 	gl_Position = pos;
 }

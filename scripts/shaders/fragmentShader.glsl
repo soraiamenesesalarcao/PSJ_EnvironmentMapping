@@ -16,7 +16,7 @@ in float ex_LightDistance;
 
 // Textures
 uniform samplerCube CubeMap;
-uniform sampler2D Texture1;
+//uniform sampler2D Texture1;
 
 // Material components
 uniform float MaterialShininess;
@@ -38,7 +38,7 @@ void main(){
 
 // Multi-Texture
 //	vec3 textureColor = texture(Texture1, ex_UV).rgb;
-	vec3 textureCube = textureCube(CubeMap, ex_Reflect).rgb;
+	vec3 textureCube = texture(CubeMap, ex_Reflect).rgb;
 
 	color = ex_AmbientGlobal;
 

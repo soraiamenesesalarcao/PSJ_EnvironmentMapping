@@ -55,9 +55,9 @@ void main(){
 	// Distance, Halfvector, Direction
 	surfaceToLight = LightPosition - pos.xyz;
 	ex_LightDistance = length(surfaceToLight);
-	L = normalize(surfaceToLight);
-	V = normalize(-EyePosition);
-	ex_HalfVector = normalize(L + V);
+	L = normalize(surfaceToLight); // fica
+	V = normalize(EyePosition);
+	ex_HalfVector = normalize(L + V); // fica
 	ex_LightDirection = L;
 	N = normalize(NormalMatrix * in_Normal.xyz).xyz;
 	ex_Normal = N;

@@ -22,6 +22,7 @@
 #define VERTICES 0
 #define NORMALS 1
 #define UVS 2
+#define TANGENTS 3
 
 #define NSOLIDS 6
 #define TEAPOT 0
@@ -55,6 +56,7 @@ typedef struct {
 	float XYZW[4];
 	float NORMAL[4];
 	float UV[2];
+	float TANGENT[4];
 } Vertex;
 
 typedef struct {

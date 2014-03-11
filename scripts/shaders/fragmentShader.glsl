@@ -13,6 +13,7 @@ in float ex_LightDistance;
 // Textures
 uniform samplerCube CubeMap;
 //uniform sampler2D Texture1;
+//uniform sampler2D NormalTexture;
 
 // Material components
 uniform vec3 MaterialAmbientColor;
@@ -46,8 +47,13 @@ void main(){
 //	vec3 textureColor = texture(Texture1, ex_UV).rgb;
 	vec3 Reflect = reflect(ex_ViewVector, ex_Normal).xyz;
 	vec3 textureCube = texture(CubeMap, Reflect).rgb;
+// vec3 textureNormal = texture(NormalTexture, ex_UV).rgb; 
 
 //vec3 textureCube = texture(CubeMap, ex_Normal).rgb;
+
+	// Bump Mapping
+	//vec3 N = 2.0 * textureNormal - 1.0;
+	//N = normalize(N);
 
 	color = AmbientGlobal;
 
@@ -62,6 +68,8 @@ void main(){
 
 		Ambient = MaterialAmbientColor * LightAmbient;
 		Diffuse = MaterialDiffuseColor * LightDiffuse * NdotL;
+		// Bump Mapping
+		// Diffuse *= textureColor;
 
 		if (NdotL > 0){
 			NdotH = max(dot(ex_Normal, ex_HalfVector), 0.0);

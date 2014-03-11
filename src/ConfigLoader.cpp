@@ -55,6 +55,48 @@ namespace ConfigLoader {
 								memcpy(vertex2.NORMAL, &normals[atoi(face2[2].c_str())-1][0], sizeof(vertex2.NORMAL));
 								memcpy(vertex3.NORMAL, &normals[atoi(face3[2].c_str())-1][0], sizeof(vertex3.NORMAL));
 							}
+
+							glm::vec3 v1 = glm::vec3(vertex1.XYZW[0], vertex1.XYZW[1], vertex1.XYZW[2]);
+							glm::vec3 v2 = glm::vec3(vertex2.XYZW[0], vertex2.XYZW[1], vertex2.XYZW[2]);
+							glm::vec3 v3 = glm::vec3(vertex3.XYZW[0], vertex3.XYZW[1], vertex3.XYZW[2]);
+
+							glm::vec2 uvs1 = glm::vec2(vertex1.UV[0], vertex1.UV[1]);
+							glm::vec2 uvs2 = glm::vec2(vertex2.UV[0], vertex2.UV[1]);
+							glm::vec2 uvs3 = glm::vec2(vertex3.UV[0], vertex3.UV[1]);
+
+							glm::vec3 n1 = glm::vec3(vertex1.NORMAL[0], vertex1.NORMAL[1], vertex1.NORMAL[2]);
+							glm::vec3 n2 = glm::vec3(vertex2.NORMAL[0], vertex2.NORMAL[1], vertex2.NORMAL[2]);
+							glm::vec3 n3 = glm::vec3(vertex3.NORMAL[0], vertex3.NORMAL[1], vertex3.NORMAL[2]);
+							
+							glm::vec3 pos1 = v2 - v1;
+							glm::vec3 pos2 = v3 - v1;
+
+							glm::vec2 uv1 = uvs2 - uvs1;
+							glm::vec2 uv2 = uvs3 - uvs1;
+
+							float coef = 1/(uv1.x * uv2.y - uv2.x * uv1.y);
+							glm::vec3 tangent, bitangent;
+							tangent = coef*((pos1 * uv2.y) - (pos2 * uv1.y));
+							bitangent = coef*((pos1 * uv1.x) - (pos2 * uv2.x));
+
+							// Gram-Schmidt orthogonalize              and   handedness
+							// t'= normalize[(t – n * (Dot (n, t))]    and   t'.w =(Dot(Cross(n, t’), b) < 0.0f ? -1.0f : 1.0f;
+							glm::vec3 tangent_aux = tangent;
+							tangent_aux = glm::normalize(tangent - n1 * glm::dot(n1, tangent));
+							vertex1.TANGENT[0] = tangent_aux.x; vertex1.TANGENT[1] = tangent_aux.y; vertex1.TANGENT[2] = tangent_aux.z;
+							if(glm::dot(glm::cross(n1, tangent_aux), bitangent) < 0.0) vertex1.TANGENT[3] = -1.0; 
+							else vertex1.TANGENT[3] = 1.0;
+
+							tangent_aux = glm::normalize(tangent - n2 * glm::dot(n2, tangent));
+							vertex2.TANGENT[0] = tangent_aux.x; vertex2.TANGENT[1] = tangent_aux.y; vertex2.TANGENT[2] = tangent_aux.z;
+							if(glm::dot(glm::cross(n2, tangent_aux), bitangent) < 0.0) vertex2.TANGENT[3] = -1.0; 
+							else vertex2.TANGENT[3] = 1.0;
+
+							tangent_aux = glm::normalize(tangent - n3 * glm::dot(n3, tangent));
+							vertex3.TANGENT[0] = tangent_aux.x; vertex3.TANGENT[1] = tangent_aux.y; vertex3.TANGENT[2] = tangent_aux.z;
+							if(glm::dot(glm::cross(n3, tangent_aux), bitangent) < 0.0) vertex3.TANGENT[3] = -1.0; 
+							else vertex3.TANGENT[3] = 1.0;
+
 							vertexArray->push_back(vertex1);
 							vertexArray->push_back(vertex2);
 							vertexArray->push_back(vertex3);

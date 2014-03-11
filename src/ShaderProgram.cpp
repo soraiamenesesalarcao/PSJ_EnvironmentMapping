@@ -32,6 +32,7 @@ int ShaderProgram::createShaderProgram(char * vSFile, char * fSFile){
 	glBindAttribLocation(id, VERTICES, "in_Position");
 	glBindAttribLocation(id, NORMALS, "in_Normal");
 	glBindAttribLocation(id, UVS, "in_UV");
+	glBindAttribLocation(id, TANGENTS, "in_Tangent");
 	glLinkProgram(id);
 	
 	_modelMatrixUniformId = glGetUniformLocation(id, "ModelMatrix");
@@ -39,8 +40,8 @@ int ShaderProgram::createShaderProgram(char * vSFile, char * fSFile){
 	_sharedMatrixUboId = glGetUniformBlockIndex(id, "SharedMatrices");	
 
 	_textureUniformId[TEX_2D] = glGetUniformLocation(id, "Texture1");
+	//_textureUniformId[TEX_2D]= glGetUniformLocation(id, "NormalTexture");
 	_textureUniformId[TEX_CUBE] = glGetUniformLocation(id, "CubeMap");
-
 
 	glUniformBlockBinding(id, glGetUniformBlockIndex(id, "SharedMatrices"), 0);
 

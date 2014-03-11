@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Texture2D.h"
 #include "TextureCube.h"
+#include "TextureBumpMapping.h"
 
 
 class Entity {
@@ -24,6 +25,7 @@ class Entity {
 
 		Texture2D * _texture2D;
 		TextureCube * _textureCube;
+		TextureBumpMapping * _textureBumpMapping;
 
 		std::vector<Properties> _propertiesArray;
 		std::vector<Vertex> _vertexArray;

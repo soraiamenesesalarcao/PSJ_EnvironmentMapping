@@ -4,6 +4,7 @@
 layout(location = 0) in vec4 in_Position;
 layout(location = 1) in vec4 in_Normal;
 layout(location = 2) in vec2 in_UV;
+layout(location = 3) in vec4 in_Tangent;
 
 // Uniforms ////////////////////////////////////////////////////////////////////
 uniform mat4 ModelMatrix;
@@ -29,9 +30,7 @@ out float ex_LightDistance;
 void main(){
 
 	vec4 pos = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
-	vec4 pos2 = ViewMatrix * ModelMatrix * in_Position;
-
-	vec3 surfaceToLight, L, V, N;
+	vec3 surfaceToLight, L, V, N, T, B;
 
 	surfaceToLight = LightPosition - pos.xyz;
 	L = normalize(surfaceToLight);
@@ -42,9 +41,24 @@ void main(){
 	ex_Normal = N;
 	ex_HalfVector = normalize(L + V);
 	ex_LightVector = L;
-//	ex_ViewVector = V;
-	ex_ViewVector = normalize(pos2.xyz);
+
 	ex_LightDistance = length(surfaceToLight);
+
+	// Contas para o Cube Mapping
+	vec4 pos2 = ViewMatrix * ModelMatrix * in_Position;
+	ex_ViewVector = normalize(pos2.xyz);
+
+	// Contas para o Bump Mapping
+	// T = normalize(NormalMatrix, in_Tangent.xyz).xyz;
+	// B = in_Tangent.w * cross(N, T);
+	// vec3 lightDirection2 = normalize(LightPosition - pos2.xyz);
+	//vec3 v = (dot(lightDirection2, T), dot(lightDirection2, B), dot (lightDirection2, N));
+	//ex_LightVector = normalize(v);
+	//pos2 = normalize(pos2);
+
+	//vec3 halfVector = normalize(pos2 + lightDirection2).xyz; // ver se faz diferença
+	//vec3 v2 = (dot (halfVector, T), dot (halfVector, B), dot (halfVector, N));
+	//ex_HalfVector = normalize(v2);
 
 	// Contas para o Sphere Mapping
 	//vec3 U = normalize(ViewMatrix * ModelMatrix * in_Position);

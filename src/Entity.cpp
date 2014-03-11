@@ -70,7 +70,8 @@ void Entity::draw(){
 	/*if(_name.compare("Cube") == 0)
 		glEnable (GL_TEXTURE_CUBE_MAP);*/
 	_textureCube->draw();
-		
+	//_textureBumpMapping->draw();	
+	
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
 	GLint specularId = ShaderProgram::getInstance()->getId("MaterialSpecularColor");
@@ -90,6 +91,7 @@ void Entity::draw(){
 	//	glDisable(GL_TEXTURE_CUBE_MAP);
 
 	//	_texture2D->unbind();	
+	//_textureBumpMapping->unbind();
 
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }
@@ -109,6 +111,9 @@ void Entity::createBufferObjects(GLuint* vaoId, GLuint* vboId){
 	//Vertex UV
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(_vertexArray[0].NORMAL)*2));
+	//Vertex Tangent
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)sizeof(_vertexArray[0].TANGENT));
 }
 
 void Entity::calculateModelMatrix(){

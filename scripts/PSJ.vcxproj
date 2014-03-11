@@ -91,6 +91,7 @@
     <ClInclude Include="..\src\Skybox.h" />
     <ClInclude Include="..\src\Texture.h" />
     <ClInclude Include="..\src\Texture2D.h" />
+    <ClInclude Include="..\src\TextureBumpMapping.h" />
     <ClInclude Include="..\src\TextureCube.h" />
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\Utils.h" />
@@ -107,6 +108,7 @@
     <ClCompile Include="..\src\Skybox.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
     <ClCompile Include="..\src\Texture2D.cpp" />
+    <ClCompile Include="..\src\TextureBumpMapping.cpp" />
     <ClCompile Include="..\src\TextureCube.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\Utils.cpp" />

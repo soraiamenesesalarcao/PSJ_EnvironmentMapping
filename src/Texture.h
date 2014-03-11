@@ -8,6 +8,7 @@ class Texture {
 	protected:
 		GLenum _texUnitEnum;
 		int _texUnitInt;
+		std::vector<GLuint> _MtexID; // vania ve isto LOLs
 	//	GLuint _texID[2];
 		Texture(int texUnit);
 	//	~Texture();

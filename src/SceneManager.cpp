@@ -31,7 +31,7 @@ void SceneManager::draw(){
 		ShaderProgram::getInstance()->bind(_shaderProgram);
 
 		Camera::getInstance()->put();			// Camera 
-		//_skybox->draw();
+		_skybox->draw();
 		_objectList[_currentObject]->draw();	// Draw solid
 		
 		// LightSource
@@ -139,7 +139,7 @@ void SceneManager::createBufferObjects(){
 
 	// Create buffer for specific entity
 	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
-	//_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
+	_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
 	
 	// Reserve space for the Uniform Blocks
 	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
@@ -160,63 +160,63 @@ void SceneManager::initObjects(){
 	Entity* teapot = new Entity("Teapot");
 	teapot->setMesh("objects/teapot.obj");
 	teapot->setMaterial("materials/silver.mtl");
-	teapot->setTexture2D("textures/Streetscene_env.jpg", TEX_UNIT_0);
-	/*teapot->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+	//teapot->setTexture2D("textures/Streetscene_env.jpg", TEX_UNIT_0);
+	teapot->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 	addEntity(teapot);
 
 	Entity* cylinder = new Entity("Cylinder");
 	cylinder->setMesh("objects/cylinder.obj");
 	cylinder->setMaterial("materials/silver.mtl");
-	cylinder->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	/*cylinder->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+	//cylinder->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
+	cylinder->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 	addEntity(cylinder);
 
 	Entity* torus = new Entity("Torus");
 	torus->setMesh("objects/torus.obj");
 	torus->setMaterial("materials/silver.mtl");
-	torus->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	/*torus->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+	//torus->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
+	torus->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 	addEntity(torus);
 
 	Entity* cube = new Entity("Cube");
-	cube->setMesh("objects/cube_B.obj");
+	cube->setMesh("objects/cube.obj");
 	cube->setMaterial("materials/silver.mtl");
-	cube->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	/*cube->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+	//cube->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
+	cube->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 	addEntity(cube);
 
 	Entity* sphere = new Entity("Sphere");
 	sphere->setMesh("objects/sphere.obj");
 	sphere->setMaterial("materials/silver.mtl");
-	sphere->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	/*sphere->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+	//sphere->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
+	sphere->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 	addEntity(sphere);
 
 	Entity* quad = new Entity("Quad");
 	quad->setMesh("objects/quad.obj");
 	quad->setMaterial("materials/silver.mtl");
-	quad->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	/*quad->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+	//quad->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
+	quad->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 	addEntity(quad);
 
-	/*_skybox = new Skybox();
+	_skybox = new Skybox();
 	_skybox->setMesh("objects/cube.obj");
 	_skybox->setMaterial("materials/silver.mtl");
 	_skybox->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);*/
+							TEX_UNIT_0);
 }
 
 void SceneManager::addEntity(Entity* entity){

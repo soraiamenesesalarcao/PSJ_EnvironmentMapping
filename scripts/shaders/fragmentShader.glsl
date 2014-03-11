@@ -14,8 +14,8 @@ in vec2 ex_TextCoord;
 // Uniforms ////////////////////////////////////////////////////////////////////
 
 // Textures
-//uniform samplerCube CubeMap;
-uniform sampler2D Texture1;
+uniform samplerCube CubeMap;
+//uniform sampler2D Texture1;
 //uniform sampler2D NormalTexture;
 
 // Material components
@@ -47,9 +47,9 @@ void main(){
 	vec3 AmbientGlobal = MaterialAmbientColor * LightAmbientGlobal;
 
 // Multi-Texture
-	vec3 textureColor = texture(Texture1, ex_TextCoord).rgb; // sphereMapping
-//	vec3 Reflect = reflect(ex_ViewVector, ex_Normal).xyz;
-//	vec3 textureCube = texture(CubeMap, Reflect).rgb;
+//	vec3 textureColor = texture(Texture1, ex_TextCoord).rgb; // sphereMapping
+	vec3 Reflect = reflect(ex_ViewVector, ex_Normal).xyz;
+	vec3 textureCube = texture(CubeMap, Reflect).rgb;
 // vec3 textureNormal = texture(NormalTexture, ex_UV).rgb;
 
 	// Bump Mapping
@@ -58,7 +58,7 @@ void main(){
 
 	color = AmbientGlobal;
 
-	if(Illumination == 0) {
+	if(Illumination == 1) {
 		float Attenuation, NdotH, NdotL;
 
 		// Light and Material
@@ -78,7 +78,7 @@ void main(){
 		} else Specular = vec3(0.0);
 
 		color += Attenuation * (Diffuse + Specular + Ambient);
-		color *= textureColor;
+		color *= textureCube;
 	} 
-	else color = textureColor;
+	else color = textureCube;
 }

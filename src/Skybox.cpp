@@ -12,8 +12,6 @@ void Skybox::draw() {
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniformMatrix3fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
-	
-
 	_textureCube->draw();
 
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
@@ -28,9 +26,12 @@ void Skybox::draw() {
 	glUniform1f(shininessId, _shininess);
 	glUniform1i(illuminationId, LIGHT_OFF);
 
+	glDepthMask(GL_FALSE);
 	glFrontFace(GL_CW);
 	glDrawArrays(GL_TRIANGLES,0,_vertexArray.size());
 	glFrontFace(GL_CCW);
+	glDepthMask(GL_TRUE);
+	
 
 	_textureCube->unbind();
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");

@@ -66,9 +66,11 @@ void Entity::draw(){
 	glUniformMatrix3fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
 //	_texture2D->draw();
+
+	/*if(_name.compare("Cube") == 0)
+		glEnable (GL_TEXTURE_CUBE_MAP);*/
 	_textureCube->draw();
 		
-
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
 	GLint specularId = ShaderProgram::getInstance()->getId("MaterialSpecularColor");
@@ -84,8 +86,10 @@ void Entity::draw(){
 	glDrawArrays(GL_TRIANGLES,0,_vertexArray.size());
 
 	_textureCube->unbind();
-	//	_texture2D->unbind();
-	
+	//if(_name.compare("Cube") == 0)
+	//	glDisable(GL_TEXTURE_CUBE_MAP);
+
+	//	_texture2D->unbind();	
 
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }

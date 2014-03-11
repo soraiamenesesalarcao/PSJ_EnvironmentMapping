@@ -47,6 +47,8 @@ void main(){
 	vec3 Reflect = reflect(ex_ViewVector, ex_Normal).xyz;
 	vec3 textureCube = texture(CubeMap, Reflect).rgb;
 
+//vec3 textureCube = texture(CubeMap, ex_Normal).rgb;
+
 	color = AmbientGlobal;
 
 	if(Illumination == 1) {

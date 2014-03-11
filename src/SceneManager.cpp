@@ -30,10 +30,10 @@ void SceneManager::draw(){
 	if(!_objectList.empty()){
 		ShaderProgram::getInstance()->bind(_shaderProgram);
 
-		Camera::getInstance()->put(); 			// Camera 
-		_objectList[_currentObject]->draw();	// Draw solid
+		Camera::getInstance()->put();			// Camera 
 		_skybox->draw();
-
+		_objectList[_currentObject]->draw();	// Draw solid
+		
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
 		glUniform3fv(ambientGId, 1, glm::value_ptr(_ambientGlobal));
@@ -157,7 +157,7 @@ void SceneManager::createBufferObjects(){
 void SceneManager::initObjects(){
 	Entity* teapot = new Entity("Teapot");
 	teapot->setMesh("objects/teapot.obj");
-	teapot->setMaterial("materials/ruby.mtl");
+	teapot->setMaterial("materials/silver.mtl");
 	//teapot->setTexture2D("textures/stone.tga", TEX_UNIT_1);
 	teapot->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
@@ -175,7 +175,7 @@ void SceneManager::initObjects(){
 
 	Entity* torus = new Entity("Torus");
 	torus->setMesh("objects/torus.obj");
-	torus->setMaterial("materials/gold.mtl");
+	torus->setMaterial("materials/silver.mtl");
 	//torus->setTexture2D("textures/stone.tga", TEX_UNIT_1);
 	torus->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
@@ -183,8 +183,8 @@ void SceneManager::initObjects(){
 	addEntity(torus);
 
 	Entity* cube = new Entity("Cube");
-	cube->setMesh("objects/cube.obj");
-	cube->setMaterial("materials/esmerald.mtl");
+	cube->setMesh("objects/cube_B.obj");
+	cube->setMaterial("materials/silver.mtl");
 	//cube->setTexture2D("textures/stone.tga", TEX_UNIT_1);
 	cube->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
@@ -193,7 +193,7 @@ void SceneManager::initObjects(){
 
 	Entity* sphere = new Entity("Sphere");
 	sphere->setMesh("objects/sphere.obj");
-	sphere->setMaterial("materials/cyan.mtl");
+	sphere->setMaterial("materials/silver.mtl");
 	//sphere->setTexture2D("textures/stone.tga", TEX_UNIT_1);
 	sphere->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
@@ -202,7 +202,7 @@ void SceneManager::initObjects(){
 
 	Entity* quad = new Entity("Quad");
 	quad->setMesh("objects/quad.obj");
-	quad->setMaterial("materials/ruby.mtl");
+	quad->setMaterial("materials/silver.mtl");
 	//quad->setTexture2D("textures/stone.tga", TEX_UNIT_1);
 	quad->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
@@ -210,8 +210,8 @@ void SceneManager::initObjects(){
 	addEntity(quad);
 
 	_skybox = new Skybox();
-	_skybox->setMesh("objects/sphere.obj");
-	_skybox->setMaterial("materials/cyan.mtl");
+	_skybox->setMesh("objects/cube.obj");
+	_skybox->setMaterial("materials/silver.mtl");
 	_skybox->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
 							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
 							TEX_UNIT_0);

@@ -29,7 +29,7 @@ out float ex_LightDistance;
 void main(){
 
 	vec4 pos = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
-	vec3 pos2 = ViewMatrix * ModelMatrix * in_Position;
+	vec4 pos2 = ViewMatrix * ModelMatrix * in_Position;
 
 	vec3 surfaceToLight, L, V, N;
 
@@ -43,7 +43,7 @@ void main(){
 	ex_HalfVector = normalize(L + V);
 	ex_LightVector = L;
 //	ex_ViewVector = V;
-	ex_ViewVector = normalize(pos2);
+	ex_ViewVector = normalize(pos2.xyz);
 	ex_LightDistance = length(surfaceToLight);
 
 	// Contas para o Sphere Mapping

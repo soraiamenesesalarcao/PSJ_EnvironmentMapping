@@ -6,6 +6,7 @@
 class TextureCube : public Texture {
 
 	private:
+		GLuint _texID;
 		std::string _files[6];
 
 	public:

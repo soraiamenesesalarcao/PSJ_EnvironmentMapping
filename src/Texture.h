@@ -8,9 +8,9 @@ class Texture {
 	protected:
 		GLenum _texUnitEnum;
 		int _texUnitInt;
-		GLuint _texID;
+	//	GLuint _texID[2];
 		Texture(int texUnit);
-		~Texture();
+	//	~Texture();
 	public:		
 		virtual void bind() = 0;
 		virtual void unbind() = 0;

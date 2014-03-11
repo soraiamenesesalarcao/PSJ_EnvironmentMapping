@@ -9,6 +9,6 @@ Texture::Texture(int texUnit) {
 		_texUnitEnum = GL_TEXTURE1;
 }
 
-Texture::~Texture(){
-	glDeleteTextures(1, &_texID);
-}
+//Texture::~Texture(){
+//	glDeleteTextures(2, _texID);
+//}

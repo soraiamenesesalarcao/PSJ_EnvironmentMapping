@@ -6,7 +6,7 @@ const glm::quat Entity::DEFAULT_ROTATION = glm::quat();
 const glm::vec3 Entity::DEFAULT_SCALE = glm::vec3(0.1,0.1,0.1);
 
 
-Entity::Entity(std::string name) /* : _textureID(-1) */{
+Entity::Entity(std::string name){
 	float x_angle = 0.0;
 	_name = name;
 	Properties initialProperty = { DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE };
@@ -15,17 +15,13 @@ Entity::Entity(std::string name) /* : _textureID(-1) */{
 	_q = glm::angleAxis(x_angle, glm::vec3(1.0, 0.0, 0.0));
 }
 
-Entity::Entity()  /* :_textureID(-1) */{
+Entity::Entity(){
 		
 }
 
 std::string Entity::getName() const{
 	return _name;
 }
-
-//void Entity::setTexture(const int id){
-//	_textureID = id;
-//}
 
 /* read the .obj file*/
 void Entity::setMesh(char * file){
@@ -38,13 +34,15 @@ void Entity::setMaterial(char* file){
 }
 
 
-void Entity::setTexture2D(std::string file){
-	_texture2D = new Texture2D(file, TEX_UNIT_0);
+void Entity::setTexture2D(std::string file, int texUnit){
+	_texture2D = new Texture2D(file, texUnit);
 }
 
+
 void Entity::setTextureCube(std::string f1, std::string f2, std::string f3,
-							std::string f4, std::string f5, std::string f6){
-	_textureCube = new TextureCube(f1, f2, f3, f4, f5, f6, TEX_UNIT_0);
+							std::string f4, std::string f5, std::string f6,
+							int texUnit){
+	_textureCube = new TextureCube(f1, f2, f3, f4, f5, f6, texUnit);
 }
 
 
@@ -55,7 +53,6 @@ void Entity::rotate(glm::vec3 axis) {
 	_q = glm::angleAxis(angle / ROTATION_DELAY, axis) * _propertiesArray[0].rotation;;
 	_propertiesArray[0].rotation = _q;
 	calculateModelMatrix();
-	//calculateNormalMatrix();
 	glutPostRedisplay();
 }
 
@@ -70,6 +67,7 @@ void Entity::draw(){
 	
 //	_texture2D->draw();
 	_textureCube->draw();
+		
 
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
@@ -85,8 +83,9 @@ void Entity::draw(){
 
 	glDrawArrays(GL_TRIANGLES,0,_vertexArray.size());
 
-	//_texture2D->unbind();
 	_textureCube->unbind();
+	//	_texture2D->unbind();
+	
 
 	Utils::checkOpenGLError("ERROR: Could not draw scene.");
 }

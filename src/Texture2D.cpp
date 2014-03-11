@@ -7,7 +7,6 @@ Texture2D::Texture2D(std::string file, int texUnit) : Texture(texUnit) {
 
 	glGenTextures(1, &_texID);
 
-	//glActiveTexture(GL_TEXTURE0);
 	glActiveTexture(_texUnitEnum);
 	glBindTexture(GL_TEXTURE_2D, _texID);
 

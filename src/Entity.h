@@ -25,7 +25,6 @@ class Entity {
 		Texture2D * _texture2D;
 		TextureCube * _textureCube;
 
-		//int _textureID;
 		std::vector<Properties> _propertiesArray;
 		std::vector<Vertex> _vertexArray;
 		int _currentPropertyIndex;
@@ -46,10 +45,10 @@ class Entity {
 
 		void setMesh(char* file);
 		void setMaterial(char* file); 
-		//void setTexture(const int id);
-		void setTexture2D(std::string file);
+		void setTexture2D(std::string file, int texUnit);
 		void setTextureCube(std::string f1, std::string f2, std::string f3,
-							std::string f4, std::string f5, std::string f6);
+							std::string f4, std::string f5, std::string f6, 
+							int texUnit);
 
 		void rotate(glm::vec3 axis);
 		void draw();

@@ -6,6 +6,7 @@
 class Texture2D : public Texture {
 
 	private:
+		GLuint _texID;
 		std::string _file;
 
 	public:

@@ -98,7 +98,7 @@ void Camera::update(){
 	
 	// spheric camera
 	glm::vec2 mouse = Input::getInstance()->getMouseMotion();
-	if(mouse.x != 0 || mouse.y != 0){} //rotate(mouse.y, mouse.x);
+	if(mouse.x != 0 || mouse.y != 0){} rotate(mouse.y, mouse.x);
 
 	// zoom
 	_distance = MAX(MIN((_distance + Input::getInstance()->getWheelDirection()), 10), 2);

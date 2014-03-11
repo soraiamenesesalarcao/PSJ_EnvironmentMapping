@@ -25,6 +25,8 @@ out vec3 ex_LightVector;
 out vec3 ex_ViewVector;
 out float ex_LightDistance;
 
+out vec2 ex_TextCoord;
+
 // Main ////////////////////////////////////////////////////////////////////////
 
 void main(){
@@ -52,20 +54,18 @@ void main(){
 	// T = normalize(NormalMatrix, in_Tangent.xyz).xyz;
 	// B = in_Tangent.w * cross(N, T);
 	// vec3 lightDirection2 = normalize(LightPosition - pos2.xyz);
-	//vec3 v = (dot(lightDirection2, T), dot(lightDirection2, B), dot (lightDirection2, N));
-	//ex_LightVector = normalize(v);
-	//pos2 = normalize(pos2);
-
-	//vec3 halfVector = normalize(pos2 + lightDirection2).xyz; // ver se faz diferença
-	//vec3 v2 = (dot (halfVector, T), dot (halfVector, B), dot (halfVector, N));
-	//ex_HalfVector = normalize(v2);
+	// vec3 v = (dot(lightDirection2, T), dot(lightDirection2, B), dot (lightDirection2, N));
+	// ex_LightVector = normalize(v);
+	// pos2 = normalize(pos2);
+	// vec3 halfVector = normalize(pos2 + lightDirection2).xyz; // ver se faz diferença
+	// vec3 v2 = (dot (halfVector, T), dot (halfVector, B), dot (halfVector, N));
+	// ex_HalfVector = normalize(v2);
 
 	// Contas para o Sphere Mapping
-	//vec3 U = normalize(ViewMatrix * ModelMatrix * in_Position);
-	//vec3 R = reflect(U, N);
-	//float m = 2.0 * sqrt(pow(R.x, 2.0) + pow(R.y, 2.0) + pow(R.z + 1.0, 2.0));
-	//ex_UV[1].s = R.x/m + 0.5;
-	//ex_UV[1].t = R.y/m + 0.5;
+	vec3 U = normalize(pos2.xyz);
+	vec3 R = reflect(U, N);
+	float m = 2.0 * sqrt(2*(R.z + 1));
+	ex_TextCoord = vec2(R.x/m + 0.5, -R.y/m + 0.5);
 
 	gl_Position = pos;
 }

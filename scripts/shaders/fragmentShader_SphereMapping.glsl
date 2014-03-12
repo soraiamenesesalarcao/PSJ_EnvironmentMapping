@@ -10,7 +10,7 @@ in float ex_LightDistance;
 // Uniforms ////////////////////////////////////////////////////////////////////
 
 // Texture
-uniform sampler2D TextureSphere;
+uniform sampler2D Texture2D;
 
 // Material components
 uniform vec3 MaterialAmbientColor;
@@ -34,11 +34,11 @@ out vec3 color;
 // Main ////////////////////////////////////////////////////////////////////////
 void main(){
 	
-	vec3 Ambient, Diffuse, Specular;
+	vec3 AmbientGlobal, Ambient, Diffuse, Specular, textureColor;
 	float Attenuation, NdotH, NdotL;
 
-	vec3 AmbientGlobal = MaterialAmbientColor * LightAmbientGlobal;
-	vec3 textureColor = texture(TextureSphere, ex_UV).rgb;
+	AmbientGlobal = MaterialAmbientColor * LightAmbientGlobal;
+	textureColor = texture(Texture2D, ex_UV).rgb;
 
 	color = AmbientGlobal;
 
@@ -52,10 +52,10 @@ void main(){
 	if (NdotL > 0){
 		NdotH = max(dot(ex_Normal, ex_HalfVector), 0.0);
 		Specular = MaterialSpecularColor * LightSpecular * pow(NdotH, MaterialShininess);
-	} else Specular = vec3(0.0);
+	}
+	else Specular = vec3(0.0);
 
 	color += Attenuation * (Diffuse + Specular + Ambient);
-
 	color *= textureColor;
 
 }

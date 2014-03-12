@@ -8,7 +8,7 @@ in vec3 ex_LightVector;
 // Uniforms ////////////////////////////////////////////////////////////////////
 
 // Textures
-uniform sampler2D Texture1;
+uniform sampler2D Texture2D;
 uniform sampler2D NormalTexture;
 
 // Material components
@@ -29,19 +29,19 @@ out vec3 color;
 // Main ////////////////////////////////////////////////////////////////////////
 void main(){
 
-	vec3 Ambient, Diffuse, Specular;
+	vec3 AmbientGlobal, Ambient, Diffuse, Specular, textureColor, textureNormal;
+	vec3 lightVec, halfVec, N
 	float Attenuation, NdotH, NdotL;
 
-	vec3 AmbientGlobal = vec3(0.2);
+	AmbientGlobal = vec3(0.2); // receber?
 
-	vec3 textureColor = texture(Texture1, ex_UV).rgb;
-	vec3 textureNormal = texture(NormalTexture, ex_UV).rgb; 
+	textureColor = texture(Texture2D, ex_UV).rgb;
+	textureNormal = texture(NormalTexture, ex_UV).rgb; 
 
-	vec3 lightVec = normalize(-ex_LightVector);
-	vec3 halfVec = normalize(ex_HalfVector);
+	lightVec = normalize(-ex_LightVector);
+	halfVec = normalize(ex_HalfVector);
 
-	vec3 N = 2.0 * textureNormal - 1.0;
-	//N = normalize(N);
+	N = 2.0 * textureNormal - 1.0;
 	
 	color = AmbientGlobal;
 
@@ -52,7 +52,8 @@ void main(){
 	if (NdotL > 0){
 		NdotH = max(0.0, dot(N, halfVec));
 		Specular = MaterialSpecularColor * LightSpecular * pow(NdotH, MaterialShininess);
-	} else Specular = vec3(0.0);
+	}
+	else Specular = vec3(0.0);
 
 	color += Diffuse + Specular + Ambient;
 	color *= textureColor;

@@ -27,29 +27,26 @@ out float ex_LightDistance;
 // Main ////////////////////////////////////////////////////////////////////////
 void main(){
 	
-	vec4 pos = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
+	vec4 pos, pos2; 
+	vec3 surfaceToLight, L, V, N, U, R;
+	float m;
 
-	vec3 surfaceToLight, L, V, N;
-
+	pos = ProjectionMatrix * ViewMatrix * ModelMatrix * in_Position;
 	surfaceToLight = LightPosition - pos.xyz;
 	L = normalize(surfaceToLight);
 	V = normalize(EyePosition);
 	N = normalize(NormalMatrix * in_Normal.xyz).xyz;
 
-	ex_UV = in_UV;
+	pos2 = ViewMatrix * ModelMatrix * in_Position;
+	U = normalize(pos2.xyz);
+	R = reflect(U, N);
+	m = 2.0 * sqrt(2*(R.z + 1));
+
+	ex_UV = vec2(R.x/m + 0.5, -R.y/m + 0.5);
 	ex_Normal = N;
 	ex_HalfVector = normalize(L + V);
 	ex_LightVector = L;
 	ex_LightDistance = length(surfaceToLight);
 
-	vec4 pos2 = ViewMatrix * ModelMatrix * in_Position;
-	vec3 U = normalize(pos2.xyz);
-	vec3 N = normalize(NormalMatrix * in_Normal.xyz).xyz;
-	vec3 R = reflect(U, N);
-	float m = 2.0 * sqrt(2*(R.z + 1));
-	ex_UV = vec2(R.x/m + 0.5, -R.y/m + 0.5);
-
-
 	gl_Position = pos;
-
 }

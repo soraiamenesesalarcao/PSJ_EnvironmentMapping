@@ -34,7 +34,7 @@
 
 #define LIGHT_OFF 0
 #define LIGHT_ON 1
-#define LIGHT_OFFSET 0.005
+#define LIGHT_OFFSET 0.01
 #define ANGLE_OFFSET 0.05
 #define ROTATION_DELAY 1.0f
 
@@ -44,9 +44,15 @@
 
 #define TEX_UNIT_0 0
 #define TEX_UNIT_1 1
+#define TEX_UNIT_2 2
 
 #define TEX_2D 0
 #define TEX_CUBE 1
+
+#define NMAPINGS 3
+#define CUBE_MAPPING 0
+#define SPHERE_MAPPING 1
+#define BUMP_MAPPING 2
 
 #define MAX(a,b) (((a)>(b))?(a):(b))
 #define MIN(a,b) (((a)<(b))?(a):(b))

@@ -38,11 +38,12 @@ out vec3 color;
 // Main ////////////////////////////////////////////////////////////////////////
 void main(){
 
-	vec3 AmbientGlobal, Ambient, Diffuse, Specular, Reflect, textureCube;
+	vec3 AmbientGlobal, Ambient, Diffuse, Specular, Reflect, textureCube, textureCubeSky;
 	
 	AmbientGlobal = MaterialAmbientColor * LightAmbientGlobal;
 	Reflect = reflect(ex_ViewVector, ex_Normal).xyz;
 	textureCube = texture(CubeMap, Reflect).rgb;
+	textureCubeSky = texture(CubeMap, ex_Normal).rgb;
 
 	color = AmbientGlobal;
 
@@ -67,5 +68,5 @@ void main(){
 		color += Attenuation * (Diffuse + Specular + Ambient);
 		color *= textureCube;
 	} 
-	else color* = textureCube;
+	else color = textureCubeSky;
 }

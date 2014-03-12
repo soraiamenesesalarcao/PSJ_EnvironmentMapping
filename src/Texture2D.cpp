@@ -8,18 +8,20 @@ Texture2D::Texture2D(std::string file, int texUnit) : Texture(texUnit) {
 	glGenTextures(1, &_texID);
 
 	glActiveTexture(_texUnitEnum);
+
 	glBindTexture(GL_TEXTURE_2D, _texID);
 
 	unsigned char* image = SOIL_load_image(_file.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	SOIL_free_image_data(image);
-
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Texture2D::~Texture2D() {
+	glDeleteTextures(1, &_texID);
 }
 
 void Texture2D::bind() {

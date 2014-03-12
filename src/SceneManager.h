@@ -21,14 +21,21 @@ class SceneManager {
 		GLuint* _vboId;
 		GLuint* _vaoIdEnv;
 		GLuint* _vboIdEnv;
-		/*A list where all figures are stored*/
+
 		std::vector<Entity*> _objectList;
 		Skybox * _skybox;
 		int _currentObject;
+		int _mappingMode;
 	
 		/* The Uniform ID value */
 		GLint _uniformBlockId;
 		GLuint UBO_BP;
+
+		void createEntities();
+		void createSkyBox();
+		void updateMapping();
+		void changeShader();		
+		void addEntity(Entity* entity);
 		
 	public:
 		static SceneManager * getInstance();
@@ -36,7 +43,5 @@ class SceneManager {
 		void draw();
 		void update();
 		void createBufferObjects();
-		void destroyBufferObjects();
-		void initObjects();
-		void addEntity(Entity* entity);
+		void destroyBufferObjects();		
 };

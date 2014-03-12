@@ -8,15 +8,126 @@ SceneManager * SceneManager::getInstance(){
 	return &instance;
 }
 
+
+void SceneManager::createEntities(){
+	
+	Entity* teapot = new Entity("Teapot");
+	Entity* cylinder = new Entity("Cylinder");
+	Entity* torus = new Entity("Torus");
+	Entity* cube = new Entity("Cube");
+	Entity* sphere = new Entity("Sphere");
+	Entity* quad = new Entity("Quad");
+
+	// Meshes
+	teapot->setMesh("objects/teapot.obj");
+	cylinder->setMesh("objects/cylinder.obj");
+	torus->setMesh("objects/torus.obj");
+	cube->setMesh("objects/cube.obj");
+	sphere->setMesh("objects/sphere.obj");
+	quad->setMesh("objects/quad.obj");
+	
+	// Materials
+	teapot->setMaterial("materials/silver.mtl");	
+	cylinder->setMaterial("materials/silver.mtl");	
+	torus->setMaterial("materials/silver.mtl");
+	cube->setMaterial("materials/silver.mtl");
+	sphere->setMaterial("materials/silver.mtl");
+	quad->setMaterial("materials/silver.mtl");
+	
+	// Adding to entities list
+	addEntity(teapot);
+	addEntity(cylinder);
+	addEntity(torus);
+	addEntity(cube);
+	addEntity(sphere);
+	addEntity(quad);
+	_skybox = NULL;
+
+}
+
+void SceneManager::createSkyBox() {
+	_skybox = new Skybox();
+	_skybox->setMesh("objects/sphere.obj");
+	_skybox->setMaterial("materials/silver.mtl");		
+}
+
+void SceneManager::updateMapping() {
+	
+
+	switch(_mappingMode) {
+		case CUBE_MAPPING:	
+			std::cout << "cube mapping " << std::endl;
+			for (int i = 0; i < NSOLIDS; i++){
+				_objectList[i]->cleanTextures();
+				_objectList[i]->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+									"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
+									TEX_UNIT_0);
+			}
+			createSkyBox();
+			_skybox->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
+								"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
+								TEX_UNIT_0);
+			break;
+		case SPHERE_MAPPING:
+			std::cout << "sphere mapping " << std::endl;
+			for (int i = 0; i < NSOLIDS; i++){				
+				_objectList[i]->cleanTextures();
+				_objectList[i]->setTexture2D("textures/spheremap.jpg", TEX_UNIT_0);
+			}
+			if(_skybox != NULL) {
+				_skybox->~Skybox();
+				_skybox = NULL;
+			}
+			break;
+		case BUMP_MAPPING:
+			std::cout << "bump mapping " << std::endl;
+			for (int i = 0; i < NSOLIDS; i++){				
+				_objectList[i]->cleanTextures();
+				_objectList[i]->setTexture2D("textures/spheremap.jpg", TEX_UNIT_0);
+			}
+			if(_skybox != NULL) {
+					_skybox->~Skybox();
+					_skybox = NULL;
+			}
+			break;
+		default:
+			;
+	}
+
+}
+
+void SceneManager::changeShader() {
+	switch(_mappingMode) {
+		case CUBE_MAPPING:
+			_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader_CubeMapping.glsl", 
+																			"shaders/fragmentShader_CubeMapping.glsl");
+			break;
+		case SPHERE_MAPPING:
+			_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader_SphereMapping.glsl", 
+																			"shaders/fragmentShader_SphereMapping.glsl");
+			break;
+		case BUMP_MAPPING:
+			_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader_SphereMapping.glsl", 
+																			"shaders/fragmentShader_SphereMapping.glsl");
+			break;
+		default:
+			;
+	}
+}
+
+void SceneManager::addEntity(Entity* entity){
+	_objectList.push_back(entity);
+}
+
+
 void SceneManager::init(){
 
-	// Shader
-	_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader.glsl", 
-																	   "shaders/fragmentShader.glsl");
-
-	// Textures
+	// Objects
 	_currentObject = TEAPOT;
-	initObjects();
+	_mappingMode = CUBE_MAPPING;
+	createEntities();
+	updateMapping();
+	changeShader();
 	createBufferObjects();
 
 	// LightSource
@@ -30,10 +141,14 @@ void SceneManager::draw(){
 	if(!_objectList.empty()){
 		ShaderProgram::getInstance()->bind(_shaderProgram);
 
-		Camera::getInstance()->put();			// Camera 
-		_skybox->draw();
-		_objectList[_currentObject]->draw();	// Draw solid
+		// Camera 
+		Camera::getInstance()->put();			
 		
+		// Draw solid
+		_objectList[_currentObject]->draw(_mappingMode);	
+		_skybox->draw(_mappingMode);
+		
+
 		// LightSource
 		GLint ambientGId = ShaderProgram::getInstance()->getId("LightAmbientGlobal");
 		glUniform3fv(ambientGId, 1, glm::value_ptr(_ambientGlobal));
@@ -49,6 +164,16 @@ void SceneManager::update(){
 	if(Input::getInstance()->keyWasReleased('T')) {
 		_currentObject = (_currentObject + 1) % NSOLIDS;
 		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
+	}
+
+	if(Input::getInstance()->keyWasReleased('P')) {
+		_mappingMode= (_mappingMode + 1) % NMAPINGS;
+		changeShader();
+		updateMapping();
+		_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
+		if(_skybox != NULL) {
+			_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
+		}
 	}
 
 	// Exit
@@ -108,6 +233,39 @@ void SceneManager::update(){
 	Camera::getInstance()->update();
 }
 
+
+
+void SceneManager::createBufferObjects(){
+	_vaoId = new GLuint[1];
+	_vboId = new GLuint[2];
+	_vaoIdEnv = new GLuint[1];
+	_vboIdEnv = new GLuint[2];
+
+	glGenVertexArrays(1, _vaoId);		//Vertex Array
+	glGenBuffers(2, _vboId);			//Buffer Array
+	glGenVertexArrays(1, _vaoIdEnv);	//Vertex Array
+	glGenBuffers(2, _vboIdEnv);			//Buffer Array
+
+	// Create buffer for specific entity
+	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
+	if(_skybox != NULL)
+		_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
+	
+	// Reserve space for the Uniform Blocks
+	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(float)*16*2, 0, GL_STREAM_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 0, _vboId[1]);
+
+	// Clear buffers
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(0); //Vertices
+	glDisableVertexAttribArray(1); //Normals
+	glDisableVertexAttribArray(2); //UVs
+	glDisableVertexAttribArray(3); //Tangents
+}
+
 void SceneManager::destroyBufferObjects(){
 	_objectList.clear();
 	ShaderProgram::getInstance()->destroyShaderProgram();
@@ -126,100 +284,5 @@ void SceneManager::destroyBufferObjects(){
 	Camera::getInstance()->~Camera();
 }
 
-void SceneManager::createBufferObjects(){
-	_vaoId = new GLuint[1];
-	_vboId = new GLuint[2];
-	_vaoIdEnv = new GLuint[1];
-	_vboIdEnv = new GLuint[2];
 
-	glGenVertexArrays(1, _vaoId);		//Vertex Array
-	glGenBuffers(2, _vboId);			//Buffer Array
-	glGenVertexArrays(1, _vaoIdEnv);	//Vertex Array
-	glGenBuffers(2, _vboIdEnv);			//Buffer Array
-
-	// Create buffer for specific entity
-	_objectList[_currentObject]->createBufferObjects(_vaoId, _vboId);
-	_skybox->createBufferObjects(_vaoIdEnv, _vboIdEnv);
-	
-	// Reserve space for the Uniform Blocks
-	glBindBuffer(GL_UNIFORM_BUFFER, _vboId[1]);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(float)*16*2, 0, GL_STREAM_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 0, _vboId[1]);
-
-	// Clear buffers
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(0); //Vertices
-	glDisableVertexAttribArray(1); //Normals
-	glDisableVertexAttribArray(2); //UVs
-	glDisableVertexAttribArray(3); //Tangents
-}
-
-void SceneManager::initObjects(){
-	Entity* teapot = new Entity("Teapot");
-	teapot->setMesh("objects/teapot.obj");
-	teapot->setMaterial("materials/silver.mtl");
-	//teapot->setTexture2D("textures/Streetscene_env.jpg", TEX_UNIT_0);
-	teapot->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-	addEntity(teapot);
-
-	Entity* cylinder = new Entity("Cylinder");
-	cylinder->setMesh("objects/cylinder.obj");
-	cylinder->setMaterial("materials/silver.mtl");
-	//cylinder->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	cylinder->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-	addEntity(cylinder);
-
-	Entity* torus = new Entity("Torus");
-	torus->setMesh("objects/torus.obj");
-	torus->setMaterial("materials/silver.mtl");
-	//torus->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	torus->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-	addEntity(torus);
-
-	Entity* cube = new Entity("Cube");
-	cube->setMesh("objects/cube.obj");
-	cube->setMaterial("materials/silver.mtl");
-	//cube->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	cube->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-	addEntity(cube);
-
-	Entity* sphere = new Entity("Sphere");
-	sphere->setMesh("objects/sphere.obj");
-	sphere->setMaterial("materials/silver.mtl");
-	//sphere->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	sphere->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-	addEntity(sphere);
-
-	Entity* quad = new Entity("Quad");
-	quad->setMesh("objects/quad.obj");
-	quad->setMaterial("materials/silver.mtl");
-	//quad->setTexture2D("textures/gl_map.jpg", TEX_UNIT_0);
-	quad->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-	addEntity(quad);
-
-	_skybox = new Skybox();
-	_skybox->setMesh("objects/cube.obj");
-	_skybox->setMaterial("materials/silver.mtl");
-	_skybox->setTextureCube("textures/posx.jpg", "textures/negx.jpg", "textures/posy.jpg",
-							"textures/negy.jpg", "textures/posz.jpg", "textures/negz.jpg",
-							TEX_UNIT_0);
-}
-
-void SceneManager::addEntity(Entity* entity){
-	_objectList.push_back(entity);
-}
 

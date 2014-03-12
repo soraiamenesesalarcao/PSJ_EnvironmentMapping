@@ -148,6 +148,18 @@
     <None Include="shaders\vertexShader.glsl">
       <Filter>Resource Files\shaders</Filter>
     </None>
+    <None Include="shaders\fragmentShader_SphereMapping.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="shaders\vertexShader_SphereMapping.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="shaders\fragmentShader_CubeMapping.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
+    <None Include="shaders\vertexShader_CubeMapping.glsl">
+      <Filter>Resource Files\shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config\lights.xml">

@@ -13,11 +13,15 @@ Entity::Entity(std::string name){
 	_propertiesArray.push_back(initialProperty);
 	calculateModelMatrix();
 	_q = glm::angleAxis(x_angle, glm::vec3(1.0, 0.0, 0.0));
+	_texture2D = NULL;
+	_textureCube = NULL;
 }
 
 Entity::Entity(){
-		
+	_texture2D = NULL;
+	_textureCube = NULL;
 }
+
 
 std::string Entity::getName() const{
 	return _name;
@@ -35,7 +39,7 @@ void Entity::setMaterial(char* file){
 
 
 void Entity::setTexture2D(std::string file, int texUnit){
-	_texture2D = new Texture2D(file, texUnit);
+	_texture2D = new Texture2D(file, texUnit);	
 }
 
 
@@ -45,6 +49,12 @@ void Entity::setTextureCube(std::string f1, std::string f2, std::string f3,
 	_textureCube = new TextureCube(f1, f2, f3, f4, f5, f6, texUnit);
 }
 
+void Entity::cleanTextures() {
+	if(_texture2D != NULL)
+		_texture2D->~Texture2D();
+	if(_textureCube != NULL)
+		_textureCube->~TextureCube();
+}
 
 void Entity::rotate(glm::vec3 axis) {
 	glm::quat q;
@@ -56,7 +66,7 @@ void Entity::rotate(glm::vec3 axis) {
 	glutPostRedisplay();
 }
 
-void Entity::draw(){
+void Entity::draw(int mode){
 
 	calculateModelMatrix();
 	calculateNormalMatrix();
@@ -65,12 +75,19 @@ void Entity::draw(){
 	glUniformMatrix4fv(ShaderProgram::getInstance()->getModelMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentModelMatrix));
 	glUniformMatrix3fv(ShaderProgram::getInstance()->getNormalMatrixUniformId(), 1, GL_FALSE, glm::value_ptr(_currentNormalMatrix));
 	
-	//_texture2D->draw();
-
-	/*if(_name.compare("Cube") == 0)
-		glEnable (GL_TEXTURE_CUBE_MAP);*/
-	_textureCube->draw();
-	//_textureBumpMapping->draw();	
+	switch(mode) {
+		case CUBE_MAPPING:
+			_textureCube->draw();
+			//_texture2D->draw();
+			break;
+		case SPHERE_MAPPING:
+			_texture2D->draw();
+			break;
+		case BUMP_MAPPING:
+			//_textureBumpMapping->draw();
+			_texture2D->draw();
+			break;
+	}
 	
 	GLint ambientId = ShaderProgram::getInstance()->getId("MaterialAmbientColor");
 	GLint diffuseId = ShaderProgram::getInstance()->getId("MaterialDiffuseColor");
@@ -86,14 +103,22 @@ void Entity::draw(){
 
 	glDrawArrays(GL_TRIANGLES, 0, _vertexArray.size());
 
-	_textureCube->unbind();
-	//if(_name.compare("Cube") == 0)
-	//	glDisable(GL_TEXTURE_CUBE_MAP);
 
-	//	_texture2D->unbind();	
-	//_textureBumpMapping->unbind();
+	switch(mode) {
+		case CUBE_MAPPING:
+			_textureCube->unbind();
+			//_texture2D->unbind();	
+			break;
+		case SPHERE_MAPPING:
+			_texture2D->unbind();	
+			break;
+		case BUMP_MAPPING:
+			//_textureBumpMapping->unbind();
+			_texture2D->unbind();	
+			break;
+	}
 
-	Utils::checkOpenGLError("ERROR: Could not draw scene.");
+	Utils::checkOpenGLError("ERROR: Could not draw Entity: " + _name);
 }
 
 void Entity::createBufferObjects(GLuint* vaoId, GLuint* vboId){

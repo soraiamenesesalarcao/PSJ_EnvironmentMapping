@@ -101,5 +101,5 @@ void Camera::update(){
 	//if(mouse.x != 0 || mouse.y != 0){} rotate(mouse.y, mouse.x);
 
 	// zoom
-	_distance = MAX(MIN((_distance + Input::getInstance()->getWheelDirection()), 10), 2);
+	_distance = MAX(MIN((_distance + Input::getInstance()->getWheelDirection()), 8), 3);
 }

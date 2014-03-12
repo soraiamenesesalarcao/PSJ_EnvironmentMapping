@@ -48,7 +48,7 @@ void main(){
 
 	// Contas para o Cube Mapping
 	vec4 pos2 = ViewMatrix * ModelMatrix * in_Position;
-	ex_ViewVector = normalize(pos2.xyz);
+	ex_ViewVector = pos2.xyz;
 
 	// Contas para o Bump Mapping
 	// T = normalize(NormalMatrix, in_Tangent.xyz).xyz;

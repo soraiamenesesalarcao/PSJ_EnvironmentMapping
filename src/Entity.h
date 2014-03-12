@@ -51,9 +51,9 @@ class Entity {
 		void setTextureCube(std::string f1, std::string f2, std::string f3,
 							std::string f4, std::string f5, std::string f6, 
 							int texUnit);
-
+		void cleanTextures();
 		void rotate(glm::vec3 axis);
-		void draw();
+		void draw(int mode);
 
 		void createBufferObjects(GLuint* vaoId, GLuint* vboId);
 		void calculateModelMatrix();

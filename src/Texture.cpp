@@ -7,6 +7,8 @@ Texture::Texture(int texUnit) {
 		_texUnitEnum = GL_TEXTURE0;
 	else if(_texUnitInt == TEX_UNIT_1)
 		_texUnitEnum = GL_TEXTURE1;
+	else if(_texUnitInt == TEX_UNIT_2)
+		_texUnitEnum = GL_TEXTURE2;
 }
 
 //Texture::~Texture(){

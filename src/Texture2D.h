@@ -11,6 +11,7 @@ class Texture2D : public Texture {
 
 	public:
 		Texture2D(std::string file, int texUnit);
+		~Texture2D();
 		void bind();
 		void unbind();
 		void draw();

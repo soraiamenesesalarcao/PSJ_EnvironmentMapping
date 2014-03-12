@@ -13,6 +13,7 @@ class TextureCube : public Texture {
 		TextureCube(std::string f1, std::string f2, std::string f3,
 					std::string f4, std::string f5, std::string f6, 
 					GLenum texUnit);
+		~TextureCube();
 		void bind();
 		void unbind();
 		void draw();

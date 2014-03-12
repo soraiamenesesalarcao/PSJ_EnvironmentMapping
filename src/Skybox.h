@@ -5,6 +5,7 @@
 class Skybox : public Entity {
 
 	public:
-		Skybox();		
-		void draw();
+		Skybox();
+		~Skybox();
+		void draw(int mode);
 };

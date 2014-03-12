@@ -34,6 +34,10 @@ TextureCube::TextureCube(	std::string f1, std::string f2, std::string f3,
 	glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
+TextureCube::~TextureCube() {
+	glDeleteTextures(1, &_texID);
+}
+
 void TextureCube::bind() {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, _texID);
 }

@@ -15,11 +15,13 @@ Entity::Entity(std::string name){
 	_q = glm::angleAxis(x_angle, glm::vec3(1.0, 0.0, 0.0));
 	_texture2D = NULL;
 	_textureCube = NULL;
+	_textureBumpMapping = NULL;
 }
 
 Entity::Entity(){
 	_texture2D = NULL;
 	_textureCube = NULL;
+	_textureBumpMapping = NULL;
 }
 
 
@@ -49,11 +51,19 @@ void Entity::setTextureCube(std::string f1, std::string f2, std::string f3,
 	_textureCube = new TextureCube(f1, f2, f3, f4, f5, f6, texUnit);
 }
 
+void Entity::setTextureBumpMapping(std::string file_texture, int texUnit,
+									std::string file_normal, int texUnit2) {
+	_textureBumpMapping = new TextureBumpMapping(file_texture, texUnit, file_normal, texUnit2);
+}
+
 void Entity::cleanTextures() {
 	if(_texture2D != NULL)
 		_texture2D->~Texture2D();
 	if(_textureCube != NULL)
 		_textureCube->~TextureCube();
+	if(_textureBumpMapping != NULL)
+		_textureBumpMapping->~TextureBumpMapping();
+
 }
 
 void Entity::rotate(glm::vec3 axis) {
@@ -78,14 +88,13 @@ void Entity::draw(int mode){
 	switch(mode) {
 		case CUBE_MAPPING:
 			_textureCube->draw();
-			//_texture2D->draw();
 			break;
 		case SPHERE_MAPPING:
 			_texture2D->draw();
 			break;
 		case BUMP_MAPPING:
-			//_textureBumpMapping->draw();
-			_texture2D->draw();
+			_textureBumpMapping->draw();
+			//_texture2D->draw();
 			break;
 	}
 	
@@ -107,14 +116,13 @@ void Entity::draw(int mode){
 	switch(mode) {
 		case CUBE_MAPPING:
 			_textureCube->unbind();
-			//_texture2D->unbind();	
 			break;
 		case SPHERE_MAPPING:
 			_texture2D->unbind();	
 			break;
 		case BUMP_MAPPING:
-			//_textureBumpMapping->unbind();
-			_texture2D->unbind();	
+			_textureBumpMapping->unbind();
+			//_texture2D->unbind();	
 			break;
 	}
 

@@ -27,12 +27,12 @@ void SceneManager::createEntities(){
 	quad->setMesh("objects/quad.obj");
 	
 	// Materials
-	teapot->setMaterial("materials/silver.mtl");	
-	cylinder->setMaterial("materials/silver.mtl");	
-	torus->setMaterial("materials/silver.mtl");
-	cube->setMaterial("materials/silver.mtl");
-	sphere->setMaterial("materials/silver.mtl");
-	quad->setMaterial("materials/silver.mtl");
+	teapot->setMaterial("materials/silverBM.mtl");	
+	cylinder->setMaterial("materials/silverBM.mtl");	
+	torus->setMaterial("materials/silverBM.mtl");
+	cube->setMaterial("materials/silverBM.mtl");
+	sphere->setMaterial("materials/silverBM.mtl");
+	quad->setMaterial("materials/silverBM.mtl");
 	
 	// Adding to entities list
 	addEntity(teapot);
@@ -83,7 +83,9 @@ void SceneManager::updateMapping() {
 			std::cout << "bump mapping " << std::endl;
 			for (int i = 0; i < NSOLIDS; i++){				
 				_objectList[i]->cleanTextures();
-				_objectList[i]->setTexture2D("textures/spheremap.jpg", TEX_UNIT_0);
+				//_objectList[i]->setTexture2D("textures/spheremap.jpg", TEX_UNIT_0);
+				_objectList[i]->setTextureBumpMapping("textures/rock.jpg", TEX_UNIT_1,
+														"textures/normalMapRock.jpg", TEX_UNIT_0);
 			}
 			if(_skybox != NULL) {
 					_skybox->~Skybox();
@@ -107,8 +109,8 @@ void SceneManager::changeShader() {
 																			"shaders/fragmentShader_SphereMapping.glsl");
 			break;
 		case BUMP_MAPPING:
-			_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader_SphereMapping.glsl", 
-																			"shaders/fragmentShader_SphereMapping.glsl");
+			_shaderProgram = ShaderProgram::getInstance()->createShaderProgram("shaders/vertexShader_BumpMapping.glsl", 
+																			"shaders/fragmentShader_BumpMapping.glsl");
 			break;
 		default:
 			;

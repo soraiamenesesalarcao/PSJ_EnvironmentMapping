@@ -48,6 +48,7 @@
 
 #define TEX_2D 0
 #define TEX_CUBE 1
+#define TEX_NORMAL 2
 
 #define NMAPINGS 3
 #define CUBE_MAPPING 0

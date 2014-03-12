@@ -6,12 +6,11 @@ TextureBumpMapping::TextureBumpMapping(std::string file_textura,int texUnit, std
 	_file_textura = file_textura;
 	_file_normal = file_normal;
 
-	// cenas fixes irao acontecer aqui
-	_MtexID = std::vector<GLuint>(3);
-	glGenTextures(2, &_MtexID[0]);
+	_texID = std::vector<GLuint>(3);
+	glGenTextures(2, &_texID[0]);
 
 	glActiveTexture(GL_TEXTURE0);
-	//glActiveTexture(_texUnitEnum);
+	glBindTexture(GL_TEXTURE_2D, _texID[0]);
 
 	unsigned char* image = SOIL_load_image(_file_textura.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -20,10 +19,9 @@ TextureBumpMapping::TextureBumpMapping(std::string file_textura,int texUnit, std
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glBindTexture(GL_TEXTURE_2D, _MtexID[0]);
-
 	///----------------------------------------------
 	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, _texID[1]);
 
 	unsigned char* image2 = SOIL_load_image(_file_normal.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image2);
@@ -32,9 +30,11 @@ TextureBumpMapping::TextureBumpMapping(std::string file_textura,int texUnit, std
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glBindTexture(GL_TEXTURE_2D, _MtexID[1]);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
 
-	//glBindTexture(GL_TEXTURE_2D, 0);
+TextureBumpMapping::~TextureBumpMapping() {
+	glDeleteTextures(2, &_texID[0]);
 }
 
 void TextureBumpMapping::bind() {
@@ -48,13 +48,13 @@ void TextureBumpMapping::unbind() {
 }
 
 void TextureBumpMapping::draw() {
-	//glActiveTexture(_texUnitEnum);
-	//bind();
 	GLint tID = ShaderProgram::getInstance()->getTextureUniformId(TEX_2D);
+	GLint t2ID = ShaderProgram::getInstance()->getTextureUniformId(TEX_NORMAL);
+
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _MtexID[0]);
-	glUniform1i(tID, 0);
+	glBindTexture(GL_TEXTURE_2D, _texID[0]);
+	glUniform1i(tID, TEX_UNIT_0);
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, _MtexID[1]);
-	glUniform1i(tID, 1);	//---> pode ser aqui!!!
+	glBindTexture(GL_TEXTURE_2D, _texID[1]);
+	glUniform1i(t2ID, TEX_UNIT_1);
 }

@@ -15,7 +15,7 @@ class ShaderProgram {
 		GLuint _modelMatrixUniformId;
 		GLuint _normalMatrixUniformId;
 		GLuint _sharedMatrixUboId;
-		GLuint _textureUniformId[2];
+		GLuint _textureUniformId[3];
 
 
 	public:
